@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Esencia y Taza — Café de origen | PROTOTIPO</title>
+<style>
+  :root{
+    --cafe-oscuro:#3b2415;
+    --cafe-medio:#6f4e2e;
+    --cafe-claro:#a9794d;
+    --crema:#f5ede1;
+    --crema-2:#ece0cd;
+    --verde:#5b6e4f;
+    --texto:#2c2117;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:var(--texto);background:var(--crema);line-height:1.6}
+  h1,h2,h3{font-family:Georgia,'Times New Roman',serif;line-height:1.2}
+  img{max-width:100%;display:block}
+  .contenedor{max-width:1100px;margin:0 auto;padding:0 24px}
+
+  /* Aviso de prototipo */
+  .aviso-proto{background:#b3261e;color:#fff;text-align:center;font-size:13px;padding:8px 16px;font-weight:600;letter-spacing:.3px}
+
+  /* Header */
+  header{position:sticky;top:0;background:rgba(59,36,21,.96);backdrop-filter:blur(6px);z-index:50}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1100px;margin:0 auto}
+  .logo{display:flex;align-items:center;gap:12px;color:var(--crema);text-decoration:none}
+  .logo .marca{font-family:Georgia,serif;font-size:22px;font-weight:700;letter-spacing:.5px}
+  .logo .sub{font-size:11px;color:var(--cafe-claro);letter-spacing:2px;text-transform:uppercase}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{color:var(--crema);text-decoration:none;font-size:14px;opacity:.85;transition:opacity .2s}
+  .nav-links a:hover{opacity:1}
+  @media(max-width:760px){.nav-links{display:none}}
+
+  /* Hero */
+  .hero{position:relative;min-height:88vh;display:flex;align-items:center;color:#fff;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:-2}
+  .hero-bg svg{width:100%;height:100%;object-fit:cover}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,rgba(40,24,12,.82) 0%,rgba(40,24,12,.45) 60%,rgba(40,24,12,.25) 100%);z-index:-1}
+  .hero-txt{max-width:620px}
+  .hero .badge{display:inline-block;background:rgba(245,237,225,.15);border:1px solid rgba(245,237,225,.35);padding:7px 16px;border-radius:30px;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:22px}
+  .hero h1{font-size:clamp(34px,5.5vw,60px);margin-bottom:18px}
+  .hero p{font-size:18px;opacity:.92;margin-bottom:32px;max-width:520px}
+  .btn{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;text-decoration:none;padding:15px 30px;border-radius:8px;font-weight:700;font-size:16px;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:transform .15s,box-shadow .15s}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.3)}
+  .btn.outline{background:transparent;border:2px solid var(--crema);color:var(--crema);box-shadow:none;margin-left:14px}
+  .btn-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+
+  /* Secciones */
+  section{padding:80px 0}
+  .titulo{text-align:center;margin-bottom:14px;font-size:clamp(26px,4vw,40px);color:var(--cafe-oscuro)}
+  .subtitulo{text-align:center;color:var(--cafe-medio);max-width:620px;margin:0 auto 50px;font-size:17px}
+
+  /* Historia */
+  .historia{background:var(--crema-2)}
+  .historia-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+  .historia-grid img{border-radius:14px;box-shadow:0 18px 40px rgba(59,36,21,.18)}
+  .historia h2{color:var(--cafe-oscuro);margin-bottom:18px;font-size:32px}
+  .historia p{margin-bottom:16px;color:#4a392a}
+  .origen-tag{display:inline-block;color:var(--verde);font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+  @media(max-width:820px){.historia-grid{grid-template-columns:1fr;gap:30px}}
+
+  /* Productos */
+  .grid-prod{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+  .card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(59,36,21,.1);transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
+  .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(59,36,21,.18)}
+  .card .img-wrap{aspect-ratio:4/3;background:var(--crema-2)}
+  .card-body{padding:24px;flex:1;display:flex;flex-direction:column}
+  .card h3{font-size:22px;color:var(--cafe-oscuro);margin-bottom:6px}
+  .card .desc{font-size:14px;color:var(--cafe-medio);margin-bottom:16px;flex:1}
+  .precio{font-size:26px;font-weight:700;color:var(--cafe-oscuro);font-family:Georgia,serif}
+  .precio small{font-size:13px;color:var(--cafe-medio);font-weight:400}
+  .card .btn{margin-top:18px;justify-content:center;font-size:15px;padding:13px}
+  @media(max-width:820px){.grid-prod{grid-template-columns:1fr;max-width:380px;margin:0 auto}}
+
+  /* Beneficios */
+  .benef{background:var(--cafe-oscuro);color:var(--crema)}
+  .benef .titulo{color:var(--crema)}
+  .grid-benef{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-top:30px}
+  .benef-item{text-align:center;padding:20px}
+  .benef-item .ic{width:62px;height:62px;margin:0 auto 16px;background:rgba(245,237,225,.1);border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .benef-item h3{font-size:19px;margin-bottom:8px}
+  .benef-item p{font-size:14px;opacity:.8}
+  @media(max-width:820px){.grid-benef{grid-template-columns:1fr}}
+
+  /* CTA final */
+  .cta-final{text-align:center;background:var(--crema-2)}
+  .cta-final h2{font-size:clamp(28px,4vw,42px);color:var(--cafe-oscuro);margin-bottom:16px}
+  .cta-final p{color:var(--cafe-medio);font-size:18px;margin-bottom:30px}
+
+  /* Footer */
+  footer{background:var(--cafe-oscuro);color:var(--crema);padding:50px 0 30px;text-align:center}
+  footer .marca{font-family:Georgia,serif;font-size:24px;margin-bottom:8px}
+  footer .datos{opacity:.8;font-size:14px;margin-bottom:20px;line-height:1.9}
+  footer a{color:var(--cafe-claro);text-decoration:none}
+  .redes{display:flex;gap:18px;justify-content:center;margin:18px 0}
+  .redes a{width:40px;height:40px;border-radius:50%;background:rgba(245,237,225,.1);display:flex;align-items:center;justify-content:center;transition:background .2s}
+  .redes a:hover{background:rgba(245,237,225,.22)}
+  .legal{font-size:12px;opacity:.55;margin-top:24px;border-top:1px solid rgba(245,237,225,.15);padding-top:20px}
+
+  /* Botón flotante WhatsApp */
+  .wa-float{position:fixed;right:22px;bottom:22px;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:60;transition:transform .15s}
+  .wa-float:hover{transform:scale(1.08)}
+</style>
+</head>
+<body>
+
+<div class="aviso-proto">⚠️ PROTOTIPO DE DEMOSTRACIÓN — Imágenes de ejemplo y número provisional. Para revisión del equipo, no es la versión final.</div>
+
+<header>
+  <div class="nav">
+    <a href="#" class="logo">
+      <!-- Logo provisional SVG -->
+      <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="21" cy="21" r="20" stroke="#a9794d" stroke-width="2"/>
+        <path d="M13 16h13c2.5 0 4 1.6 4 4s-1.5 4-4 4h-1.2c-.5 3.4-3.3 6-6.8 6h-1c-3.8 0-7-3.2-7-7v-7z" stroke="#f5ede1" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M26 18h.5c1.4 0 2.5 1 2.5 2.4S27.9 23 26.5 23H26" stroke="#f5ede1" stroke-width="1.6"/>
+        <path d="M18 9c0 2-1.5 2.5-1.5 4.5M22 9c0 2-1.5 2.5-1.5 4.5" stroke="#a9794d" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <div class="marca">Esencia y Taza</div>
+        <div class="sub">Café de origen</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#historia">Nuestra historia</a></li>
+      <li><a href="#productos">Productos</a></li>
+      <li><a href="#porque">Por qué nosotros</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" style="padding:0">
+  <div class="hero-bg">
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="cielo" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#c9a36b"/><stop offset="1" stop-color="#8a6238"/>
+        </linearGradient>
+        <linearGradient id="monte1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#6f4e2e"/><stop offset="1" stop-color="#4a3320"/>
+        </linearGradient>
+        <linearGradient id="monte2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#5b6e4f"/><stop offset="1" stop-color="#3e4d36"/>
+        </linearGradient>
+      </defs>
+      <rect width="1440" height="900" fill="url(#cielo)"/>
+      <circle cx="1140" cy="220" r="90" fill="#f5ede1" opacity="0.45"/>
+      <path d="M0 560 Q 240 420 480 540 T 960 500 T 1440 560 V900 H0 Z" fill="url(#monte1)" opacity="0.85"/>
+      <path d="M0 650 Q 300 540 600 640 T 1200 610 T 1440 660 V900 H0 Z" fill="url(#monte2)"/>
+      <!-- Hileras de café -->
+      <g opacity="0.5" stroke="#3e4d36" stroke-width="3">
+        <path d="M0 780 Q 360 740 720 780 T 1440 780" fill="none"/>
+        <path d="M0 820 Q 360 785 720 820 T 1440 820" fill="none"/>
+        <path d="M0 860 Q 360 830 720 860 T 1440 860" fill="none"/>
+      </g>
+    </svg>
+  </div>
+  <div class="contenedor">
+    <div class="hero-txt">
+      <span class="badge">Santa Rosa de Osos · Antioquia, Colombia</span>
+      <h1>El sabor de nuestra tierra, en tu taza</h1>
+      <p>Café 100% colombiano, cultivado y tostado con dedicación en las montañas del norte de Antioquia. De nuestra finca directo a tu casa.</p>
+      <div class="btn-row">
+        <a href="https://wa.me/573045412142?text=Hola%20Esencia%20y%20Taza,%20quiero%20información%20sobre%20su%20café" class="btn" target="_blank">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.7.9-.1.2-.3.2-.5.1-1.3-.6-2.1-1.1-3-2.6-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7c-.2-.4-.4-.4-.5-.4h-.5c-.2 0-.5.1-.7.3-.2.2-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.7 3.1.6.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1-.1-.1-.2-.2-.5-.3z"/></svg>
+          Pedir por WhatsApp
+        </a>
+        <a href="#productos" class="btn outline">Ver productos</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORIA -->
+<section class="historia" id="historia">
+  <div class="contenedor historia-grid">
+    <div>
+      <svg viewBox="0 0 600 460" xmlns="http://www.w3.org/2000/svg">
+        <rect width="600" height="460" fill="#d8c4a3"/>
+        <path d="M0 300 Q 150 230 300 290 T 600 280 V460 H0 Z" fill="#7d5a35"/>
+        <path d="M0 360 Q 150 310 300 350 T 600 340 V460 H0 Z" fill="#5b6e4f"/>
+        <circle cx="470" cy="110" r="55" fill="#f3e6c9"/>
+        <g fill="#4a3320"><circle cx="160" cy="380" r="9"/><circle cx="210" cy="395" r="9"/><circle cx="260" cy="378" r="9"/><circle cx="120" cy="400" r="9"/></g>
+        <g fill="#b5403c"><circle cx="380" cy="385" r="7"/><circle cx="420" cy="400" r="7"/><circle cx="460" cy="383" r="7"/></g>
+        <text x="300" y="240" font-family="Georgia" font-size="22" fill="#5a4226" text-anchor="middle" opacity="0.6">[ Foto de la finca / paisaje cafetero ]</text>
+      </svg>
+    </div>
+    <div>
+      <span class="origen-tag">Nuestra historia</span>
+      <h2>De una familia caficultora de Santa Rosa de Osos</h2>
+      <p><em>(Texto de ejemplo — para reemplazar con la historia real)</em></p>
+      <p>Crecimos entre cafetales, en el norte de Antioquia, donde el clima de montaña y la tradición familiar dan vida a un café con carácter. Hoy queremos llevar ese sabor auténtico, sin intermediarios, directamente a tu mesa.</p>
+      <p>Cada lote es seleccionado y tostado en pequeñas cantidades para garantizar frescura. Comprar nuestro café es apoyar directamente a una familia caficultora colombiana.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTOS -->
+<section id="productos">
+  <div class="contenedor">
+    <h2 class="titulo">Nuestro café</h2>
+    <p class="subtitulo">Presentaciones y precios de ejemplo — el equipo definirá los valores y variedades finales.</p>
+    <div class="grid-prod">
+
+      <div class="card">
+        <div class="img-wrap">
+          <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#ece0cd"/><rect x="150" y="70" width="100" height="170" rx="10" fill="#5a3b22"/><rect x="165" y="100" width="70" height="80" rx="4" fill="#f5ede1"/><text x="200" y="148" font-family="Georgia" font-size="13" fill="#5a3b22" text-anchor="middle">ESENCIA</text><text x="200" y="166" font-family="Georgia" font-size="13" fill="#5a3b22" text-anchor="middle">Y TAZA</text><circle cx="120" cy="245" r="8" fill="#4a3320"/><circle cx="145" cy="255" r="8" fill="#4a3320"/><circle cx="170" cy="248" r="8" fill="#4a3320"/></svg>
+        </div>
+        <div class="card-body">
+          <h3>Café en grano · 250g</h3>
+          <p class="desc">Ideal para probar. Grano entero, tueste medio, para moler en casa.</p>
+          <div class="precio">$18.000 <small>COP</small></div>
+          <a href="https://wa.me/573045412142?text=Hola,%20quiero%20pedir%20el%20café%20en%20grano%20de%20250g" class="btn" target="_blank">Pedir por WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="img-wrap">
+          <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#e3d2b6"/><rect x="145" y="55" width="110" height="195" rx="10" fill="#3b2415"/><rect x="160" y="90" width="80" height="90" rx="4" fill="#f5ede1"/><text x="200" y="132" font-family="Georgia" font-size="14" fill="#3b2415" text-anchor="middle">ESENCIA</text><text x="200" y="152" font-family="Georgia" font-size="14" fill="#3b2415" text-anchor="middle">Y TAZA</text><circle cx="115" cy="255" r="8" fill="#4a3320"/><circle cx="140" cy="265" r="8" fill="#4a3320"/><circle cx="165" cy="258" r="8" fill="#4a3320"/></svg>
+        </div>
+        <div class="card-body">
+          <h3>Café en grano · 500g</h3>
+          <p class="desc">El más pedido. Rinde para varias semanas conservando el aroma.</p>
+          <div class="precio">$32.000 <small>COP</small></div>
+          <a href="https://wa.me/573045412142?text=Hola,%20quiero%20pedir%20el%20café%20en%20grano%20de%20500g" class="btn" target="_blank">Pedir por WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="img-wrap">
+          <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#d8c4a3"/><rect x="135" y="45" width="130" height="210" rx="12" fill="#2c1a0e"/><rect x="152" y="85" width="96" height="100" rx="4" fill="#f5ede1"/><text x="200" y="130" font-family="Georgia" font-size="15" fill="#2c1a0e" text-anchor="middle">ESENCIA</text><text x="200" y="152" font-family="Georgia" font-size="15" fill="#2c1a0e" text-anchor="middle">Y TAZA</text><circle cx="110" cy="260" r="8" fill="#4a3320"/><circle cx="135" cy="270" r="8" fill="#4a3320"/><circle cx="160" cy="263" r="8" fill="#4a3320"/></svg>
+        </div>
+        <div class="card-body">
+          <h3>Café en grano · 1kg</h3>
+          <p class="desc">La mejor relación precio-cantidad. Para los que ya no pueden vivir sin él.</p>
+          <div class="precio">$58.000 <small>COP</small></div>
+          <a href="https://wa.me/573045412142?text=Hola,%20quiero%20pedir%20el%20café%20en%20grano%20de%201kg" class="btn" target="_blank">Pedir por WhatsApp</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- POR QUÉ NOSOTROS -->
+<section class="benef" id="porque">
+  <div class="contenedor">
+    <h2 class="titulo">¿Por qué Esencia y Taza?</h2>
+    <div class="grid-benef">
+      <div class="benef-item">
+        <div class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a9794d" stroke-width="2"><path d="M12 2L4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4z"/></svg></div>
+        <h3>Origen garantizado</h3>
+        <p>Café 100% de Santa Rosa de Osos, Antioquia. Sabes exactamente de dónde viene lo que tomas.</p>
+      </div>
+      <div class="benef-item">
+        <div class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a9794d" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h3>Tostado fresco</h3>
+        <p>Tostamos en lotes pequeños bajo pedido. Recibes el café en su mejor momento.</p>
+      </div>
+      <div class="benef-item">
+        <div class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a9794d" stroke-width="2"><path d="M3 12h18M12 3v18"/></svg></div>
+        <h3>Directo del caficultor</h3>
+        <p>Sin intermediarios. Tu compra apoya directamente a una familia campesina colombiana.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final" id="contacto">
+  <div class="contenedor">
+    <h2>¿Listo para probar nuestro café?</h2>
+    <p>Escríbenos por WhatsApp y te atendemos personalmente.</p>
+    <a href="https://wa.me/573045412142?text=Hola%20Esencia%20y%20Taza,%20quiero%20hacer%20un%20pedido" class="btn" target="_blank">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.7.9-.1.2-.3.2-.5.1-1.3-.6-2.1-1.1-3-2.6-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7c-.2-.4-.4-.4-.5-.4h-.5c-.2 0-.5.1-.7.3-.2.2-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.7 3.1.6.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1-.1-.1-.2-.2-.5-.3z"/></svg>
+      Escribir a WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="contenedor">
+    <div class="marca">Esencia y Taza</div>
+    <div class="datos">
+      Café de origen · Santa Rosa de Osos, Antioquia, Colombia<br>
+      <a href="mailto:comercial@esenciaytaza.com">comercial@esenciaytaza.com</a> ·
+      <a href="https://wa.me/573045412142" target="_blank">WhatsApp: 304 541 2142</a>
+    </div>
+    <div class="redes">
+      <a href="#" title="Instagram (pendiente)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5ede1" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1" fill="#f5ede1"/></svg></a>
+      <a href="#" title="Facebook (pendiente)"><svg width="18" height="18" viewBox="0 0 24 24" fill="#f5ede1"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
+      <a href="https://wa.me/573045412142" title="WhatsApp" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="#f5ede1"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2z"/></svg></a>
+    </div>
+    <div class="legal">
+      PROTOTIPO DE DEMOSTRACIÓN — Imágenes ilustrativas y datos de ejemplo. Número y contenido provisionales para revisión interna del equipo.<br>
+      © 2026 Esencia y Taza. Todos los derechos reservados.
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/573045412142?text=Hola%20Esencia%20y%20Taza" class="wa-float" title="Escríbenos por WhatsApp" target="_blank">
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.7.9-.1.2-.3.2-.5.1-1.3-.6-2.1-1.1-3-2.6-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7c-.2-.4-.4-.4-.5-.4h-.5c-.2 0-.5.1-.7.3-.2.2-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.7 3.1.6.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1-.1-.1-.2-.2-.5-.3z"/></svg>
+</a>
+
+</body>
+</html>
