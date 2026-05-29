@@ -1,0 +1,6 @@
+N°,Fecha,Cliente,WhatsApp,Ciudad,Producto,Cantidad,Precio unit (COP),Total (COP),Método pago,Estado,N° guía envío,Costo envío,Notas
+1,2026-05-29,Ejemplo: María Pérez,3001234567,Medellín,Café 500g,1,32000,32000,Wompi-Nequi,Enviado,123ABC456,8000,Cliente nuevo - le gustó tueste medio
+2,2026-05-29,Ejemplo: Juan Gómez,3107654321,Bogotá,Café 1kg,2,58000,116000,Wompi-Tarjeta,Pagado-pendiente envío,,12000,Pidió que llegue antes del viernes
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,

@@ -1,0 +1,35 @@
+ESENCIA Y TAZA - PANEL DE CONTROL,,
+,,
+Las celdas con FÓRMULA se llenan SOLAS al ingresar datos en VENTAS y GASTOS.,,
+,,
+=== INDICADORES GENERALES ===,Valor,Fórmula a pegar en la columna B
+Total ventas (histórico),0,=SUMA(VENTAS!I:I)
+Total gastos (histórico),0,=SUMA(GASTOS!E:E)
+Utilidad bruta (ventas - gastos),0,=B6-B7
+Total clientes registrados,0,=CONTARA(CLIENTES!B:B)-1
+Total pedidos,0,=CONTARA(VENTAS!A:A)-1
+Ticket promedio (COP),0,=SI(B10>0;B6/B10;0)
+Total proveedores,0,=CONTARA(PROVEEDORES!B:B)-1
+,,
+=== ESTE MES ===,Valor,Fórmula a pegar
+Ventas del mes actual,0,"=SUMAR.SI.CONJUNTO(VENTAS!I:I;VENTAS!B:B;"">=""&FECHA(AÑO(HOY());MES(HOY());1);VENTAS!B:B;""<""&FECHA(AÑO(HOY());MES(HOY())+1;1))"
+Gastos del mes actual,0,"=SUMAR.SI.CONJUNTO(GASTOS!E:E;GASTOS!B:B;"">=""&FECHA(AÑO(HOY());MES(HOY());1);GASTOS!B:B;""<""&FECHA(AÑO(HOY());MES(HOY())+1;1))"
+Utilidad del mes,0,=B15-B16
+,,
+=== POR PRODUCTO (cantidad / total) ===,Cantidad,Total facturado
+Café 250g,0,0
+Café 500g,0,0
+Café 1kg,0,0
+,,
+=== POR MÉTODO DE PAGO ===,Total,
+Wompi-Tarjeta,0,=SUMAR.SI(VENTAS!J:J;""Wompi-Tarjeta"";VENTAS!I:I)
+Wompi-Nequi,0,=SUMAR.SI(VENTAS!J:J;""Wompi-Nequi"";VENTAS!I:I)
+Wompi-PSE,0,=SUMAR.SI(VENTAS!J:J;""Wompi-PSE"";VENTAS!I:I)
+Efectivo,0,=SUMAR.SI(VENTAS!J:J;""Efectivo"";VENTAS!I:I)
+,,
+=== GASTOS POR CATEGORÍA ===,Total,
+Materia prima,0,=SUMAR.SI(GASTOS!C:C;""Materia prima"";GASTOS!E:E)
+Empaque,0,=SUMAR.SI(GASTOS!C:C;""Empaque"";GASTOS!E:E)
+Envíos,0,=SUMAR.SI(GASTOS!C:C;""Envíos"";GASTOS!E:E)
+Marketing,0,=SUMAR.SI(GASTOS!C:C;""Marketing"";GASTOS!E:E)
+Otros,0,=SUMAR.SI(GASTOS!C:C;""Otros"";GASTOS!E:E)
