@@ -396,7 +396,7 @@
       </div>
     </div>
     <div class="legal">
-      © 2026 Esencia y Taza. Café de origen — Santa Rosa de Osos, Antioquia, Colombia. Todos los derechos reservados.
+      © <span id="anio">2026</span> Esencia y Taza. Café de origen — Santa Rosa de Osos, Antioquia, Colombia. Todos los derechos reservados.
     </div>
   </div>
 </footer>
@@ -453,6 +453,9 @@
   }
   function cerrarPago(){document.getElementById('modalPago').classList.remove('abierto')}
   document.addEventListener('keydown',e=>{if(e.key==='Escape')cerrarPago()});
+
+  // Año dinámico en el copyright (se actualiza solo cada año)
+  document.getElementById('anio').textContent = new Date().getFullYear();
 </script>
 
 </body>
