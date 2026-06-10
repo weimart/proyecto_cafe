@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Esencia y Taza Café — Café de especialidad colombiano. El arte del origen, tradición que se cultiva. Huila, Nariño, Cauca y Eje Cafetero.">
+<meta property="og:title" content="Esencia y Taza Café — Café de Especialidad Colombiano">
+<meta property="og:description" content="Microlotes exclusivos del origen colombiano. Trazabilidad total, puntaje SCA 84+.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0D0603">
+<title>Esencia & Taza Café | Café de Especialidad Colombiano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Josefin+Sans:wght@100;200;300;400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ESENCIA Y TAZA CAFÉ — DESIGN SYSTEM
+   Paleta: Café Oscuro #3D1A08 | Café Medio #5C2D0A | Café Claro #8B4A1A
+            Dorado #C8A84B | Dorado Claro #E8D190 | Crema #F5E6C8
+            Fondo #0D0603 | Negro Café #080301
+   Tipografías: Playfair Display (display) | Cormorant Garamond (editorial) | Josefin Sans (UI)
+   ============================================================ */
+
+  :root {
+    --cafe-dark:   #3D1A08;
+    --cafe-med:    #5C2D0A;
+    --cafe-light:  #8B4A1A;
+    --gold:        #C8A84B;
+    --gold-light:  #E8D190;
+    --gold-pale:   #F5DFA0;
+    --cream:       #F5E6C8;
+    --cream-light: #FBF5E8;
+    --cream-dark:  #E8D5B0;
+    --text-dark:   #1A0A03;
+    --text-mid:    #4A2A10;
+    --text-muted:  #8B6B45;
+    --text-faint:  #5A4030;
+    --bg:          #0D0603;
+    --bg-card:     #140800;
+    --bg-deep:     #080301;
+    --bg-warm:     #1A0A03;
+    --nav-h:       72px;
+    --max-w:       1120px;
+    --radius:      2px;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'Josefin Sans', sans-serif;
+    background: var(--bg);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg-deep); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+  /* ── UTILITIES ── */
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
+  .divider { height: .5px; background: linear-gradient(90deg,transparent,rgba(200,168,75,.3),transparent); margin: 0 2rem; }
+  .eyebrow { font-size: 10px; letter-spacing: .4em; color: var(--gold); text-transform: uppercase; font-weight: 300; margin-bottom: 1rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(32px,5vw,54px); font-weight: 700; color: var(--cream); line-height: 1.05; margin-bottom: 1.5rem; }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .body-editorial { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--text-muted); line-height: 1.75; }
+
+  .btn-primary {
+    display: inline-block; background: var(--gold); color: var(--text-dark);
+    border: none; padding: 14px 40px;
+    font-family: 'Josefin Sans', sans-serif; font-size: 11px;
+    letter-spacing: .2em; text-transform: uppercase; font-weight: 600;
+    cursor: pointer; border-radius: var(--radius);
+    transition: background .3s, transform .2s; text-decoration: none;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--cream);
+    border: .5px solid rgba(245,230,200,.4); padding: 14px 40px;
+    font-family: 'Josefin Sans', sans-serif; font-size: 11px;
+    letter-spacing: .2em; text-transform: uppercase; font-weight: 300;
+    cursor: pointer; border-radius: var(--radius);
+    transition: all .3s; text-decoration: none;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── NAV ── */
+  #nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+    height: var(--nav-h);
+    background: rgba(13,6,3,.93);
+    backdrop-filter: blur(16px);
+    border-bottom: .5px solid rgba(200,168,75,.2);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem;
+    transition: background .3s;
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--gold); cursor: pointer; line-height: 1.15; text-decoration: none; }
+  .nav-logo small { display: block; font-family: 'Josefin Sans', sans-serif; font-size: 8px; font-weight: 200; letter-spacing: .35em; color: var(--text-muted); text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; font-weight: 300; transition: color .3s; padding: .5rem 0; border-bottom: 1px solid transparent; }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .nav-right { display: flex; gap: .75rem; align-items: center; }
+  .btn-nav-wa { background: #25D366; color: #fff; border: none; padding: 7px 16px; font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; border-radius: 1px; font-weight: 600; text-decoration: none; transition: opacity .3s; }
+  .btn-nav-wa:hover { opacity: .85; }
+  .btn-cart { background: none; border: .5px solid rgba(200,168,75,.35); color: var(--gold); padding: 7px 16px; font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; border-radius: 1px; transition: all .3s; }
+  .btn-cart:hover { background: rgba(200,168,75,.1); }
+
+  /* ── HERO ── */
+  #hero {
+    height: 100vh; min-height: 680px; position: relative;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 25% 55%, rgba(92,45,10,.55) 0%,transparent 65%),
+                radial-gradient(ellipse 50% 40% at 75% 35%, rgba(200,168,75,.06) 0%,transparent 55%),
+                linear-gradient(170deg, #0D0603 0%, #180A04 40%, #0D0603 100%);
+  }
+  .hero-rings { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+  .ring { position: absolute; border-radius: 50%; border: .5px solid rgba(200,168,75,.1); }
+  .ring-1 { width: 700px; height: 700px; animation: ring-rotate 60s linear infinite; }
+  .ring-2 { width: 480px; height: 480px; border-color: rgba(200,168,75,.14); animation: ring-rotate 40s linear infinite reverse; }
+  .ring-3 { width: 280px; height: 280px; border-color: rgba(200,168,75,.2); animation: ring-rotate 25s linear infinite; }
+  @keyframes ring-rotate { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+
+  .hero-grain {
+    position: absolute; inset: 0; opacity: .035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+  }
+
+  .hero-content { position: relative; z-index: 2; text-align: center; padding: 2rem; max-width: 700px; }
+  .hero-badge { display: inline-flex; align-items: center; gap: .6rem; border: .5px solid rgba(200,168,75,.3); padding: 6px 18px; border-radius: 20px; font-size: 10px; letter-spacing: .3em; color: var(--gold); text-transform: uppercase; margin-bottom: 2rem; animation: fade-up .8s ease both; }
+  .hero-badge::before { content: ''; width: 5px; height: 5px; background: var(--gold); border-radius: 50%; animation: pulse-dot 2s infinite; }
+  @keyframes pulse-dot { 0%,100%{opacity:.4;transform:scale(1)} 50%{opacity:1;transform:scale(1.4)} }
+
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(58px,10vw,100px); font-weight: 900; line-height: .9; color: var(--cream); animation: fade-up .8s ease .1s both; }
+  .hero-amp { display: block; font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); font-size: 1.25em; line-height: .75; }
+  .hero-sub { font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: .45em; color: var(--text-muted); text-transform: uppercase; font-weight: 200; margin-top: 1.5rem; animation: fade-up .8s ease .2s both; }
+  .hero-ctas { display: flex; gap: 1rem; justify-content: center; margin-top: 2.5rem; flex-wrap: wrap; animation: fade-up .8s ease .3s both; }
+  .hero-scroll { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: .75rem; z-index: 2; cursor: pointer; }
+  .scroll-text { font-size: 9px; letter-spacing: .3em; color: var(--text-muted); text-transform: uppercase; }
+  .scroll-line { width: 1px; height: 44px; background: linear-gradient(var(--gold), transparent); animation: scroll-pulse 2.5s infinite; }
+  @keyframes scroll-pulse { 0%,100%{opacity:.3;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(.7)} }
+  @keyframes fade-up { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── STRIP STATS ── */
+  .stats-strip { background: var(--bg-deep); border-top: .5px solid rgba(200,168,75,.12); border-bottom: .5px solid rgba(200,168,75,.12); }
+  .stats-inner { display: grid; grid-template-columns: repeat(4,1fr); }
+  .stat-item { padding: 2.5rem 2rem; text-align: center; border-right: .5px solid rgba(200,168,75,.1); }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: .4rem; }
+  .stat-label { font-size: 9px; letter-spacing: .25em; color: var(--text-muted); text-transform: uppercase; }
+
+  /* ── FEATURED PRODUCTS ── */
+  #productos { padding: 7rem 0; }
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 2px; margin-top: 3.5rem; }
+  .product-card {
+    background: var(--bg-card); border: .5px solid rgba(200,168,75,.1); padding: 2rem;
+    cursor: pointer; transition: background .35s; position: relative; overflow: hidden;
+  }
+  .product-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); transform:scaleX(0); transition:transform .4s; }
+  .product-card:hover { background: #1C0C02; }
+  .product-card:hover::after { transform:scaleX(1); }
+  .prod-visual {
+    width:100%; aspect-ratio:1; border-radius:var(--radius);
+    background: linear-gradient(135deg,#2A1005,#3D1A08,#1A0803);
+    display:flex; align-items:center; justify-content:center;
+    font-size:56px; margin-bottom:1.5rem; position:relative; overflow:hidden;
+  }
+  .prod-visual::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 38% 38%,rgba(200,168,75,.1) 0%,transparent 60%); }
+  .prod-origin { font-size:9px; letter-spacing:.3em; color:var(--gold); text-transform:uppercase; margin-bottom:.4rem; }
+  .prod-name { font-family:'Playfair Display',serif; font-size:22px; font-weight:600; color:var(--cream); margin-bottom:.5rem; line-height:1.2; }
+  .prod-notes { font-family:'Cormorant Garamond',serif; font-size:15px; color:var(--text-muted); margin-bottom:1.5rem; font-style:italic; }
+  .prod-footer { display:flex; align-items:center; justify-content:space-between; }
+  .prod-price { font-family:'Playfair Display',serif; font-size:24px; color:var(--gold); font-weight:400; }
+  .prod-price small { display:block; font-size:10px; color:var(--text-muted); font-family:'Josefin Sans',sans-serif; font-weight:300; }
+  .btn-add { background:none; border:.5px solid rgba(200,168,75,.35); color:var(--gold); padding:8px 18px; font-family:'Josefin Sans',sans-serif; font-size:10px; letter-spacing:.15em; text-transform:uppercase; cursor:pointer; border-radius:var(--radius); transition:all .3s; }
+  .btn-add:hover { background:var(--gold); color:var(--text-dark); }
+  .prod-tag { display:inline-block; background:rgba(200,168,75,.15); color:var(--gold); font-size:9px; letter-spacing:.2em; padding:3px 10px; text-transform:uppercase; border-radius:var(--radius); margin-bottom:.75rem; }
+
+  /* ── ORIGEN SECTION ── */
+  #origen {
+    background:linear-gradient(170deg,#0D0603 0%,#1A0A03 50%,#0D0603 100%);
+    padding:8rem 0; position:relative; overflow:hidden;
+  }
+  .origen-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+  .origen-visual {
+    position:relative; aspect-ratio:.88;
+    background:linear-gradient(135deg,#2A1005,#4A2010,#1A0803);
+    border-radius:var(--radius); overflow:hidden;
+    display:flex; align-items:center; justify-content:center; font-size:7rem;
+  }
+  .origen-frame { position:absolute; inset:14px; border:.5px solid rgba(200,168,75,.3); border-radius:var(--radius); pointer-events:none; }
+  .origen-badge { position:absolute; bottom:0; right:0; background:var(--gold); padding:1rem 1.75rem; font-family:'Playfair Display',serif; font-size:14px; font-weight:700; color:var(--text-dark); line-height:1.3; }
+  .origen-badge span { display:block; font-family:'Josefin Sans',sans-serif; font-size:9px; font-weight:300; letter-spacing:.2em; text-transform:uppercase; color:var(--cafe-med); margin-top:.2rem; }
+
+  /* ── PROCESS ── */
+  #proceso { padding:7rem 0; }
+  .process-steps { display:grid; grid-template-columns:repeat(5,1fr); gap:0; margin-top:3.5rem; position:relative; }
+  .process-steps::before { content:''; position:absolute; top:2.5rem; left:10%; right:10%; height:.5px; background:linear-gradient(90deg,transparent,rgba(200,168,75,.25),transparent); }
+  .step { padding:2rem 1rem; text-align:center; position:relative; }
+  .step-num { font-family:'Playfair Display',serif; font-size:44px; font-weight:900; color:rgba(200,168,75,.1); line-height:1; margin-bottom:.25rem; }
+  .step-dot { width:10px; height:10px; background:var(--gold); border-radius:50%; margin:0 auto .75rem; opacity:.7; }
+  .step-icon { font-size:1.75rem; margin-bottom:.75rem; }
+  .step-label { font-size:9px; letter-spacing:.25em; color:var(--gold); text-transform:uppercase; margin-bottom:.5rem; font-weight:400; }
+  .step-desc { font-size:12px; color:var(--text-muted); line-height:1.5; }
+
+  /* ── SENSORY ── */
+  .sensory-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:3rem; }
+  .sens-item { padding:2.5rem 1.5rem; text-align:center; border:.5px solid rgba(200,168,75,.1); background:var(--bg-card); transition:border-color .3s; }
+  .sens-item:hover { border-color:rgba(200,168,75,.4); }
+  .sens-icon { font-size:2rem; margin-bottom:1rem; }
+  .sens-label { font-size:9px; letter-spacing:.3em; color:var(--gold); text-transform:uppercase; margin-bottom:.5rem; }
+  .sens-value { font-family:'Playfair Display',serif; font-size:16px; color:var(--cream); }
+
+  /* ── TESTI ── */
+  #testimonios { padding:7rem 0; }
+  .testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:3.5rem; }
+  .testi-card { background:var(--bg-card); border:.5px solid rgba(200,168,75,.1); padding:2.5rem; position:relative; }
+  .testi-card::before { content:'\201C'; font-family:'Playfair Display',serif; font-size:90px; color:var(--gold); opacity:.15; position:absolute; top:-.5rem; right:1.5rem; line-height:1; }
+  .testi-stars { color:var(--gold); font-size:12px; letter-spacing:.15em; margin-bottom:1.2rem; }
+  .testi-text { font-family:'Cormorant Garamond',serif; font-size:17px; color:var(--cream-dark); line-height:1.7; margin-bottom:1.5rem; font-style:italic; }
+  .testi-name { font-size:10px; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; }
+  .testi-city { font-size:10px; color:var(--text-muted); }
+
+  /* ── SOCIAL ── */
+  #social { background:var(--bg-deep); padding:5rem 0; border-top:.5px solid rgba(200,168,75,.12); }
+  .social-header { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:2.5rem; }
+  .social-handle { font-family:'Playfair Display',serif; font-size:26px; color:var(--cream); }
+  .social-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:3px; }
+  .social-cell { aspect-ratio:1; background:#180A01; border:.5px solid rgba(200,168,75,.08); display:flex; align-items:center; justify-content:center; font-size:2rem; cursor:pointer; transition:all .35s; }
+  .social-cell:hover { background:#3D1A08; border-color:rgba(200,168,75,.35); }
+
+  /* ── SUSCRIPCION BANNER ── */
+  #suscripcion { background:var(--gold); padding:4.5rem 2rem; text-align:center; }
+  #suscripcion h2 { font-family:'Playfair Display',serif; font-size:clamp(26px,4vw,44px); color:var(--text-dark); margin-bottom:.75rem; }
+  #suscripcion p { font-size:13px; color:var(--cafe-med); letter-spacing:.08em; margin-bottom:2rem; font-weight:300; }
+  .btn-dark { background:var(--text-dark); color:var(--gold); border:none; padding:14px 40px; font-family:'Josefin Sans',sans-serif; font-size:11px; letter-spacing:.2em; text-transform:uppercase; font-weight:600; cursor:pointer; border-radius:var(--radius); transition:opacity .3s; }
+  .btn-dark:hover { opacity:.85; }
+
+  /* ── WHATSAPP BANNER ── */
+  .wa-cta-strip { background:#0A1F0F; padding:3rem 2rem; text-align:center; border-top:.5px solid rgba(37,211,102,.2); border-bottom:.5px solid rgba(37,211,102,.2); }
+  .wa-cta-strip h3 { font-family:'Playfair Display',serif; font-size:26px; color:#fff; margin-bottom:.75rem; }
+  .wa-cta-strip p { font-size:12px; color:rgba(255,255,255,.6); margin-bottom:1.5rem; letter-spacing:.08em; }
+  .btn-wa-lg { background:#25D366; color:#fff; border:none; padding:14px 40px; font-family:'Josefin Sans',sans-serif; font-size:11px; letter-spacing:.2em; text-transform:uppercase; font-weight:600; cursor:pointer; border-radius:var(--radius); transition:opacity .3s; text-decoration:none; display:inline-block; }
+  .btn-wa-lg:hover { opacity:.88; }
+
+  /* ── BLOG PREVIEW ── */
+  #blog { padding:7rem 0; }
+  .blog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:3.5rem; }
+  .blog-card { background:var(--bg-card); border:.5px solid rgba(200,168,75,.1); overflow:hidden; cursor:pointer; transition:background .35s; }
+  .blog-card:hover { background:#1C0C02; }
+  .blog-thumb { aspect-ratio:16/9; background:linear-gradient(135deg,#2A1005,#3D1A08); display:flex; align-items:center; justify-content:center; font-size:3rem; }
+  .blog-body { padding:1.75rem; }
+  .blog-cat { font-size:9px; letter-spacing:.3em; color:var(--gold); text-transform:uppercase; margin-bottom:.75rem; }
+  .blog-title { font-family:'Playfair Display',serif; font-size:18px; color:var(--cream); margin-bottom:.75rem; line-height:1.3; }
+  .blog-date { font-size:11px; color:var(--text-muted); }
+
+  /* ── TIENDA PAGE ── */
+  #page-tienda { display:none; }
+  .store-header { padding:5rem 0 2.5rem; border-bottom:.5px solid rgba(200,168,75,.12); }
+  .store-filters-bar { padding:1.5rem 0; display:flex; gap:.75rem; flex-wrap:wrap; border-bottom:.5px solid rgba(200,168,75,.08); }
+  .filter-pill { background:none; border:.5px solid rgba(200,168,75,.18); color:var(--text-muted); padding:6px 18px; font-family:'Josefin Sans',sans-serif; font-size:10px; letter-spacing:.2em; text-transform:uppercase; cursor:pointer; border-radius:20px; transition:all .3s; }
+  .filter-pill:hover,.filter-pill.on { border-color:var(--gold); color:var(--gold); background:rgba(200,168,75,.08); }
+  .store-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:2px; padding:2.5rem 0 7rem; }
+
+  /* ── PRODUCTO DETAIL PAGE ── */
+  #page-producto { display:none; }
+  .pd-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; padding:4rem 0 7rem; }
+  .pd-gallery { position:sticky; top:calc(var(--nav-h) + 2rem); }
+  .pd-main { aspect-ratio:1; background:linear-gradient(135deg,#2A1005,#4A2010,#1A0803); border-radius:var(--radius); display:flex; align-items:center; justify-content:center; font-size:8rem; margin-bottom:1rem; border:.5px solid rgba(200,168,75,.15); position:relative; overflow:hidden; }
+  .pd-main::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 35% 35%,rgba(200,168,75,.12) 0%,transparent 60%); }
+  .pd-thumbs { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+  .pd-thumb { aspect-ratio:1; background:var(--bg-card); border:.5px solid rgba(200,168,75,.15); border-radius:var(--radius); display:flex; align-items:center; justify-content:center; font-size:1.6rem; cursor:pointer; transition:border-color .3s; }
+  .pd-thumb.on { border-color:var(--gold); }
+  .breadcrumb { font-size:10px; color:var(--text-muted); letter-spacing:.1em; margin-bottom:1.5rem; }
+  .breadcrumb b { color:var(--gold); }
+  .pd-badge { display:inline-block; background:var(--gold); color:var(--text-dark); font-size:9px; letter-spacing:.2em; padding:4px 14px; text-transform:uppercase; margin-bottom:1rem; font-weight:600; }
+  .pd-name { font-family:'Playfair Display',serif; font-size:clamp(30px,4vw,46px); font-weight:700; color:var(--cream); line-height:1.1; margin-bottom:.75rem; }
+  .pd-origin { font-family:'Cormorant Garamond',serif; font-size:18px; color:var(--text-muted); font-style:italic; margin-bottom:2rem; }
+  .pd-price-row { display:flex; align-items:baseline; gap:1rem; margin-bottom:1.75rem; }
+  .pd-price { font-family:'Playfair Display',serif; font-size:40px; color:var(--gold); font-weight:400; }
+  .pd-price-note { font-size:12px; color:var(--text-muted); }
+  .weight-row { display:flex; gap:8px; margin-bottom:2rem; }
+  .w-btn { background:none; border:.5px solid rgba(200,168,75,.25); color:var(--text-muted); padding:9px 22px; font-family:'Josefin Sans',sans-serif; font-size:11px; letter-spacing:.1em; cursor:pointer; border-radius:var(--radius); transition:all .3s; }
+  .w-btn:hover,.w-btn.on { border-color:var(--gold); color:var(--gold); background:rgba(200,168,75,.08); }
+  .pd-section-h { font-size:10px; letter-spacing:.3em; color:var(--gold); text-transform:uppercase; margin-bottom:1rem; }
+  .notes-pills { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:2rem; }
+  .note-pill { background:rgba(200,168,75,.08); border:.5px solid rgba(200,168,75,.25); color:var(--cream-dark); font-size:12px; padding:6px 16px; border-radius:20px; }
+  .bar-row { display:flex; align-items:center; gap:1rem; margin-bottom:.75rem; }
+  .bar-lbl { font-size:11px; color:var(--text-muted); min-width:78px; letter-spacing:.1em; text-transform:uppercase; }
+  .bar-track { flex:1; height:3px; background:rgba(200,168,75,.1); border-radius:2px; overflow:hidden; }
+  .bar-fill { height:100%; background:linear-gradient(90deg,var(--cafe-light),var(--gold)); border-radius:2px; }
+  .bar-val { font-size:11px; color:var(--gold); min-width:24px; text-align:right; }
+  .pd-actions { display:flex; flex-direction:column; gap:10px; margin:2rem 0; }
+  .pd-tabs-nav { display:flex; border-bottom:.5px solid rgba(200,168,75,.12); margin-bottom:1.75rem; }
+  .tab-link { background:none; border:none; color:var(--text-muted); padding:11px 20px; font-size:10px; letter-spacing:.2em; text-transform:uppercase; cursor:pointer; font-family:'Josefin Sans',sans-serif; border-bottom:2px solid transparent; margin-bottom:-1px; transition:all .3s; }
+  .tab-link.on { color:var(--gold); border-bottom-color:var(--gold); }
+  .tab-content { display:none; }
+  .tab-content.on { display:block; }
+  .tech-table { width:100%; border-collapse:collapse; }
+  .tech-table tr { border-bottom:.5px solid rgba(200,168,75,.1); }
+  .tech-table td { padding:10px 0; font-size:13px; }
+  .tech-table td:first-child { color:var(--text-muted); font-size:10px; letter-spacing:.1em; text-transform:uppercase; width:42%; }
+
+  /* ── NOSOTROS ── */
+  #page-nosotros { display:none; }
+  .about-hero { background:linear-gradient(170deg,#0D0603 0%,#180A04 60%,#0D0603 100%); padding:7rem 0 5rem; }
+  .about-vals { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:4rem; }
+  .val-card { padding:2.5rem; background:var(--bg-card); border:.5px solid rgba(200,168,75,.1); }
+  .val-icon { font-size:2.2rem; margin-bottom:1rem; }
+  .val-name { font-family:'Playfair Display',serif; font-size:20px; color:var(--gold); margin-bottom:.75rem; }
+  .val-desc { font-size:13px; color:var(--text-muted); line-height:1.65; }
+
+  /* ── CONTACTO ── */
+  #page-contacto { display:none; }
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; padding:5rem 0 7rem; }
+  .contact-form-box { background:var(--bg-card); border:.5px solid rgba(200,168,75,.12); padding:3rem; }
+  .form-group { margin-bottom:1.5rem; }
+  .form-label { font-size:10px; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; display:block; margin-bottom:.6rem; }
+  .form-input { width:100%; background:#0A0401; border:.5px solid rgba(200,168,75,.2); color:var(--cream); padding:12px 16px; font-family:'Josefin Sans',sans-serif; font-size:13px; border-radius:var(--radius); outline:none; transition:border-color .3s; }
+  .form-input:focus { border-color:var(--gold); }
+  .form-input::placeholder { color:var(--text-faint); }
+  textarea.form-input { min-height:140px; resize:vertical; }
+  .contact-info-box { }
+  .contact-item { display:flex; gap:1rem; align-items:flex-start; padding:1.5rem 0; border-bottom:.5px solid rgba(200,168,75,.1); }
+  .contact-icon { font-size:1.5rem; margin-top:.1rem; }
+  .contact-label { font-size:10px; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; margin-bottom:.3rem; }
+  .contact-value { font-family:'Cormorant Garamond',serif; font-size:18px; color:var(--cream); }
+
+  /* ── FOOTER ── */
+  footer { background:var(--bg-deep); padding:5rem 0 2.5rem; border-top:.5px solid rgba(200,168,75,.12); }
+  .footer-grid { display:grid; grid-template-columns:2.2fr 1fr 1fr 1.2fr; gap:3.5rem; margin-bottom:3rem; }
+  .footer-brand h3 { font-family:'Playfair Display',serif; font-size:24px; color:var(--gold); margin-bottom:.75rem; }
+  .footer-brand p { font-size:12px; color:var(--text-muted); line-height:1.75; max-width:280px; }
+  .footer-social { display:flex; gap:1rem; margin-top:1.5rem; }
+  .footer-social a { font-size:1.3rem; text-decoration:none; transition:transform .3s; display:inline-block; }
+  .footer-social a:hover { transform:translateY(-2px); }
+  .footer-col h4 { font-size:10px; letter-spacing:.3em; color:var(--gold); text-transform:uppercase; margin-bottom:1.25rem; font-weight:400; }
+  .footer-col a { display:block; font-size:12px; color:var(--text-muted); text-decoration:none; margin-bottom:.6rem; transition:color .3s; cursor:pointer; }
+  .footer-col a:hover { color:var(--cream); }
+  .footer-newsletter input { width:100%; background:#0A0401; border:.5px solid rgba(200,168,75,.2); color:var(--cream); padding:11px 14px; font-family:'Josefin Sans',sans-serif; font-size:12px; border-radius:var(--radius); outline:none; transition:border-color .3s; margin-bottom:.75rem; }
+  .footer-newsletter input:focus { border-color:var(--gold); }
+  .footer-newsletter input::placeholder { color:var(--text-faint); font-size:11px; }
+  .footer-bottom { border-top:.5px solid rgba(200,168,75,.1); padding-top:2rem; display:flex; justify-content:space-between; align-items:center; }
+  .footer-bottom p { font-size:11px; color:var(--text-muted); }
+  .footer-certif { font-size:11px; color:var(--text-muted); display:flex; gap:1rem; align-items:center; }
+
+  /* ── WA FLOAT ── */
+  #wa-float {
+    position:fixed; bottom:2rem; right:2rem; z-index:800;
+    width:56px; height:56px; background:#25D366; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-size:1.5rem;
+    box-shadow:0 4px 24px rgba(37,211,102,.4); text-decoration:none;
+    animation:wa-pulse 3.5s infinite;
+  }
+  @keyframes wa-pulse { 0%,100%{box-shadow:0 4px 24px rgba(37,211,102,.4)} 50%{box-shadow:0 4px 40px rgba(37,211,102,.7)} }
+  #wa-float::after { content:''; position:absolute; width:68px; height:68px; border:1.5px solid rgba(37,211,102,.3); border-radius:50%; animation:wa-ring 3.5s infinite; }
+  @keyframes wa-ring { 0%{transform:scale(.9);opacity:0} 50%{opacity:1} 100%{transform:scale(1.3);opacity:0} }
+
+  /* ── PAGE SYSTEM ── */
+  .page-section { display:none; }
+  .page-section.active { display:block; }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:900px){
+    .nav-links { display:none; }
+    .stats-inner { grid-template-columns:repeat(2,1fr); }
+    .origen-grid,.pd-grid,.contact-grid { grid-template-columns:1fr; gap:2rem; }
+    .process-steps { grid-template-columns:repeat(3,1fr); }
+    .process-steps::before { display:none; }
+    .testi-grid,.blog-grid { grid-template-columns:1fr; }
+    .sensory-grid { grid-template-columns:repeat(2,1fr); }
+    .footer-grid { grid-template-columns:1fr 1fr; gap:2rem; }
+    .about-vals { grid-template-columns:repeat(2,1fr); }
+  }
+
+  @media(max-width:580px){
+    .hero-title { font-size:clamp(44px,14vw,72px); }
+    .stats-inner { grid-template-columns:repeat(2,1fr); }
+    .social-grid { grid-template-columns:repeat(3,1fr); }
+    .footer-grid { grid-template-columns:1fr; }
+    .sensory-grid { grid-template-columns:1fr 1fr; }
+    .about-vals { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ NAVBAR ═══════════ -->
+<nav id="nav">
+  <a href="#" class="nav-logo" onclick="showPage('home'); return false;">
+    Esencia & Taza
+    <small>El Arte del Origen · Colombia</small>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')" id="nl-home" class="active">Inicio</a></li>
+    <li><a href="#" onclick="showPage('tienda')">Tienda</a></li>
+    <li><a href="#" onclick="showPage('producto')">Producto</a></li>
+    <li><a href="#" onclick="showPage('nosotros')">Nosotros</a></li>
+    <li><a href="#" onclick="showPage('contacto')">Contacto</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://wa.me/573022573244?text=Hola%2C%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20los%20productos%20de%20Esencia%20y%20Taza%20Caf%C3%A9." target="_blank" class="btn-nav-wa">💬 WhatsApp</a>
+    <button class="btn-cart">🛍 Carrito (0)</button>
+  </div>
+</nav>
+
+<!-- ═══════════ HOME ═══════════ -->
+<div id="page-home" class="page-section active">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grain"></div>
+    <div class="hero-rings">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">☕ Café de Especialidad · Origen Colombiano</div>
+      <h1 class="hero-title">
+        ESENCIA<span class="hero-amp">&amp;</span>TAZA
+      </h1>
+      <p class="hero-sub">El Arte del Origen · Tradición que se Cultiva</p>
+      <div class="hero-ctas">
+        <a href="#" onclick="showPage('tienda'); return false;" class="btn-primary">Explorar Colección</a>
+        <a href="https://wa.me/573022573244?text=Hola%2C%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20los%20productos%20de%20Esencia%20y%20Taza%20Caf%C3%A9." target="_blank" class="btn-outline">💬 Pedir por WhatsApp</a>
+      </div>
+    </div>
+    <div class="hero-scroll" onclick="document.getElementById('stats').scrollIntoView({behavior:'smooth'})">
+      <span class="scroll-text">Descubrir</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div id="stats" class="stats-strip">
+    <div class="stats-inner container">
+      <div class="stat-item"><div class="stat-num">84+</div><div class="stat-label">Puntaje SCA</div></div>
+      <div class="stat-item"><div class="stat-num">12</div><div class="stat-label">Microlotes disponibles</div></div>
+      <div class="stat-item"><div class="stat-num">4</div><div class="stat-label">Regiones origen</div></div>
+      <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Trazabilidad total</div></div>
+    </div>
+  </div>
+
+  <!-- SENSORY STRIP -->
+  <div class="container">
+    <div class="sensory-grid" style="padding:3rem 0;">
+      <div class="sens-item"><div class="sens-icon">🌿</div><div class="sens-label">Origen</div><div class="sens-value">Eje Cafetero Colombiano</div></div>
+      <div class="sens-item"><div class="sens-icon">🏔</div><div class="sens-label">Altitud</div><div class="sens-value">1.600 – 2.100 msnm</div></div>
+      <div class="sens-item"><div class="sens-icon">✋</div><div class="sens-label">Cosecha</div><div class="sens-value">Manual Selectiva</div></div>
+      <div class="sens-item"><div class="sens-icon">🔥</div><div class="sens-label">Tostión</div><div class="sens-value">Artesanal Perfil Especialidad</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PRODUCTOS DESTACADOS -->
+  <section id="productos">
+    <div class="container">
+      <p class="eyebrow">— Selección Premium</p>
+      <h2 class="section-title">Nuestra <em>Colección</em></h2>
+      <p class="body-editorial" style="max-width:520px">Cada taza cuenta la historia de manos que cultivan con amor. Microlotes trazables de las montañas colombianas.</p>
+      <div class="products-grid">
+        <div class="product-card" onclick="showPage('producto')">
+          <div class="prod-visual">☕</div>
+          <span class="prod-tag">Destacado</span>
+          <div class="prod-origin">Huila · Washed · SCA 86</div>
+          <div class="prod-name">Sierra Negra Especial</div>
+          <div class="prod-notes">Caramelo · Manzana verde · Bergamota</div>
+          <div class="prod-footer"><div class="prod-price">$38.000<small>/ 250g</small></div><button class="btn-add">+ Añadir</button></div>
+        </div>
+        <div class="product-card" onclick="showPage('producto')">
+          <div class="prod-visual">🫘</div>
+          <span class="prod-tag">Natural</span>
+          <div class="prod-origin">Nariño · Natural · SCA 85</div>
+          <div class="prod-name">Cóndor Natural</div>
+          <div class="prod-notes">Frutos rojos · Cacao · Panela</div>
+          <div class="prod-footer"><div class="prod-price">$42.000<small>/ 250g</small></div><button class="btn-add">+ Añadir</button></div>
+        </div>
+        <div class="product-card" onclick="showPage('producto')">
+          <div class="prod-visual">🌱</div>
+          <span class="prod-tag">Honey</span>
+          <div class="prod-origin">Cauca · Honey · SCA 85.5</div>
+          <div class="prod-name">Miel del Macizo</div>
+          <div class="prod-notes">Melocotón · Miel · Flores blancas</div>
+          <div class="prod-footer"><div class="prod-price">$45.000<small>/ 250g</small></div><button class="btn-add">+ Añadir</button></div>
+        </div>
+        <div class="product-card" onclick="showPage('tienda')">
+          <div class="prod-visual">🏔</div>
+          <span class="prod-tag">Microlote</span>
+          <div class="prod-origin">Tolima · Washed · SCA 87</div>
+          <div class="prod-name">Nevado Reserve</div>
+          <div class="prod-notes">Mandarina · Maracuyá · Chocolate blanco</div>
+          <div class="prod-footer"><div class="prod-price">$55.000<small>/ 250g</small></div><button class="btn-add">+ Añadir</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORIGEN -->
+  <section id="origen">
+    <div class="container">
+      <div class="origen-grid">
+        <div class="origen-visual">
+          ☕
+          <div class="origen-frame"></div>
+          <div class="origen-badge">Desde Colombia 🇨🇴<span>Eje Cafetero · Huila · Nariño · Cauca</span></div>
+        </div>
+        <div>
+          <p class="eyebrow">— Nuestra Historia</p>
+          <h2 class="section-title">El Arte del <em>Origen</em></h2>
+          <p class="body-editorial" style="margin-bottom:1.5rem">Nacimos del amor por la tierra colombiana y la convicción de que cada taza merece contar su historia. Trabajamos directamente con familias caficultoras del Eje Cafetero, Huila, Nariño y Cauca.</p>
+          <p class="body-editorial" style="margin-bottom:2.5rem">Trazabilidad total desde la finca. Comercio justo certificado. Un perfil de sabor que honra el esfuerzo de cada cosecha.</p>
+          <a href="#" onclick="showPage('nosotros'); return false;" class="btn-outline">Conocer la Historia →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESO -->
+  <section id="proceso" style="padding:7rem 0">
+    <div class="container">
+      <p class="eyebrow">— Del Campo a tu Taza</p>
+      <h2 class="section-title">El <em>Proceso</em></h2>
+      <div class="process-steps">
+        <div class="step"><div class="step-num">01</div><div class="step-dot"></div><div class="step-icon">🌿</div><div class="step-label">Cultivo</div><div class="step-desc">Variedad seleccionada a más de 1.800 msnm en suelos volcánicos</div></div>
+        <div class="step"><div class="step-num">02</div><div class="step-dot"></div><div class="step-icon">🤲</div><div class="step-label">Cosecha</div><div class="step-desc">Recolección manual, solo cerezas maduras en su punto óptimo</div></div>
+        <div class="step"><div class="step-num">03</div><div class="step-dot"></div><div class="step-icon">💧</div><div class="step-label">Proceso</div><div class="step-desc">Lavado, natural o honey según el lote y la variedad</div></div>
+        <div class="step"><div class="step-num">04</div><div class="step-dot"></div><div class="step-icon">🔥</div><div class="step-label">Tostión</div><div class="step-desc">Artesanal en tambor 5kg, perfil especialidad claro-medio</div></div>
+        <div class="step"><div class="step-num">05</div><div class="step-dot"></div><div class="step-icon">📦</div><div class="step-label">Envío</div><div class="step-desc">Empaque sellado hermético, despachado máx. 48h post-tostión</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- TESTIMONIOS -->
+  <section id="testimonios">
+    <div class="container">
+      <p class="eyebrow">— Clientes</p>
+      <h2 class="section-title">Lo que dicen <em>ellos</em></h2>
+      <div class="testi-grid">
+        <div class="testi-card"><div class="testi-stars">★ ★ ★ ★ ★</div><p class="testi-text">"El mejor café de especialidad que he probado en Colombia. El Sierra Negra tiene notas increíbles de caramelo y manzana. No volvería a otro."</p><div class="testi-name">María P.</div><div class="testi-city">Bogotá</div></div>
+        <div class="testi-card"><div class="testi-stars">★ ★ ★ ★ ★</div><p class="testi-text">"Pedí la suscripción mensual y fue la mejor decisión. El café llega fresco, bien empacado y cada mes hay un microlote diferente y sorprendente."</p><div class="testi-name">Carlos R.</div><div class="testi-city">Medellín</div></div>
+        <div class="testi-card"><div class="testi-stars">★ ★ ★ ★ ★</div><p class="testi-text">"Compré el kit empresarial para mi equipo y fue un éxito total. La presentación es impecable, el café extraordinario. Volveré a pedir sin duda."</p><div class="testi-name">Ana L.</div><div class="testi-city">Cali</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG PREVIEW -->
+  <section id="blog" style="padding:7rem 0">
+    <div class="container">
+      <p class="eyebrow">— Cultura Cafetera</p>
+      <h2 class="section-title">Nuestro <em>Blog</em></h2>
+      <div class="blog-grid">
+        <div class="blog-card"><div class="blog-thumb">☕</div><div class="blog-body"><div class="blog-cat">Preparación</div><div class="blog-title">Cómo preparar un V60 perfecto con café de Huila</div><div class="blog-date">15 de enero, 2025</div></div></div>
+        <div class="blog-card"><div class="blog-thumb">🌿</div><div class="blog-body"><div class="blog-cat">Origen</div><div class="blog-title">La diferencia entre proceso lavado, natural y honey</div><div class="blog-date">8 de enero, 2025</div></div></div>
+        <div class="blog-card"><div class="blog-thumb">🏔</div><div class="blog-body"><div class="blog-cat">Cultura</div><div class="blog-title">Por qué Colombia produce el mejor café del mundo</div><div class="blog-date">1 de enero, 2025</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL FEED -->
+  <section id="social">
+    <div class="container">
+      <div class="social-header">
+        <div>
+          <p class="eyebrow">— Síguenos</p>
+          <div class="social-handle">@esenciaytazacafe</div>
+        </div>
+        <a href="https://instagram.com/esenciaytazacafe" target="_blank" class="btn-outline" style="font-size:10px">Ver Instagram →</a>
+      </div>
+      <div class="social-grid">
+        <div class="social-cell">☕</div><div class="social-cell">🌿</div><div class="social-cell">🫘</div>
+        <div class="social-cell">🏔</div><div class="social-cell">🤲</div><div class="social-cell">✨</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUSCRIPCION -->
+  <section id="suscripcion">
+    <h2>Suscripción Mensual Premium</h2>
+    <p>Recibe café fresco de especialidad en tu puerta · Personaliza tu perfil de sabor · Cancela cuando quieras</p>
+    <button class="btn-dark">Comenzar Suscripción →</button>
+  </section>
+
+  <!-- WA CTA -->
+  <div class="wa-cta-strip">
+    <h3>¿Preguntas? Escríbenos</h3>
+    <p>Atención personalizada · Asesoría de método · Cotizaciones empresariales</p>
+    <a href="https://wa.me/573022573244?text=Hola%2C%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20los%20productos%20de%20Esencia%20y%20Taza%20Caf%C3%A9." target="_blank" class="btn-wa-lg">💬 Chatear en WhatsApp</a>
+  </div>
+
+</div><!-- /#page-home -->
+
+<!-- ═══════════ TIENDA ═══════════ -->
+<div id="page-tienda" class="page-section">
+  <div class="container">
+    <div class="store-header">
+      <p class="eyebrow">— Catálogo Completo</p>
+      <h1 class="section-title" style="font-size:clamp(28px,4vw,44px);margin-bottom:.5rem">Nuestra <em>Tienda</em></h1>
+      <p style="font-size:12px;color:var(--text-muted)">12 productos · Envío a todo Colombia</p>
+    </div>
+    <div class="store-filters-bar">
+      <button class="filter-pill on" onclick="setFilter(this)">Todos</button>
+      <button class="filter-pill" onclick="setFilter(this)">Washed</button>
+      <button class="filter-pill" onclick="setFilter(this)">Natural</button>
+      <button class="filter-pill" onclick="setFilter(this)">Honey</button>
+      <button class="filter-pill" onclick="setFilter(this)">Microlote</button>
+      <button class="filter-pill" onclick="setFilter(this)">Suscripción</button>
+      <button class="filter-pill" onclick="setFilter(this)">Regalos</button>
+    </div>
+    <div class="store-grid">
+      <div class="product-card" onclick="showPage('producto')"><div class="prod-visual">☕</div><span class="prod-tag">Destacado</span><div class="prod-origin">Huila · Washed · SCA 86</div><div class="prod-name">Sierra Negra Especial</div><div class="prod-notes">Caramelo · Manzana · Bergamota</div><div class="prod-footer"><div class="prod-price">$38.000<small>/250g</small></div><button class="btn-add">+ Añadir</button></div></div>
+      <div class="product-card" onclick="showPage('producto')"><div class="prod-visual">🫘</div><span class="prod-tag">Natural</span><div class="prod-origin">Nariño · Natural · SCA 85</div><div class="prod-name">Cóndor Natural</div><div class="prod-notes">Frutos rojos · Cacao · Panela</div><div class="prod-footer"><div class="prod-price">$42.000<small>/250g</small></div><button class="btn-add">+ Añadir</button></div></div>
+      <div class="product-card" onclick="showPage('producto')"><div class="prod-visual">🌱</div><span class="prod-tag">Honey</span><div class="prod-origin">Cauca · Honey · SCA 85.5</div><div class="prod-name">Miel del Macizo</div><div class="prod-notes">Melocotón · Miel · Flores blancas</div><div class="prod-footer"><div class="prod-price">$45.000<small>/250g</small></div><button class="btn-add">+ Añadir</button></div></div>
+      <div class="product-card" onclick="showPage('producto')"><div class="prod-visual">🏔</div><span class="prod-tag">Microlote</span><div class="prod-origin">Tolima · Washed · SCA 87</div><div class="prod-name">Nevado Reserve</div><div class="prod-notes">Mandarina · Maracuyá · Choc. blanco</div><div class="prod-footer"><div class="prod-price">$55.000<small>/250g</small></div><button class="btn-add">+ Añadir</button></div></div>
+      <div class="product-card"><div class="prod-visual">🌺</div><span class="prod-tag">Honey</span><div class="prod-origin">Antioquia · Yellow Honey · SCA 84.5</div><div class="prod-name">Oro del Suroeste</div><div class="prod-notes">Durazno · Vainilla · Almendra</div><div class="prod-footer"><div class="prod-price">$40.000<small>/250g</small></div><button class="btn-add">+ Añadir</button></div></div>
+      <div class="product-card"><div class="prod-visual">📦</div><span class="prod-tag">Suscripción</span><div class="prod-origin">Rotación mensual · Origen variable</div><div class="prod-name">Club Mensual Premium</div><div class="prod-notes">Un microlote diferente cada mes</div><div class="prod-footer"><div class="prod-price">$35.000<small>/mes</small></div><button class="btn-add">Suscribirse</button></div></div>
+      <div class="product-card"><div class="prod-visual">🎁</div><span class="prod-tag">Regalo</span><div class="prod-origin">3 cafés seleccionados · Caja premium</div><div class="prod-name">Kit Regalo Empresarial</div><div class="prod-notes">Presentación impecable para corporativos</div><div class="prod-footer"><div class="prod-price">$95.000<small>/kit</small></div><button class="btn-add">+ Añadir</button></div></div>
+      <div class="product-card"><div class="prod-visual">🫗</div><span class="prod-tag">Accesorio</span><div class="prod-origin">Filtro de papel · V60 compatible</div><div class="prod-name">Filtros Premium 100u</div><div class="prod-notes">Compatible V60, Chemex, Kalita</div><div class="prod-footer"><div class="prod-price">$18.000<small>/pack</small></div><button class="btn-add">+ Añadir</button></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PRODUCTO ═══════════ -->
+<div id="page-producto" class="page-section">
+  <div class="container">
+    <div class="pd-grid">
+      <div class="pd-gallery">
+        <div class="pd-main">☕</div>
+        <div class="pd-thumbs">
+          <div class="pd-thumb on">☕</div>
+          <div class="pd-thumb">🌿</div>
+          <div class="pd-thumb">🫘</div>
+          <div class="pd-thumb">🏔</div>
+        </div>
+      </div>
+      <div class="pd-info">
+        <div class="breadcrumb">Inicio / Tienda / <b>Sierra Negra Especial</b></div>
+        <span class="pd-badge">Café de Especialidad</span>
+        <h1 class="pd-name">Sierra Negra<br>Especial</h1>
+        <p class="pd-origin">Huila, Colombia · Proceso Washed · SCA 86 puntos</p>
+        <div class="pd-price-row">
+          <span class="pd-price" id="pd-price-val">$38.000</span>
+          <span class="pd-price-note">COP · incluye envío nacional</span>
+        </div>
+        <div class="weight-row">
+          <button class="w-btn on" onclick="setWeight(this,'$38.000')">250g</button>
+          <button class="w-btn" onclick="setWeight(this,'$70.000')">500g</button>
+          <button class="w-btn" onclick="setWeight(this,'$130.000')">1 kg</button>
+        </div>
+        <div class="pd-section-h">Notas de Cata</div>
+        <div class="notes-pills">
+          <span class="note-pill">🍮 Caramelo</span>
+          <span class="note-pill">🍏 Manzana verde</span>
+          <span class="note-pill">🍋 Bergamota</span>
+          <span class="note-pill">🌸 Floral</span>
+        </div>
+        <div class="pd-section-h">Perfil Sensorial</div>
+        <div style="margin-bottom:2rem">
+          <div class="bar-row"><span class="bar-lbl">Acidez</span><div class="bar-track"><div class="bar-fill" style="width:75%"></div></div><span class="bar-val">7.5</span></div>
+          <div class="bar-row"><span class="bar-lbl">Dulzor</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><span class="bar-val">8.0</span></div>
+          <div class="bar-row"><span class="bar-lbl">Cuerpo</span><div class="bar-track"><div class="bar-fill" style="width:65%"></div></div><span class="bar-val">6.5</span></div>
+          <div class="bar-row"><span class="bar-lbl">Finish</span><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div><span class="bar-val">8.5</span></div>
+        </div>
+        <div class="pd-actions">
+          <button class="btn-primary" style="padding:16px;font-size:12px;text-align:center">Comprar Ahora</button>
+          <a href="https://wa.me/573022573244?text=Hola%2C%20quiero%20pedir%20el%20Sierra%20Negra%20Especial%20250g%20de%20Esencia%20y%20Taza." target="_blank" class="btn-outline" style="padding:14px;text-align:center;font-size:11px">💬 Pedir por WhatsApp</a>
+        </div>
+        <div class="pd-tabs-nav">
+          <button class="tab-link on" onclick="setTab(this,'t-origen')">Origen</button>
+          <button class="tab-link" onclick="setTab(this,'t-proceso')">Proceso</button>
+          <button class="tab-link" onclick="setTab(this,'t-tecnica')">Ficha Técnica</button>
+          <button class="tab-link" onclick="setTab(this,'t-metodos')">Métodos</button>
+        </div>
+        <div id="t-origen" class="tab-content on"><p style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--cream-dark);line-height:1.75">Cultivado en las montañas del Huila a 1.850 msnm por la familia Martínez en la vereda El Paraíso, municipio de San Agustín. El microclima único de la región, combinado con suelos volcánicos ricos en minerales, da como resultado un café con acidez brillante y perfil floral excepcional. Variedades Caturra y Colombia.</p></div>
+        <div id="t-proceso" class="tab-content"><p style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--cream-dark);line-height:1.75">Proceso 100% lavado. Despulpado el mismo día de cosecha. Fermentación controlada en tanque cerrado por 36 horas. Lavado en tres aguas. Secado en camas africanas elevadas por 21 días bajo invernadero plástico. Tostión artesanal en tambor 5 kg, perfil claro–medio para filtro y espresso.</p></div>
+        <div id="t-tecnica" class="tab-content">
+          <table class="tech-table">
+            <tr><td>Variedad</td><td>Caturra / Colombia</td></tr>
+            <tr><td>Altitud</td><td>1.850 msnm</td></tr>
+            <tr><td>Proceso</td><td>Washed (Lavado)</td></tr>
+            <tr><td>Fermentación</td><td>36 horas en tanque cerrado</td></tr>
+            <tr><td>Secado</td><td>21 días camas africanas</td></tr>
+            <tr><td>Tostión</td><td>Clara–Media</td></tr>
+            <tr><td>Puntaje SCA</td><td>86 puntos</td></tr>
+            <tr><td>Cosecha</td><td>Noviembre 2024</td></tr>
+            <tr><td>Productor</td><td>Familia Martínez · San Agustín, Huila</td></tr>
+            <tr><td>Envío</td><td>2–5 días hábiles</td></tr>
+          </table>
+        </div>
+        <div id="t-metodos" class="tab-content"><p style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--cream-dark);line-height:1.75">Recomendado para V60 (receta 1:15, agua 92°C), Chemex (1:16), Aeropress (1:12 inmersión 2min) y Espresso (1:2, 28–30 seg). La acidez brillante del perfil washed brilla especialmente en métodos de filtro. Para espresso, se sugiere agregar un 5–10% de blend con natural para mayor cuerpo.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ NOSOTROS ═══════════ -->
+<div id="page-nosotros" class="page-section">
+  <div class="about-hero">
+    <div class="container">
+      <p class="eyebrow">— Nuestra Historia</p>
+      <h1 class="section-title" style="max-width:620px">El Arte del <em>Origen</em>,<br>Tradición que se Cultiva</h1>
+      <p class="body-editorial" style="max-width:560px;margin-bottom:2.5rem">Nacimos del amor por la tierra colombiana y la convicción de que cada taza merece contar su historia. Esencia y Taza Café es una marca de café de especialidad que trabaja directamente con familias caficultoras de las mejores regiones de Colombia.</p>
+      <p class="body-editorial" style="max-width:560px">Creemos en la trazabilidad total, el comercio justo y una experiencia sensorial que honra el esfuerzo de quienes cultivan. Nuestro compromiso va más allá del café: es un vínculo entre el campo colombiano y la taza de quienes aprecian la calidad.</p>
+    </div>
+  </div>
+  <div style="padding:5rem 0;background:var(--bg-deep)">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;margin-bottom:4rem;text-align:center">
+        <div style="padding:2.5rem;border:.5px solid rgba(200,168,75,.15)"><div style="font-family:'Playfair Display',serif;font-size:13px;letter-spacing:.25em;color:var(--gold);margin-bottom:1rem;text-transform:uppercase">Misión</div><p class="body-editorial" style="font-size:15px">Conectar las montañas colombianas con el mundo a través de café de especialidad de alta calidad, respetando el origen y a quienes lo cultivan.</p></div>
+        <div style="padding:2.5rem;border:.5px solid rgba(200,168,75,.15)"><div style="font-family:'Playfair Display',serif;font-size:13px;letter-spacing:.25em;color:var(--gold);margin-bottom:1rem;text-transform:uppercase">Visión</div><p class="body-editorial" style="font-size:15px">Ser la marca de café de especialidad colombiano más reconocida por su autenticidad, trazabilidad y experiencia sensorial excepcional.</p></div>
+        <div style="padding:2.5rem;border:.5px solid rgba(200,168,75,.15)"><div style="font-family:'Playfair Display',serif;font-size:13px;letter-spacing:.25em;color:var(--gold);margin-bottom:1rem;text-transform:uppercase">Propósito</div><p class="body-editorial" style="font-size:15px">Cada taza que sirves es la historia de una familia, de una montaña, de un proceso hecho con amor. Ese es el propósito de Esencia y Taza.</p></div>
+      </div>
+      <p class="eyebrow">— Nuestros Valores</p>
+      <div class="about-vals">
+        <div class="val-card"><div class="val-icon">🌿</div><div class="val-name">Artesanía</div><p class="val-desc">Cada lote procesado a mano, cada tostión supervisada, cada empaque sellado con cuidado genuino.</p></div>
+        <div class="val-card"><div class="val-icon">🔍</div><div class="val-name">Trazabilidad</div><p class="val-desc">Sabemos el nombre del productor, la finca, la altitud y la fecha de cosecha de cada café que ofrecemos.</p></div>
+        <div class="val-card"><div class="val-icon">🤝</div><div class="val-name">Comercio Justo</div><p class="val-desc">Pagamos precios premium directamente al productor, fortaleciendo comunidades caficultoras.</p></div>
+        <div class="val-card"><div class="val-icon">🏔</div><div class="val-name">Origen</div><p class="val-desc">Orgullosamente colombianos. La biodiversidad de nuestras montañas es nuestro mayor activo.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ CONTACTO ═══════════ -->
+<div id="page-contacto" class="page-section">
+  <div class="container">
+    <div style="padding:4rem 0 2rem">
+      <p class="eyebrow">— Contáctanos</p>
+      <h1 class="section-title" style="font-size:clamp(28px,4vw,44px)">Hablemos de <em>Café</em></h1>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-form-box">
+        <p style="font-size:10px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:2rem">— Envíanos un Mensaje</p>
+        <div class="form-group"><label class="form-label">Nombre completo</label><input type="text" class="form-input" placeholder="Tu nombre"></div>
+        <div class="form-group"><label class="form-label">Correo electrónico</label><input type="email" class="form-input" placeholder="tu@email.com"></div>
+        <div class="form-group"><label class="form-label">Asunto</label><input type="text" class="form-input" placeholder="¿En qué te podemos ayudar?"></div>
+        <div class="form-group"><label class="form-label">Mensaje</label><textarea class="form-input" placeholder="Cuéntanos sobre tu consulta, pedido o cotización..."></textarea></div>
+        <button class="btn-primary" style="width:100%">Enviar Mensaje</button>
+      </div>
+      <div class="contact-info-box" style="padding-top:1rem">
+        <div class="contact-item"><div class="contact-icon">💬</div><div><div class="contact-label">WhatsApp Business</div><div class="contact-value">+57 302 257 3244</div></div></div>
+        <div class="contact-item"><div class="contact-icon">📷</div><div><div class="contact-label">Instagram</div><div class="contact-value">@esenciaytazacafe</div></div></div>
+        <div class="contact-item"><div class="contact-icon">🎵</div><div><div class="contact-label">TikTok</div><div class="contact-value">@esenciaytazacafe</div></div></div>
+        <div class="contact-item"><div class="contact-icon">🕐</div><div><div class="contact-label">Atención al cliente</div><div class="contact-value">Lunes – Sábado · 8am – 6pm</div></div></div>
+        <div style="margin-top:2.5rem">
+          <a href="https://wa.me/573022573244?text=Hola%2C%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20los%20productos%20de%20Esencia%20y%20Taza%20Caf%C3%A9." target="_blank" class="btn-wa-lg" style="display:inline-block">💬 Chatear Ahora en WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ FOOTER (global) ═══════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>Esencia & Taza Café</h3>
+        <p>Café de especialidad colombiano. El arte del origen, tradición que se cultiva. Directo del campo a tu taza con trazabilidad total.</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/esenciaytazacafe" target="_blank">📷</a>
+          <a href="https://tiktok.com/@esenciaytazacafe" target="_blank">🎵</a>
+          <a href="https://wa.me/573022573244" target="_blank">💬</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Tienda</h4>
+        <a onclick="showPage('tienda')">Todos los cafés</a>
+        <a>Suscripciones</a>
+        <a>Regalos Empresariales</a>
+        <a>Accesorios</a>
+        <a>Novedades</a>
+      </div>
+      <div class="footer-col">
+        <h4>Nosotros</h4>
+        <a onclick="showPage('nosotros')">Historia</a>
+        <a>Origen y Fincas</a>
+        <a>Sostenibilidad</a>
+        <a>Blog</a>
+        <a onclick="showPage('contacto')">Contacto</a>
+      </div>
+      <div class="footer-col footer-newsletter">
+        <h4>Newsletter</h4>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:1rem;line-height:1.6">Recibe recetas, noticias de origen y ofertas exclusivas.</p>
+        <input type="email" placeholder="tu@email.com">
+        <button class="btn-primary" style="width:100%;padding:10px;font-size:10px">Suscribirse</button>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Esencia y Taza Café · Todos los derechos reservados · Colombia 🇨🇴</p>
+      <div class="footer-certif">
+        <span>☕ Café de Especialidad SCA</span>
+        <span>·</span>
+        <span>🌿 Comercio Justo</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WA FLOAT -->
+<a id="wa-float" href="https://wa.me/573022573244?text=Hola%2C%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20los%20productos%20de%20Esencia%20y%20Taza%20Caf%C3%A9." target="_blank">💬</a>
+
+<script>
+  const pages = ['home','tienda','producto','nosotros','contacto'];
+  function showPage(id) {
+    pages.forEach(p => {
+      const el = document.getElementById('page-' + p);
+      if(el) el.classList.toggle('active', p === id);
+    });
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    const nl = document.getElementById('nl-' + id);
+    if(nl) nl.classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+    return false;
+  }
+
+  function setFilter(btn) {
+    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+  }
+
+  function setWeight(btn, price) {
+    document.querySelectorAll('.w-btn').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    document.getElementById('pd-price-val').textContent = price;
+  }
+
+  function setTab(btn, tabId) {
+    const parent = btn.closest('.pd-info');
+    parent.querySelectorAll('.tab-link').forEach(b => b.classList.remove('on'));
+    parent.querySelectorAll('.tab-content').forEach(t => t.classList.remove('on'));
+    btn.classList.add('on');
+    document.getElementById(tabId).classList.add('on');
+  }
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').style.background =
+      window.scrollY > 40 ? 'rgba(13,6,3,.97)' : 'rgba(13,6,3,.93)';
+  });
+
+  // Thumb selector
+  document.querySelectorAll('.pd-thumb').forEach(t => {
+    t.onclick = () => {
+      document.querySelectorAll('.pd-thumb').forEach(x => x.classList.remove('on'));
+      t.classList.add('on');
+    };
+  });
+</script>
+</body>
+</html>
