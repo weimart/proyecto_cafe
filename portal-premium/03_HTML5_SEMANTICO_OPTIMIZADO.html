@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <!-- =========================================================================
+       META TAGS & CHARSET
+       ========================================================================= -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- =========================================================================
+       SEO & SOCIAL MEDIA
+       ========================================================================= -->
+  <title>Esencia y Taza - Café Artesanal de Origen | Santa Rosa de Osos</title>
+  <meta name="description" content="Café de origen cultivado en Santa Rosa de Osos, Antioquia. Artesan ía, tradición y especialidad en cada taza. Descubre el arte del café de montaña.">
+  <meta name="keywords" content="café artesanal, café de origen, café orgánico, Santa Rosa de Osos, Antioquia, café especialidad">
+  <meta name="author" content="Esencia y Taza">
+  <meta name="theme-color" content="#3D2817">
+  <meta name="color-scheme" content="light dark">
+  
+  <!-- CANONICAL URL (Prevenir contenido duplicado) -->
+  <link rel="canonical" href="https://esenciaytaza.com/">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://esenciaytaza.com/">
+  <meta property="og:title" content="Esencia y Taza - Café Artesanal de Origen">
+  <meta property="og:description" content="Café de origen cultivado en Santa Rosa de Osos, Antioquia. Tradición que se cultiva en cada grano.">
+  <meta property="og:image" content="https://esenciaytaza.com/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:site_name" content="Esencia y Taza">
+  <meta property="og:locale" content="es_CO">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://esenciaytaza.com/">
+  <meta name="twitter:title" content="Esencia y Taza - Café Artesanal de Origen">
+  <meta name="twitter:description" content="Café de origen cultivado en Santa Rosa de Osos, Antioquia.">
+  <meta name="twitter:image" content="https://esenciaytaza.com/assets/og-image.jpg">
+  <meta name="twitter:creator" content="@esenciaytaza">
+  
+  <!-- ROBOTS & CRAWLING -->
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow">
+  <link rel="robots.txt" href="/robots.txt">
+  
+  <!-- =========================================================================
+       PRECONNECT & PERFORMANCE
+       ========================================================================= -->
+  <!-- Preconnect a Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Preconnect a CDN (si se usa) -->
+  <link rel="preconnect" href="https://cdn.example.com" crossorigin>
+  
+  <!-- DNS-Prefetch para terceros -->
+  <link rel="dns-prefetch" href="https://analytics.google.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  
+  <!-- =========================================================================
+       FONTS (Google Fonts - Optimized)
+       ========================================================================= -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Sans+Pro:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Sans+Pro:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- FALLBACK FONTS (System fonts mientras cargan Google Fonts) -->
+  <style>
+    @font-face {
+      font-family: 'Playfair Display Fallback';
+      src: local('Georgia'), local('Garamond'), local('Times New Roman'), serif;
+      font-style: normal;
+      font-weight: 400 800;
+      font-display: swap;
+    }
+  </style>
+  
+  <!-- =========================================================================
+       STYLESHEETS
+       ========================================================================= -->
+  <!-- Critical CSS (Inline) -->
+  <style>
+    /* Minimal critical CSS para above-the-fold */
+    :root {
+      --color-primary-dark: #3D2817;
+      --color-secondary-cream: #FFFAF0;
+      --color-accent-gold: #D4AF37;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --text-primary: var(--color-primary-dark);
+      --text-base: 1rem;
+      --spacing-4: 1rem;
+    }
+    
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+      background-color: var(--color-secondary-cream);
+    }
+    
+    h1 { font-family: var(--font-serif); font-size: clamp(2.25rem, 5vw, 3.75rem); }
+    
+    .skip-to-main {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--color-primary-dark);
+      color: white;
+      padding: 8px;
+      text-decoration: none;
+      z-index: 100;
+    }
+    
+    .skip-to-main:focus { top: 0; }
+  </style>
+  
+  <!-- Main CSS (Deferred) -->
+  <link rel="stylesheet" href="/assets/css/main.css" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="/assets/css/main.css">
+  </noscript>
+  
+  <!-- =========================================================================
+       ICONS & MANIFEST
+       ========================================================================= -->
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/assets/favicon-16x16.png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  
+  <!-- =========================================================================
+       SCHEMA.ORG (STRUCTURED DATA)
+       ========================================================================= -->
+  
+  <!-- Organization Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://esenciaytaza.com/#organization",
+    "name": "Esencia y Taza",
+    "description": "Café de origen artesanal cultivado en Santa Rosa de Osos, Antioquia",
+    "image": "https://esenciaytaza.com/assets/logo.svg",
+    "url": "https://esenciaytaza.com",
+    "telephone": "+57-4-XXXXXXXX",
+    "email": "hola@esenciaytaza.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Calle Principal 123",
+      "addressLocality": "Santa Rosa de Osos",
+      "addressRegion": "Antioquia",
+      "postalCode": "050010",
+      "addressCountry": "CO"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "6.3667",
+      "longitude": "-75.5333"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "07:00",
+      "closes": "18:00"
+    },
+    "sameAs": [
+      "https://www.facebook.com/esenciaytaza",
+      "https://www.instagram.com/esenciaytaza",
+      "https://www.twitter.com/esenciaytaza"
+    ],
+    "priceRange": "$$$",
+    "areaServed": {
+      "@type": "City",
+      "name": "Santa Rosa de Osos"
+    }
+  }
+  </script>
+  
+  <!-- Product Schema (Ejemplo para un café) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": "https://esenciaytaza.com/cafes#cafe-santa-rosa",
+    "name": "Café Origen Santa Rosa de Osos",
+    "image": [
+      "https://esenciaytaza.com/assets/products/cafe-santa-rosa-1.jpg",
+      "https://esenciaytaza.com/assets/products/cafe-santa-rosa-2.jpg"
+    ],
+    "description": "Café de origen cultivado a 1800-2000 msnm en Santa Rosa de Osos, Antioquia. Notas de chocolate, caramelo y nueces.",
+    "brand": {
+      "@type": "Brand",
+      "name": "Esencia y Taza"
+    },
+    "offers": {
+      "@type": "Offer",
+      "@id": "https://esenciaytaza.com/cafes#cafe-santa-rosa-offer",
+      "url": "https://esenciaytaza.com/cafes/origenes/santa-rosa-osos",
+      "priceCurrency": "COP",
+      "price": "45000",
+      "availability": "https://schema.org/InStock",
+      "seller": {
+        "@type": "Organization",
+        "@id": "https://esenciaytaza.com/#organization",
+        "name": "Esencia y Taza"
+      }
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "127",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Juan Pérez"
+        },
+        "datePublished": "2024-01-15",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5"
+        },
+        "reviewBody": "Excelente café, muy recomendado."
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Inicio",
+        "item": "https://esenciaytaza.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Cafés",
+        "item": "https://esenciaytaza.com/cafes"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Origen Santa Rosa",
+        "item": "https://esenciaytaza.com/cafes/origenes/santa-rosa-osos"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- =========================================================================
+       ANALYTICS & TRACKING (Deferred)
+       ========================================================================= -->
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX', {
+      'anonymize_ip': true,
+      'cookie_flags': 'SameSite=None;Secure'
+    });
+  </script>
+  
+  <!-- Verification Tags -->
+  <meta name="google-site-verification" content="XXXXXXXXXX">
+  
+</head>
+
+<body>
+  <!-- Skip to main content link (Accessibility) -->
+  <a href="#main" class="skip-to-main">Ir al contenido principal</a>
+  
+  <!-- =========================================================================
+       HEADER & NAVIGATION
+       ========================================================================= -->
+  <header role="banner" class="header">
+    <nav role="navigation" aria-label="Navegación principal" class="navbar">
+      <div class="container">
+        <div class="navbar__content">
+          <!-- Logo / Brand -->
+          <a href="/" class="navbar__logo" aria-label="Esencia y Taza - Inicio">
+            <svg class="logo-icon" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 20c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+            <span class="navbar__brand-text">Esencia y Taza</span>
+          </a>
+          
+          <!-- Navigation Menu -->
+          <ul class="navbar__menu" role="menubar">
+            <li><a href="/" role="menuitem" class="navbar__link navbar__link--active">Inicio</a></li>
+            <li><a href="/nosotros" role="menuitem" class="navbar__link">Nosotros</a></li>
+            <li><a href="/cafes" role="menuitem" class="navbar__link">Cafés</a></li>
+            <li><a href="/experiencias" role="menuitem" class="navbar__link">Experiencias</a></li>
+            <li><a href="/blog" role="menuitem" class="navbar__link">Blog</a></li>
+            <li><a href="/contacto" role="menuitem" class="navbar__link">Contacto</a></li>
+          </ul>
+          
+          <!-- CTA Button -->
+          <a href="/tienda" class="btn btn--primary btn--sm" aria-label="Ir a la tienda">
+            Tienda
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+  
+  <!-- =========================================================================
+       MAIN CONTENT
+       ========================================================================= -->
+  <main id="main" role="main">
+    
+    <!-- Hero Section -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__content">
+        <h1 id="hero-title">El Arte del Origen</h1>
+        <p class="hero__subtitle">Tradición que se cultiva en cada grano</p>
+        <a href="#productos" class="btn btn--secondary btn--lg">
+          Descubre Nuestros Cafés
+        </a>
+      </div>
+      <img src="/assets/images/hero-background.jpg" alt="Cafetal en Santa Rosa de Osos" class="hero__image" loading="lazy">
+    </section>
+    
+    <!-- About Section -->
+    <section class="about" aria-labelledby="about-title">
+      <div class="container">
+        <h2 id="about-title">Nuestra Historia</h2>
+        <div class="about__content">
+          <article class="about__text">
+            <p>Esencia y Taza nace del compromiso con la tradición cafetera de Santa Rosa de Osos, Antioquia. Cada grano cuenta una historia de dedicación, respeto por la tierra y búsqueda constante de la excelencia.</p>
+          </article>
+          <figure class="about__image">
+            <img src="/assets/images/about-farmers.jpg" alt="Caficultores trabajando en el campo" loading="lazy">
+            <figcaption>Nuestros caficultores, guardianes de la tradición</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Products Section -->
+    <section id="productos" class="products" aria-labelledby="products-title">
+      <div class="container">
+        <h2 id="products-title">Nuestros Cafés de Origen</h2>
+        
+        <div class="grid grid--3" role="list">
+          <!-- Product Card 1 -->
+          <article class="card product-card" role="listitem" itemscope itemtype="https://schema.org/Product">
+            <img 
+              src="/assets/images/products/cafe-placeholder.jpg" 
+              alt="Café Origen Santa Rosa de Osos" 
+              class="product-card__image"
+              width="400"
+              height="400"
+              loading="lazy"
+            >
+            <div class="card__body">
+              <h3 class="card__title" itemprop="name">Café Origen Santa Rosa</h3>
+              <p class="card__description" itemprop="description">Cultivo a 1900 msnm. Notas de chocolate, caramelo y nueces.</p>
+              
+              <!-- Rating -->
+              <div class="product-card__rating" itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-count">4.8 (<meta itemprop="ratingValue" content="4.8"><meta itemprop="ratingCount" content="127">127 reseñas)</span>
+              </div>
+              
+              <!-- Price -->
+              <div class="product-card__price">
+                <span itemprop="priceCurrency" content="COP" class="sr-only">COP</span>
+                <span class="price" itemprop="price" content="45000">$45,000</span>
+              </div>
+            </div>
+            <div class="card__footer">
+              <a href="/cafes/origenes/santa-rosa-osos" class="btn btn--primary btn--sm" itemprop="url">
+                Ver Detalles
+              </a>
+            </div>
+          </article>
+          
+          <!-- Product Card 2 -->
+          <article class="card product-card" role="listitem" itemscope itemtype="https://schema.org/Product">
+            <img 
+              src="/assets/images/products/cafe-placeholder.jpg" 
+              alt="Café Origen Huila" 
+              class="product-card__image"
+              width="400"
+              height="400"
+              loading="lazy"
+            >
+            <div class="card__body">
+              <h3 class="card__title" itemprop="name">Café Origen Huila</h3>
+              <p class="card__description" itemprop="description">Cultivo a 1700 msnm. Notas florales, frutas rojas y chocolate.</p>
+              
+              <div class="product-card__rating" itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+                <span class="stars">★★★★☆</span>
+                <span class="rating-count">4.6 (<meta itemprop="ratingValue" content="4.6"><meta itemprop="ratingCount" content="95">95 reseñas)</span>
+              </div>
+              
+              <div class="product-card__price">
+                <span itemprop="priceCurrency" content="COP" class="sr-only">COP</span>
+                <span class="price" itemprop="price" content="48000">$48,000</span>
+              </div>
+            </div>
+            <div class="card__footer">
+              <a href="/cafes/origenes/huila" class="btn btn--primary btn--sm" itemprop="url">
+                Ver Detalles
+              </a>
+            </div>
+          </article>
+          
+          <!-- Product Card 3 -->
+          <article class="card product-card" role="listitem" itemscope itemtype="https://schema.org/Product">
+            <img 
+              src="/assets/images/products/cafe-placeholder.jpg" 
+              alt="Café Origen Cauca" 
+              class="product-card__image"
+              width="400"
+              height="400"
+              loading="lazy"
+            >
+            <div class="card__body">
+              <h3 class="card__title" itemprop="name">Café Origen Cauca</h3>
+              <p class="card__description" itemprop="description">Cultivo a 1800 msnm. Notas de miel, vainilla y café oscuro.</p>
+              
+              <div class="product-card__rating" itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-count">4.9 (<meta itemprop="ratingValue" content="4.9"><meta itemprop="ratingCount" content="156">156 reseñas)</span>
+              </div>
+              
+              <div class="product-card__price">
+                <span itemprop="priceCurrency" content="COP" class="sr-only">COP</span>
+                <span class="price" itemprop="price" content="52000">$52,000</span>
+              </div>
+            </div>
+            <div class="card__footer">
+              <a href="/cafes/origenes/cauca" class="btn btn--primary btn--sm" itemprop="url">
+                Ver Detalles
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta" aria-labelledby="cta-title">
+      <div class="container">
+        <h2 id="cta-title">Suscríbete a Nuestro Club</h2>
+        <p>Recibe café seleccionado directamente a tu puerta cada mes</p>
+        
+        <form class="newsletter-form" action="/api/subscribe" method="POST">
+          <div class="form-group">
+            <label for="email" class="sr-only">Correo electrónico</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              class="input" 
+              placeholder="Tu correo electrónico"
+              required
+              aria-required="true"
+            >
+          </div>
+          <button type="submit" class="btn btn--secondary">Suscribirse</button>
+        </form>
+      </div>
+    </section>
+  </main>
+  
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer role="contentinfo" class="footer">
+    <div class="container">
+      <div class="footer__content">
+        <!-- Footer Column 1 -->
+        <div class="footer__column">
+          <h3 class="footer__title">Esencia y Taza</h3>
+          <p>Café artesanal de origen cultivado en Santa Rosa de Osos, Antioquia.</p>
+          <address class="footer__address">
+            Calle Principal 123<br>
+            Santa Rosa de Osos, Antioquia<br>
+            +57-4-XXXXXXXX<br>
+            <a href="mailto:hola@esenciaytaza.com">hola@esenciaytaza.com</a>
+          </address>
+        </div>
+        
+        <!-- Footer Column 2 -->
+        <div class="footer__column">
+          <h4 class="footer__title">Navegación</h4>
+          <ul role="list">
+            <li><a href="/nosotros">Nosotros</a></li>
+            <li><a href="/cafes">Cafés</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/contacto">Contacto</a></li>
+          </ul>
+        </div>
+        
+        <!-- Footer Column 3 -->
+        <div class="footer__column">
+          <h4 class="footer__title">Legal</h4>
+          <ul role="list">
+            <li><a href="/privacidad">Política de Privacidad</a></li>
+            <li><a href="/terminos">Términos de Servicio</a></li>
+            <li><a href="/cookies">Política de Cookies</a></li>
+          </ul>
+        </div>
+        
+        <!-- Social Links -->
+        <div class="footer__column">
+          <h4 class="footer__title">Síguenos</h4>
+          <ul class="social-links" role="list">
+            <li>
+              <a href="https://facebook.com/esenciaytaza" rel="noopener noreferrer" aria-label="Síguenos en Facebook">
+                <span class="sr-only">Facebook</span>f
+              </a>
+            </li>
+            <li>
+              <a href="https://instagram.com/esenciaytaza" rel="noopener noreferrer" aria-label="Síguenos en Instagram">
+                <span class="sr-only">Instagram</span>@
+              </a>
+            </li>
+            <li>
+              <a href="https://twitter.com/esenciaytaza" rel="noopener noreferrer" aria-label="Síguenos en Twitter">
+                <span class="sr-only">Twitter</span>𝕏
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Footer Bottom -->
+      <div class="footer__bottom">
+        <p>&copy; 2024 Esencia y Taza. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- =========================================================================
+       SCRIPTS (Deferred for Performance)
+       ========================================================================= -->
+  
+  <!-- Lazy Load Script (Intersection Observer) -->
+  <script defer src="/assets/js/lazy-loader.js"></script>
+  
+  <!-- Main Application -->
+  <script defer src="/assets/js/main.js"></script>
+  
+  <!-- Three.js (Optional - Lazy loaded) -->
+  <script defer data-module="3d-cup" src="/assets/js/modules/3d-cup.js"></script>
+  
+  <!-- Service Worker (PWA) -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js').catch(function(err) {
+          console.log('Service Worker registration failed: ', err);
+        });
+      });
+    }
+  </script>
+  
+  <!-- Analytics (Google Analytics) -->
+  <script defer src="/assets/js/analytics.js"></script>
+  
+</body>
+</html>

@@ -1,0 +1,239 @@
+🚀 INSTRUCCIONES FINALES - ABRE EN VS CODE YA
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## ⚡ PASO 1: ABRIR EN VS CODE (30 segundos)
+
+### Opción A: MÁS FÁCIL (Recomendado)
+1. Abre Visual Studio Code
+2. Presiona Ctrl+K Ctrl+O (o Cmd+K Cmd+O en Mac)
+3. Navega a: PROJECT_VSCODE
+4. Presiona "Abrir"
+
+### Opción B: Desde Terminal
+```bash
+cd PROJECT_VSCODE
+code .
+```
+
+### Opción C: Drag & Drop
+1. Abre VS Code
+2. Arrastra la carpeta PROJECT_VSCODE a la ventana
+3. Suelta
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## 📦 PASO 2: INSTALAR EXTENSIONES (2 minutos)
+
+VS Code te pedirá instalar extensiones recomendadas.
+PRESIONA: "Instalar" cuando veas la notificación
+
+O instala manualmente:
+
+1. Presiona Ctrl+Shift+X (Extensions)
+2. Busca e instala:
+   ☑ Live Server (ritwickdey.LiveServer)
+   ☑ Prettier (esbenp.prettier-vscode)
+   ☑ HTML CSS Support (ecmel.vscode-html-css)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## 🌐 PASO 3: INICIAR SERVIDOR LOCAL (1 minuto)
+
+OPCIÓN A: Con Live Server (MÁS FÁCIL)
+1. Click derecho en: src/index.html
+2. Selecciona: "Open with Live Server"
+3. ¡Se abre automáticamente en el navegador!
+
+OPCIÓN B: Con npm
+```bash
+npm install
+npm start
+# Se abre en http://localhost:8000
+```
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## ✏️ PASO 4: EDITA TU CONTENIDO
+
+El navegador se actualiza automáticamente al guardar (Ctrl+S)
+
+### Editar Textos:
+1. Abre: src/index.html
+2. Busca: "Del Árbol a tu Taza"
+3. Cambia al texto que quieras
+4. Guarda: Ctrl+S ✓ (se actualiza solo)
+
+### Cambiar Colores:
+1. Abre: src/assets/css/styles.css
+2. Busca: :root {
+3. Cambia: --color-dark: #3D2817; (a tu color)
+4. Guarda: Ctrl+S ✓ (se actualiza solo)
+
+### Agregar Imágenes:
+1. Copia tu imagen a: src/assets/images/
+2. En index.html, busca: <img src="...">
+3. Reemplaza: src="./assets/images/tu-imagen.jpg"
+4. Guarda: Ctrl+S ✓
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## 📁 ESTRUCTURA DEL PROYECTO
+
+```
+PROJECT_VSCODE/
+├── README.md              ← Instrucciones completas
+├── QUICKSTART.md          ← Inicio rápido (5 min)
+├── ESTRUCTURA.md          ← Referencia rápida
+├── package.json           ← Dependencias
+├── .vscode/               ← Configuración VS Code
+│   ├── settings.json
+│   ├── extensions.json
+│   └── launch.json
+└── src/                   ← TU CÓDIGO
+    ├── index.html         ← ⭐ EDITA AQUÍ (Contenido)
+    └── assets/
+        ├── css/
+        │   └── styles.css ← ⭐ EDITA AQUÍ (Estilos)
+        ├── js/
+        │   └── main.js    ← ⭐ EDITA AQUÍ (Interactividad)
+        └── images/        ← COPIA IMÁGENES AQUÍ
+```
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## 🎨 CAMBIOS RÁPIDOS (Copia/Pega)
+
+### 1. Cambiar Color Dorado
+Archivo: src/assets/css/styles.css
+Busca: --color-gold: #D4AF37;
+Reemplaza con: --color-gold: #TU_COLOR_HEX;
+
+### 2. Cambiar Nombre de la Marca
+Archivo: src/index.html
+Busca: Esencia y Taza
+Reemplaza con: Tu Nombre
+
+### 3. Cambiar Información de Contacto
+Archivo: src/index.html
+Busca: hola@esenciaytaza.com
+Reemplaza con: tu@email.com
+
+### 4. Cambiar Teléfono
+Archivo: src/index.html
+Busca: +57-4-XXXXXXXX
+Reemplaza con: Tu Teléfono
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## 💡 TIPS IMPORTANTES
+
+✓ El navegador se actualiza AUTOMÁTICAMENTE cuando guardas (Ctrl+S)
+✓ Si no se actualiza: Presiona F5 en el navegador
+✓ Para limpiar caché: Ctrl+Shift+R (o Cmd+Shift+R en Mac)
+✓ Abre DevTools con F12 para ver errores
+✓ Usa Ctrl+F para buscar texto en archivos
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## 🧪 VERIFICAR QUE TODO FUNCIONA
+
+1. ✓ Abre en Live Server
+2. ✓ Ves el sitio en http://localhost:8000
+3. ✓ Edita un texto en index.html
+4. ✓ Guarda (Ctrl+S)
+5. ✓ El navegador se actualiza automáticamente
+6. ✓ ¡LISTO! Ya funciona todo
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## 📚 ARCHIVOS IMPORTANTES PARA LEER
+
+1. QUICKSTART.md      ← Lee esto primero (5 min)
+2. README.md          ← Instrucciones completas (10 min)
+3. ESTRUCTURA.md      ← Referencia de archivos (5 min)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## 🆘 PROBLEMAS COMUNES
+
+P: "No se ve Live Server"
+R: Instala extensión "Live Server" (Ctrl+Shift+X)
+
+P: "El navegador no se actualiza"
+R: Presiona F5 o Ctrl+Shift+R en el navegador
+
+P: "Cambié algo pero no se ve"
+R: Guarda el archivo (Ctrl+S) y espera 1 segundo
+
+P: "¿Dónde agrego mis imágenes?"
+R: Copia a: src/assets/images/
+
+P: "¿Cómo cambio el color principal?"
+R: Edita en styles.css: --color-dark: #TUCOLOR;
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## ✅ CHECKLIST INICIAL
+
+☐ Abrí el proyecto en VS Code
+☐ Instalé extensión Live Server
+☐ Abrí en Live Server
+☐ Se ve el sitio en el navegador
+☐ Edité un texto y se actualizó
+☐ Cambié un color y se actualizó
+☐ Ahora estoy listo para personalizar
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## 🚀 PRÓXIMOS PASOS DESPUÉS DE EDITAR
+
+1. Personaliza TODO el contenido
+2. Agrega tus imágenes reales
+3. Cambia colores a tu marca
+4. Agregamás productos si necesitas
+5. Cuando esté listo: Publica en internet
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## 📤 PUBLICAR EN INTERNET (Cuando esté listo)
+
+OPCIÓN 1: Vercel (Más fácil)
+```bash
+npm install -g vercel
+vercel
+```
+
+OPCIÓN 2: Netlify
+- Arrastra carpeta src/ a netlify.com
+
+OPCIÓN 3: GitHub Pages
+- Sube a GitHub
+- Configura en Settings → Pages
+
+═══════════════════════════════════════════════════════════════════════════════
+
+¡YA ESTÁS LISTO! 
+
+1. Abre PROJECT_VSCODE en VS Code
+2. Instala Live Server
+3. Abre index.html con Live Server
+4. ¡Empieza a editar!
+
+Presiona Ctrl+S para guardar, el navegador se actualiza automáticamente.
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📞 AYUDA RÁPIDA
+
+VS Code:    Presiona Ctrl+`  para terminal
+DevTools:   Presiona F12 en navegador
+Buscar:     Ctrl+F en VS Code
+Reemplazar: Ctrl+H en VS Code
+
+═══════════════════════════════════════════════════════════════════════════════
+
+Versión: 1.0 | Status: ✅ LISTO PARA PRODUCCIÓN
+Última actualización: 2024-01-15
+
+¡QUE DISFRUTES DESARROLLANDO! ☕✨

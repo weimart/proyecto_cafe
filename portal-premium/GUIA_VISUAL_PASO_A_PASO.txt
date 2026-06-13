@@ -1,0 +1,191 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                                                                                ║
+║          🎯 GUÍA VISUAL: INTEGRAR EN TU CARPETA proyecto_cafe                 ║
+║                                                                                ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+PASO 1: LOCALIZA TUS 2 CARPETAS
+
+┌─ Tu Mac ─────────────────────────────────────────────────────────────┐
+│                                                                       │
+│  📁 Desktop/                                                         │
+│  ├─ 📁 proyecto_cafe/           ← TU CARPETA EXISTENTE              │
+│  │   └─ (vacía o con archivos)                                       │
+│  │                                                                   │
+│  └─ 📁 Downloads/                                                    │
+│     └─ (Archivos descargados)                                        │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+PASO 2: OBTÉN LOS ARCHIVOS
+
+Opción A: Desde el navegador
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Ve a: /mnt/user-data/outputs/PROJECT_VSCODE/
+2. Descarga todos los archivos
+3. Cópialos a tu carpeta proyecto_cafe
+
+Opción B: Desde Terminal (Más fácil)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Abre Terminal (Cmd+Espacio → "Terminal")
+2. Ejecuta:
+
+   cd ~/Desktop/proyecto_cafe
+   cp -r /mnt/user-data/outputs/PROJECT_VSCODE/src .
+   cp -r /mnt/user-data/outputs/PROJECT_VSCODE/.vscode .
+   cp /mnt/user-data/outputs/PROJECT_VSCODE/package.json .
+   cp /mnt/user-data/outputs/PROJECT_VSCODE/README.md .
+   cp /mnt/user-data/outputs/PROJECT_VSCODE/.gitignore .
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+PASO 3: VERIFICA LA ESTRUCTURA
+
+Abre Finder y navega a tu carpeta proyecto_cafe. Debe verse así:
+
+┌─ proyecto_cafe ──────────────────────────────────────────────────────┐
+│                                                                       │
+│  ✓ 📁 src/                    ← CARPETA (contiene index.html)       │
+│  ✓ 📁 .vscode/                ← CARPETA (configuración VS Code)     │
+│  ✓ 📄 package.json            ← ARCHIVO                             │
+│  ✓ 📄 README.md               ← ARCHIVO                             │
+│  ✓ 📄 .gitignore              ← ARCHIVO                             │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+
+Si ves todo esto ✓, ¡puedes continuar al Paso 4!
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+PASO 4: ABRE EN VS CODE
+
+1. Abre Visual Studio Code
+2. Presiona: Cmd+K Cmd+O (o en el menú: File → Open Folder)
+3. Navega a: ~/Desktop/proyecto_cafe
+4. Presiona: "Open"
+
+VS Code debe verse así:
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ EXPLORER (lado izquierdo)                                           │
+├─────────────────────────────────────────────────────────────────────┤
+│ 📁 PROYECTO_CAFE                                                    │
+│  ├─ 📁 src                                                          │
+│  │  ├─ 📁 assets                                                    │
+│  │  │  ├─ 📁 css                                                    │
+│  │  │  ├─ 📁 js                                                     │
+│  │  │  └─ 📁 images                                                 │
+│  │  └─ 📄 index.html                                                │
+│  ├─ 📁 .vscode                                                      │
+│  ├─ 📄 package.json                                                 │
+│  └─ 📄 README.md                                                    │
+└─────────────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+PASO 5: INSTALAR DEPENDENCIAS
+
+1. Abre Terminal en VS Code: Cmd+` (backtick)
+2. Escribe:
+
+   npm install
+
+3. Espera a que termine (1-2 minutos)
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+PASO 6: INICIAR SERVIDOR
+
+En Terminal de VS Code, escribe:
+
+   npm start
+
+O, si tienes instalada la extensión "Live Server":
+
+1. Click derecho en: src/index.html
+2. Selecciona: "Open with Live Server"
+
+¡El sitio se abre automáticamente en tu navegador!
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+PASO 7: EDITAR Y PERSONALIZAR
+
+Ahora puedes editar:
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ PARA CAMBIAR...        │ ABRE ARCHIVO...        │ EN CARPETA...    │
+├────────────────────────┼────────────────────────┼──────────────────┤
+│ Textos y contenido     │ index.html             │ src/             │
+│ Colores y estilos      │ styles.css             │ src/assets/css/  │
+│ Interactividad         │ main.js                │ src/assets/js/   │
+│ Tus imágenes           │ (copia aquí)           │ src/assets/images/
+└─────────────────────────┴────────────────────────┴──────────────────┘
+
+Guarda (Cmd+S) y el navegador se actualiza automáticamente ✨
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+✅ CHECKLIST DE VERIFICACIÓN
+
+Después de los 7 pasos:
+
+☑ Copié archivos a proyecto_cafe
+☑ Abrí proyecto_cafe en VS Code
+☑ Vi la estructura en Explorer
+☑ Instalé dependencias (npm install)
+☑ Inicié servidor (npm start)
+☑ El sitio se abre en el navegador
+☑ Edité un texto y se actualizó
+☑ Cambié un color y se actualizó
+
+Si todo está ☑, ¡YA ESTÁ LISTO!
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+🎯 RECUERDA
+
+✓ El navegador se actualiza automáticamente al guardar (Cmd+S)
+✓ Si no se ve el cambio: Cmd+R en el navegador para refrescar
+✓ Abre DevTools con Cmd+Option+I para ver errores
+✓ Todos los archivos están documentados
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+🆘 PROBLEMAS COMUNES
+
+Problema: "No veo la carpeta en VS Code"
+Solución: Abre de nuevo (Cmd+K Cmd+O) y selecciona bien la carpeta
+
+Problema: "npm install no funciona"
+Solución: Instala Node.js desde https://nodejs.org/
+
+Problema: "Live Server no abre"
+Solución: Instala extensión Live Server (Cmd+Shift+X)
+
+Problema: "Los cambios no se ven"
+Solución: Guarda (Cmd+S) y espera 1 segundo, luego Cmd+R en navegador
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+¡ÉXITO! 🎉
+
+Tu proyecto proyecto_cafe ahora tiene:
+✓ Código profesional
+✓ Estructura organizada
+✓ Hot reload automático
+✓ Extensiones recomendadas
+✓ Documentación completa
+
+¿Necesitas más ayuda? Lee los archivos:
+- QUICKSTART.md (5 minutos)
+- README.md (instrucciones completas)
+- ESTRUCTURA.md (referencia rápida)
+
+═══════════════════════════════════════════════════════════════════════════════════

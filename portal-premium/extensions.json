@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "ritwickdey.LiveServer",
+    "esbenp.prettier-vscode",
+    "ecmel.vscode-html-css",
+    "xabikos.JavaScriptSnippets",
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-rename-tag",
+    "dbaeumer.vscode-eslint",
+    "Gruntfuggly.todo-tree",
+    "ms-vscode.vscode-typescript-next",
+    "GitHub.copilot",
+    "ThunderClient.thunder-client"
+  ]
+}

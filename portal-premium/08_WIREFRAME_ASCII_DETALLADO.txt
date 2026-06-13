@@ -1,0 +1,509 @@
+╔════════════════════════════════════════════════════════════════════════════════════╗
+║                    ESENCIA Y TAZA - ESQUEMA VISUAL WIREFRAME                      ║
+║                         Layout & Estructura Completa                              ║
+╚════════════════════════════════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════════════════════════════════════════════════
+                              VISTA GENERAL (DESKTOP)
+═══════════════════════════════════════════════════════════════════════════════════════
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                    HEADER / NAV                                   ┃
+┃  [LOGO] Esencia y Taza      [Inicio] [Nosotros] [Cafés] [Blog] [Contacto] [☰]  ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                                    ┃
+┃                           ╔════════════════════════════════╗                     ┃
+┃                           ║  SECTION 1: HERO              ║                     ┃
+┃                           ║  (Full-screen con video/img)  ║                     ┃
+┃                           ║                                ║                     ┃
+┃                           ║  [Background cinematográfico] ║                     ┃
+┃                           ║                                ║                     ┃
+┃                           ║    "Del Árbol a tu Taza"      ║                     ┃
+┃                           ║    en un Solo Scroll          ║                     ┃
+┃                           ║                                ║                     ┃
+┃                           ║  "Café Orgánico de Montaña"   ║                     ┃
+┃                           ║                                ║                     ┃
+┃                           ║  [CTA: Explorar Tienda]       ║                     ┃
+┃                           ║  [CTA: Ver Trazabilidad]      ║                     ┃
+┃                           ║                                ║                     ┃
+┃                           ║           ↓ SCROLL ↓          ║                     ┃
+┃                           ╚════════════════════════════════╝                     ┃
+┃                                                                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                                    ┃
+┃                        ╔═════════════════════════════════════╗                   ┃
+┃                        ║  SECTION 2: NUESTRO ORIGEN          ║                   ┃
+┃                        ║  (2-column: Imagen + Texto)         ║                   ┃
+┃                        ╠═════════════════════════════════════╣                   ┃
+┃        ╭────────────────╂─────────────────────────────────╮  ║                   ┃
+┃        │                │ Nuestro Terroir                 │  ║                   ┃
+┃        │  [Imagen       │ Caicedo, Antioquia             │  ║                   ┃
+┃        │   Cafetal]     │                                 │  ║                   ┃
+┃        │                │ Texto descriptivo...            │  ║                   ┃
+┃        │   600x400px    │                                 │  ║                   ┃
+┃        │   hover:zoom   │ ┌──────────┬──────────┐         │  ║                   ┃
+┃        │                │ │ 1900+    │ 100%     │         │  ║                   ┃
+┃        │                │ │ msnm     │ Orgánico │         │  ║                   ┃
+┃        │                │ └──────────┴──────────┘         │  ║                   ┃
+┃        │                │ ┌──────────┬──────────┐         │  ║                   ┃
+┃        │                │ │ 35+      │ 100%     │         │  ║                   ┃
+┃        │                │ │ Años     │ Trazable │         │  ║                   ┃
+┃        │                │ └──────────┴──────────┘         │  ║                   ┃
+┃        ╰────────────────╂─────────────────────────────────╯  ║                   ┃
+┃                        ╚═════════════════════════════════════╝                   ┃
+┃                                                                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                                    ┃
+┃                    ╔══════════════════════════════════════════╗                  ┃
+┃                    ║  SECTION 3: TRAZABILIDAD               ║                  ┃
+┃                    ║  "Tu Café Tiene Historia"              ║                  ┃
+┃                    ╠══════════════════════════════════════════╣                  ┃
+┃     ╭──────────────────────────────┬──────────────────────╮  ║                  ┃
+┃     │                              │                      │  ║                  ┃
+┃     │   [Bolsa de Café Visual]     │  Lotes Interactivos │  ║                  ┃
+┃     │   - Foto realista            │                      │  ║                  ┃
+┃     │   - Detalles etiqueta        │  ┌──────────────┐   │  ║                  ┃
+┃     │   - QR code                  │  │ LOT-001      │   │  ║                  ┃
+┃     │   - Animación hover          │  │ Origen Único │   │  ║                  ┃
+┃     │                              │  │ 1900 msnm    │   │  ║                  ┃
+┃     │                              │  │ [Expandir▼]  │   │  ║                  ┃
+┃     │   300x400px                  │  └──────────────┘   │  ║                  ┃
+┃     │   Sombra suave               │                      │  ║                  ┃
+┃     │                              │  ┌──────────────┐   │  ║                  ┃
+┃     │                              │  │ LOT-002      │   │  ║                  ┃
+┃     │                              │  │ Honey Esp.   │   │  ║                  ┃
+┃     │                              │  │ 1850 msnm    │   │  ║                  ┃
+┃     │                              │  │ [Expandir▼]  │   │  ║                  ┃
+┃     │                              │  └──────────────┘   │  ║                  ┃
+┃     ╰──────────────────────────────┴──────────────────────╯  ║                  ┃
+┃                    ╚══════════════════════════════════════════╝                  ┃
+┃                                                                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                                    ┃
+┃                    ╔══════════════════════════════════════════╗                  ┃
+┃                    ║  SECTION 4: TIENDA - NUESTROS CAFÉS    ║                  ┃
+┃                    ║  "Colección Premium"                   ║                  ┃
+┃                    ╠══════════════════════════════════════════╣                  ┃
+┃     ┌──────────────┬──────────────┬──────────────┐           ║                  ┃
+┃     │              │              │              │           ║                  ┃
+┃     │  ╔════════╗  │  ╔════════╗  │  ╔════════╗  │           ║                  ┃
+┃     │  ║[Imagen]║  │  ║[Imagen]║  │  ║[Imagen]║  │           ║                  ┃
+┃     │  ║ Café   ║  │  ║ Café   ║  │  ║ Café   ║  │           ║                  ┃
+┃     │  ║ 1      ║  │  ║ 2      ║  │  ║ 3      ║  │           ║                  ┃
+┃     │  ╚════════╝  │  ╚════════╝  │  ╚════════╝  │           ║                  ┃
+┃     │              │              │              │           ║                  ┃
+┃     │ CARD 1       │ CARD 2       │ CARD 3       │           ║                  ┃
+┃     │              │              │              │           ║                  ┃
+┃     │ Origen Único │ Honey Esp.   │ Blend Prem.  │           ║                  ┃
+┃     │ Tost. Media  │ Natural      │ Tost. Oscura │           ║                  ┃
+┃     │              │              │              │           ║                  ┃
+┃     │ ★★★★★ 4.8   │ ★★★★★ 4.9   │ ★★★★☆ 4.7   │           ║                  ┃
+┃     │ (247 reviews)│ (189 reviews)│ (312 reviews)│           ║                  ┃
+┃     │              │              │              │           ║                  ┃
+┃     │ Notas:       │ Notas:       │ Notas:       │           ║                  ┃
+┃     │ • Chocolate  │ • Miel       │ • Nueces     │           ║                  ┃
+┃     │ • Frambuesa  │ • Caramelo   │ • Chocolate  │           ║                  ┃
+┃     │ • Cacao      │ • Tropical   │ • Especias   │           ║                  ┃
+┃     │              │              │              │           ║                  ┃
+┃     │ Molido: [▼]  │ Molido: [▼]  │ Molido: [▼]  │           ║                  ┃
+┃     │              │              │              │           ║                  ┃
+┃     │ $45,000      │ $52,000      │ $48,000      │           ║                  ┃
+┃     │ 250g         │ 250g         │ 250g         │           ║                  ┃
+┃     │              │              │              │           ║                  ┃
+┃     │ [+ Añadir]   │ [+ Añadir]   │ [+ Añadir]   │           ║                  ┃
+┃     │              │              │              │           ║                  ┃
+┃     └──────────────┴──────────────┴──────────────┘           ║                  ┃
+┃                    ╚══════════════════════════════════════════╝                  ┃
+┃                                                                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                                    ┃
+┃                    ╔══════════════════════════════════════════╗                  ┃
+┃                    ║  SECTION 5: HISTORIAS                  ║                  ┃
+┃                    ║  "Los Rostros Detrás del Café"         ║                  ┃
+┃                    ╠══════════════════════════════════════════╣                  ┃
+┃     ┌──────────────────────────────┬──────────────────────────────┐              ║                  ┃
+┃     │                              │                              │              ║                  ┃
+┃     │  ╔════════════════════════╗  │  ╔════════════════════════╗  │              ║                  ┃
+┃     │  ║   [Imagen Cosecha]     ║  │  ║  [Imagen Caficultor]  ║  │              ║                  ┃
+┃     │  ╚════════════════════════╝  │  ╚════════════════════════╝  │              ║                  ┃
+┃     │                              │                              │              ║                  ┃
+┃     │  Cosecha Matutina             │  Historias de Generaciones  │              ║                  ┃
+┃     │  en Altura                    │                              │              ║                  ┃
+┃     │                              │  Jorge Urrego, 35 años      │              ║                  ┃
+┃     │  Trabajo madrugada...        │  Tradición de familia...    │              ║                  ┃
+┃     │                              │                              │              ║                  ┃
+┃     │  Familia Urrego              │  Santa Rosa de Osos         │              ║                  ┃
+┃     └──────────────────────────────┴──────────────────────────────┘              ║                  ┃
+┃                                                                                    ┃
+┃     ┌──────────────────────────────┬──────────────────────────────┐              ║                  ┃
+┃     │                              │                              │              ║                  ┃
+┃     │  ╔════════════════════════╗  │  ╔════════════════════════╗  │              ║                  ┃
+┃     │  ║  [Imagen Fermentación] ║  │  ║   [Imagen Tostión]    ║  │              ║                  ┃
+┃     │  ╚════════════════════════╝  │  ╚════════════════════════╝  │              ║                  ┃
+┃     │                              │                              │              ║                  ┃
+┃     │  Proceso de Fermentación     │  Tostión Artesanal Perfecta │              ║                  ┃
+┃     │  Natural                     │                              │              ║                  ┃
+┃     │                              │  Control de precisión...    │              ║                  ┃
+┃     │  48 horas controladas...     │                              │              ║                  ┃
+┃     │                              │  Maestro Tostador Local     │              ║                  ┃
+┃     │  Maestría de Proceso         │                              │              ║                  ┃
+┃     └──────────────────────────────┴──────────────────────────────┘              ║                  ┃
+┃                    ╚══════════════════════════════════════════╝                  ┃
+┃                                                                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                                    ┃
+┃                    ╔══════════════════════════════════════════╗                  ┃
+┃                    ║  SECTION 6: AUDIO - EL SONIDO DEL CAFÉ ║                  ┃
+┃                    ║  Experiencia Sensorial Completa         ║                  ┃
+┃                    ╠══════════════════════════════════════════╣                  ┃
+┃     ╔──────────────────────────────────────────────────────╗  ║                  ┃
+┃     │                                                      │  ║                  ┃
+┃     │  Amanecer en Caicedo                                │  ║                  ┃
+┃     │  Grabación auténtica de nuestros cafetales...      │  ║                  ┃
+┃     │  🎵 5:42 minutos | Grabación original              │  ║                  ┃
+┃     │                                                      │  ║                  ┃
+┃     │                               [▶ PLAY BUTTON]       │  ║                  ┃
+┃     │                                                      │  ║                  ┃
+┃     │  [Si está playing]                                 │  ║                  ┃
+┃     │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━         │  ║                  ┃
+┃     │  1:58                                        5:42  │  ║                  ┃
+┃     │                                                      │  ║                  ┃
+┃     ╚──────────────────────────────────────────────────────╝  ║                  ┃
+┃                    ╚══════════════════════════════════════════╝                  ┃
+┃                                                                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                                    ┃
+┃                              FOOTER                                               ┃
+┃  ┌────────────────┬────────────────┬────────────────┬────────────────┐           ┃
+┃  │ Esencia y Taza │ Navegación     │ Legal          │ Síguenos       │           ┃
+┃  │                │                │                │                │           ┃
+┃  │ Café orgánico  │ • Nosotros     │ • Privacidad   │ • Instagram    │           ┃
+┃  │ Santa Rosa...  │ • Cafés        │ • Términos     │ • Facebook     │           ┃
+┃  │                │ • Blog         │ • Cookies      │ • Twitter      │           ┃
+┃  │ hola@...       │ • Contacto     │                │                │           ┃
+┃  │ +57-4-XXXX     │                │                │                │           ┃
+┃  └────────────────┴────────────────┴────────────────┴────────────────┘           ┃
+┃                                                                                    ┃
+┃                    © 2024 Esencia y Taza | Todos derechos                        ┃
+┃                                                                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+
+═══════════════════════════════════════════════════════════════════════════════════════
+                            VISTA MOBILE (< 768px)
+═══════════════════════════════════════════════════════════════════════════════════════
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  MOBILE HEADER                   ┃
+┃  [☰] [LOGO] [🛒]                 ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  HERO (Full screen)               ┃
+┃  [Background]                     ┃
+┃                                   ┃
+┃  "Del Árbol a tu Taza"            ┃
+┃  en un Solo Scroll                ┃
+┃                                   ┃
+┃  "Café Orgánico de Montaña"       ┃
+┃                                   ┃
+┃  [CTA Botón ancho]                ┃
+┃                                   ┃
+┃  [CTA Botón ancho]                ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  SECCIÓN: Origen                  ┃
+┃                                   ┃
+┃  [Imagen full-width]              ┃
+┃                                   ┃
+┃  Nuestro Terroir                  ┃
+┃  Caicedo, Antioquia               ┃
+┃                                   ┃
+┃  Texto descriptivo...             ┃
+┃                                   ┃
+┃  ┌────────┬────────┐              ┃
+┃  │ 1900+  │ 100%   │              ┃
+┃  │ msnm   │ Orgánico
+│              ┃
+┃  └────────┴────────┘              ┃
+┃                                   ┃
+┃  ┌────────┬────────┐              ┃
+┃  │ 35+    │ 100%   │              ┃
+┃  │ Años   │ Trazable
+│              ┃
+┃  └────────┴────────┘              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  SECCIÓN: Trazabilidad           ┃
+┃                                   ┃
+┃  Tu Café Tiene Historia           ┃
+┃                                   ┃
+┃  [Bolsa Café imagen]              ┃
+┃  full-width                       ┃
+┃                                   ┃
+┃  [Lote 1 - Expandible]            ┃
+┃  [Lote 2 - Expandible]            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  SECCIÓN: Tienda                  ┃
+┃                                   ┃
+┃  Nuestros Cafés                   ┃
+┃                                   ┃
+┃  [CARD 1 full-width]              ┃
+┃  ┌─────────────────┐              ┃
+┃  │[Imagen]         │              ┃
+┃  │Origen Único     │              ┃
+┃  │★★★★★ 4.8       │              ┃
+┃  │Notas...         │              ┃
+┃  │Molido: [▼]      │              ┃
+┃  │$45,000          │              ┃
+┃  │[+ Añadir]       │              ┃
+┃  └─────────────────┘              ┃
+┃                                   ┃
+┃  [CARD 2 full-width]              ┃
+┃  [...]                            ┃
+┃                                   ┃
+┃  [CARD 3 full-width]              ┃
+┃  [...]                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  SECCIÓN: Historias               ┃
+┃                                   ┃
+┃  Los Rostros Detrás del Café     ┃
+┃                                   ┃
+┃  [Card 1 - full-width]            ┃
+┃  [Card 2 - full-width]            ┃
+┃  [Card 3 - full-width]            ┃
+┃  [Card 4 - full-width]            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  SECCIÓN: Audio                   ┃
+┃                                   ┃
+┃  El Sonido del Cafetal            ┃
+┃                                   ┃
+┃  Descripción...                   ┃
+┃                                   ┃
+┃        [▶ PLAY]                   ┃
+┃                                   ┃
+┃  [Barra de progreso]              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  FOOTER (Stacked)                 ┃
+┃                                   ┃
+┃  Esencia y Taza                   ┃
+┃  [info...]                        ┃
+┃                                   ┃
+┃  Navegación                       ┃
+┃  • Nosotros                       ┃
+┃  • Cafés                          ┃
+┃  • Blog                           ┃
+┃                                   ┃
+┃  Legal                            ┃
+┃  • Privacidad                     ┃
+┃  • Términos                       ┃
+┃                                   ┃
+┃  Síguenos                         ┃
+┃  • Instagram                      ┃
+┃  • Facebook                       ┃
+┃                                   ┃
+┃  © 2024 Esencia y Taza            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+
+═══════════════════════════════════════════════════════════════════════════════════════
+                          DETALLES DE COMPONENTES
+═══════════════════════════════════════════════════════════════════════════════════════
+
+▶ PRODUCT CARD (TIENDA)
+┌─────────────────────────┐
+│  [Imagen Café]          │ ← Hover: Zoom 110%
+│  altura: 400px          │
+│  width: 100%            │
+├─────────────────────────┤
+│ ★★★★★ 4.8 (247)        │ ← Rating + Review count
+├─────────────────────────┤
+│ Café Origen Santa Rosa  │ ← Título (serif)
+│ Subtítulo descriptivo   │ ← Descripción
+├─────────────────────────┤
+│ Notas de Sabor:         │
+│ [Chocolate] [Caramelo]  │ ← Badges
+│ [Nuezes] [Miel]         │
+├─────────────────────────┤
+│ Molido: [Selector ▼]    │ ← Dropdown
+├─────────────────────────┤
+│ $45,000        250g     │ ← Precio + Tamaño
+├─────────────────────────┤
+│    [+ AÑADIR A CESTA]   │ ← CTA Botón
+└─────────────────────────┘
+
+▶ NAVIGATION BAR (DESKTOP)
+┌──────────────────────────────────────────────────────┐
+│ [LOGO] Esencia y Taza   [Nav Links]   [CTA] [🛒: 0] │
+└──────────────────────────────────────────────────────┘
+Sticky: Si scroll > 100px
+Active link: Subrayado + color gold
+
+▶ HERO SECTION
+Full-screen: height = 100vh
+Background: Imagen cinematográfica + overlay gradiente
+Content: Centrado vertical + horizontal
+Parallax: Si scroll, brightness disminuye
+CTA Buttons: 2 opciones (primaria + secundaria)
+
+▶ EXPANDIBLE LOTE
+┌──────────────────────────┐
+│ LOT-2024-CAICEDO-001     │ ← Cerrado
+│ Origen Único             │
+│ Estado: En tránsito [✓]  │
+│ [Click para expandir ▼]  │
+└──────────────────────────┘
+
+DESPUÉS DE CLICK:
+┌──────────────────────────┐
+│ LOT-2024-CAICEDO-001 ✓   │ ← Abierto
+│ Origen Único             │
+│ Cosecha: 15 Oct 2024     │
+├──────────────────────────┤
+│ Altitud: 1900 msnm       │
+│ Cantidad: 450 kg         │
+│ GPS: 5°17'02" N...       │
+│ Caficultor: Jorge Urrego │
+├──────────────────────────┤
+│ [Ver Certificado]        │
+└──────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════════════════
+                            CARRITO LATERAL (SIDEBAR)
+═══════════════════════════════════════════════════════════════════════════════════════
+
+ESTADO: CERRADO
+  [Navbar derecha]
+  🛒 <-- Click abre sidebar
+
+ESTADO: ABIERTO
+┌─────────────────────────────────┐
+│ Tu Cesta                      [X]│ ← Close button
+├─────────────────────────────────┤
+│ [Si vacío]                      │
+│ Tu cesta está vacía             │
+│ Añade café para empezar         │
+│                                 │
+│ [Si con productos]              │
+│ ┌──────────────────────────────┐│
+│ │ Origen Único - Molido Espresso││
+│ │ $45,000 x 2 = $90,000        ││
+│ │ [-] 2 [+] [X Eliminar]       ││
+│ └──────────────────────────────┘│
+│                                 │
+│ ┌──────────────────────────────┐│
+│ │ Honey Especial - Entero       ││
+│ │ $52,000 x 1 = $52,000        ││
+│ │ [-] 1 [+] [X Eliminar]       ││
+│ └──────────────────────────────┘│
+├─────────────────────────────────┤
+│ Subtotal:      $142,000         │
+│ Envío:         GRATIS ✓         │
+│ ───────────────────────────────│
+│ TOTAL:         $142,000         │
+├─────────────────────────────────┤
+│ [PROCEDER AL PAGO]              │ ← Primary CTA
+│ [SEGUIR COMPRANDO]              │ ← Secondary
+└─────────────────────────────────┘
+
+COMPORTAMIENTO:
+- Overlay oscuro detrás (click cierra)
+- Sidebar entra desde derecha
+- Scroll interno si productos abundan
+- Números actualizados en tiempo real
+- Animación suave: 300ms
+
+
+═══════════════════════════════════════════════════════════════════════════════════════
+                        PALETA DE COLORES & TIPOGRAFÍA
+═══════════════════════════════════════════════════════════════════════════════════════
+
+COLORES PRINCIPALES:
+┌─────────────┬─────────┬──────────────────────────────────┐
+│ Color       │ Hex     │ Uso                              │
+├─────────────┼─────────┼──────────────────────────────────┤
+│ Café Oscuro │ #3D2817 │ Texto principal, títulos        │
+│ Café Medio  │ #6B5344 │ Bordes, líneas, acentos suave  │
+│ Dorado      │ #D4AF37 │ Botones, acentos premium       │
+│ Crema       │ #FFFAF0 │ Fondo principal                │
+│ Beige       │ #E8DECC │ Fondos secundarios, cards      │
+└─────────────┴─────────┴──────────────────────────────────┘
+
+TIPOGRAFÍA:
+┌────────────────┬────────────────────┬─────────────┐
+│ Elemento       │ Fuente             │ Tamaño      │
+├────────────────┼────────────────────┼─────────────┤
+│ H1 (Hero)      │ Playfair Display   │ 3.75rem     │
+│ H2 (Secciones)│ Playfair Display   │ 2.25rem     │
+│ H3 (Cards)     │ Playfair Display   │ 1.875rem    │
+│ Párrafos       │ Source Sans Pro    │ 1rem        │
+│ Pequeño        │ Source Sans Pro    │ 0.875rem    │
+│ Código         │ IBM Plex Mono      │ 0.875rem    │
+└────────────────┴────────────────────┴─────────────┘
+
+ESPACIADO BASE: 8px
+Margen/Padding: 4px, 8px, 12px, 16px, 24px, 32px, 48px, 64px
+
+
+═══════════════════════════════════════════════════════════════════════════════════════
+                          INTERACCIONES & ANIMACIONES
+═══════════════════════════════════════════════════════════════════════════════════════
+
+HOVER EFFECTS:
+  • Botones:     translateY(-2px) + shadow aumenta
+  • Imágenes:    scale(1.05) smooth
+  • Links:       color → gold, underline
+  • Cards:       shadow aumenta, translateY(-4px)
+
+SCROLL EFFECTS:
+  • Hero:        brightness disminuye al scroll
+  • Animaciones: Fade in / Slide up al entrar en viewport
+  • Nav:         Se vuelve sticky > 100px scroll
+  • Links:       Se actualizan según sección visible
+
+LOADING STATES:
+  • Imágenes:    Skeleton loading (placeholder animado)
+  • Lazy images: Pulse animation mientras cargan
+  • Buttons:     Disabled state con opacity reducida
+
+TIEMPO DE TRANSICIONES: 200-300ms (cubic-bezier)
+
+
+═══════════════════════════════════════════════════════════════════════════════════════
+
+Este wireframe representa la estructura completa del sitio web "Esencia y Taza"
+con todos los componentes, secciones, comportamientos interactivos y detalles visuales.
+
+Usa este esquema como referencia para:
+  ✓ Implementación del HTML
+  ✓ Organización de componentes CSS
+  ✓ Flujo de JavaScript
+  ✓ Responsive breakpoints
+  ✓ Acciones de usuario
+
+═══════════════════════════════════════════════════════════════════════════════════════

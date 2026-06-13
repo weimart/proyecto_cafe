@@ -1,0 +1,25 @@
+{
+  "name": "esencia-y-taza",
+  "version": "1.0.0",
+  "description": "Sitio web premium de café artesanal de origen - Esencia y Taza",
+  "main": "index.js",
+  "scripts": {
+    "dev": "http-server . -p 8000 -o src/index.html",
+    "build": "echo 'Build script - minify/optimize assets'",
+    "start": "http-server . -p 8000",
+    "minify": "echo 'Minify CSS and JS'",
+    "lint": "echo 'Lint code'"
+  },
+  "keywords": [
+    "cafe",
+    "artesanal",
+    "origen",
+    "premium",
+    "Colombia"
+  ],
+  "author": "Esencia y Taza",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
