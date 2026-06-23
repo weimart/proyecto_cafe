@@ -5,12 +5,10 @@
 
 const WHATSAPP = '573022573244';
 
-// ── Configuración de Wompi (se completará cuando llegue la llave) ──────────
-// Cuando el equipo entregue la llave pública, reemplazar aquí:
 const WOMPI = {
-  publicKey: '',          // ej: 'pub_prod_xxxxxxxxxxxx'  <-- PEGAR AQUÍ
+  publicKey: 'pub_prod_i8kgq0AwhbR6ZGuKKrvH1Nh6Fq8EnXZn',
   currency: 'COP',
-  activo: false           // poner en true cuando publicKey esté lista
+  activo: true
 };
 
 // ── Catálogo: Café Origen Caicedo, presentaciones (grano o molido) ─────────
@@ -136,14 +134,24 @@ const Cart = (() => {
     window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
-  // Estructura lista para Wompi (Web Checkout). La firma de integridad
-  // debe generarse en backend (Apps Script) — aquí queda el punto de enganche.
   const checkoutWompi = () => {
-    // TODO: cuando llegue la llave + backend de firma:
-    // 1. Pedir referencia + firma al Apps Script
-    // 2. Redirigir a https://checkout.wompi.co/p/ con los datos
-    alert('Pago con Wompi: pendiente de conectar la llave y la firma de integridad.');
-    checkoutWhatsApp(); // fallback seguro mientras tanto
+    const referencia = 'ET-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7).toUpperCase();
+    const montoEnCentavos = total() * 100;
+
+    // Descripción compacta de los items para el campo redirect
+    const resumen = items.map(i =>
+      `${i.cantidad}x ${i.tamano} ${i.tipo}`
+    ).join(', ');
+
+    const params = new URLSearchParams({
+      'public-key'    : WOMPI.publicKey,
+      'currency'      : WOMPI.currency,
+      'amount-in-cents': String(montoEnCentavos),
+      'reference'     : referencia,
+      'redirect-url'  : window.location.origin + window.location.pathname,
+    });
+
+    window.location.href = 'https://checkout.wompi.co/p/?' + params.toString();
   };
 
   return { add, abrir, cerrar, render, checkout, pagar };
