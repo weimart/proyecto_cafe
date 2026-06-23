@@ -307,6 +307,32 @@ const ContactForm = (() => {
 })();
 
 // ============================================================================
+// MÓDULO: Popup bienvenida
+// ============================================================================
+const Popup = (() => {
+  const init = () => {
+    const overlay = document.getElementById('popup-overlay');
+    const btnClose = document.getElementById('popup-close');
+    const btnCta   = document.getElementById('popup-cta');
+    if (!overlay) return;
+
+    if (sessionStorage.getItem('et_popup_ok')) return;
+
+    setTimeout(() => { overlay.removeAttribute('hidden'); }, 1200);
+
+    const cerrar = () => {
+      overlay.setAttribute('hidden', '');
+      sessionStorage.setItem('et_popup_ok', '1');
+    };
+
+    btnClose?.addEventListener('click', cerrar);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) cerrar(); });
+    btnCta?.addEventListener('click', cerrar);
+  };
+  return { init };
+})();
+
+// ============================================================================
 // APP INIT
 // ============================================================================
 const App = {
@@ -316,6 +342,7 @@ const App = {
     AnioDinamico.init();
     Cart.render();
     ContactForm.init();
+    Popup.init();
 
     // Botones del carrito
     document.getElementById('cart-toggle')?.addEventListener('click', Cart.abrir);
