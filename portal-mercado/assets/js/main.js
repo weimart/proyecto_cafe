@@ -240,6 +240,73 @@ const AnioDinamico = {
 };
 
 // ============================================================================
+// MÓDULO: Formulario de contacto
+// ============================================================================
+const ContactForm = (() => {
+  const EMAIL = 'comercial@esenciaytaza.com';
+
+  const mostrarError = (id, msg) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.borderColor = '#e53e3e';
+    let err = el.parentNode.querySelector('.field-error');
+    if (!err) {
+      err = document.createElement('span');
+      err.className = 'field-error';
+      el.parentNode.appendChild(err);
+    }
+    err.textContent = msg;
+  };
+
+  const limpiarErrores = () => {
+    document.querySelectorAll('.field-error').forEach(e => e.remove());
+    ['cf-nombre','cf-email','cf-mensaje'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.borderColor = '';
+    });
+  };
+
+  const init = () => {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      limpiarErrores();
+
+      const nombre  = document.getElementById('cf-nombre')?.value.trim()  || '';
+      const correo  = document.getElementById('cf-email')?.value.trim()   || '';
+      const mensaje = document.getElementById('cf-mensaje')?.value.trim() || '';
+
+      let valido = true;
+      if (!nombre)  { mostrarError('cf-nombre',  'Por favor ingresa tu nombre.');          valido = false; }
+      if (!correo)  { mostrarError('cf-email',   'Por favor ingresa tu correo.');          valido = false; }
+      if (!mensaje) { mostrarError('cf-mensaje', 'Por favor escribe tu mensaje o pedido.'); valido = false; }
+      if (!valido) return;
+
+      const asunto = encodeURIComponent('Mensaje desde esenciaytaza.com');
+      const cuerpo = encodeURIComponent(`Nombre: ${nombre}\nCorreo: ${correo}\n\nMensaje:\n${mensaje}`);
+      const mailtoUrl = `mailto:${EMAIL}?subject=${asunto}&body=${cuerpo}`;
+
+      const waTexto = encodeURIComponent(`Hola Esencia y Taza, soy ${nombre} (${correo}).\n\n${mensaje}`);
+      const waUrl   = `https://wa.me/573022573244?text=${waTexto}`;
+
+      // Abrir cliente de correo
+      window.open(mailtoUrl, '_self');
+
+      // Mostrar fallback WhatsApp inmediatamente
+      const nota = form.querySelector('.form-nota');
+      if (nota) {
+        nota.innerHTML = `✓ Si no se abrió tu correo, <a href="${waUrl}" target="_blank" rel="noopener" class="nota-wa">envíanos el mensaje por WhatsApp</a>.`;
+        nota.classList.add('form-nota--ok');
+      }
+    });
+  };
+
+  return { init };
+})();
+
+// ============================================================================
 // APP INIT
 // ============================================================================
 const App = {
@@ -248,6 +315,7 @@ const App = {
     Navigation.init();
     AnioDinamico.init();
     Cart.render();
+    ContactForm.init();
 
     // Botones del carrito
     document.getElementById('cart-toggle')?.addEventListener('click', Cart.abrir);
@@ -263,3 +331,19 @@ if (document.readyState === 'loading') {
 } else {
   App.init();
 }
+
+// ── Banner de cookies ──────────────────────────────────────────────────────
+(function () {
+  const banner = document.getElementById('cookie-banner');
+  const btn    = document.getElementById('cookie-aceptar');
+  if (!banner || !btn) return;
+
+  if (!localStorage.getItem('et_cookies_ok')) {
+    banner.removeAttribute('hidden');
+  }
+
+  btn.addEventListener('click', () => {
+    localStorage.setItem('et_cookies_ok', '1');
+    banner.setAttribute('hidden', '');
+  });
+}());
