@@ -9,8 +9,7 @@ const WOMPI = {
   publicKey: 'pub_prod_i8kgq0AwhbR6ZGuKKrvH1Nh6Fq8EnXZn',
   currency: 'COP',
   activo: true,
-  // URL del Apps Script que genera la firma de integridad (se llena tras desplegar)
-  scriptUrl: ''
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbxNxiFXnLsuD_K8g4p9xagimfgm8pC5DXvaRpqxTHNIIgUx78gWmKwrRFLMYbRaxjip/exec'
 };
 
 // ── Catálogo: Café Origen Caicedo, presentaciones (grano o molido) ─────────
