@@ -1039,27 +1039,33 @@ a:hover {
 }
 .popup-close:hover { background: rgba(0,0,0,.7); }
 
-.popup-img-link {
-  display: block;
-  line-height: 0;
-  position: relative;
-  cursor: pointer;
-}
 .popup-img-full {
   width: 100%;
   height: auto;
   display: block;
   border-radius: 20px;
 }
-/* Área transparente encima del botón naranja del flyer (último 18% del alto) */
-.popup-btn-area {
+/* Zona transparente sobre la X del diseño (esquina superior derecha) */
+.popup-hit-x {
   position: absolute;
-  bottom: 6%;
-  left: 20%; right: 20%;
-  height: 14%;
+  top: 2%; right: 3%;
+  width: 9%; aspect-ratio: 1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+}
+/* Zona transparente sobre el botón naranja del diseño */
+.popup-hit-btn {
+  position: absolute;
+  left: 24%; right: 24%;
+  top: 80%; bottom: 6%;
   border-radius: 50px;
   cursor: pointer;
+  z-index: 10;
 }
 @media (max-width: 560px) {
-  .popup-btn-area { left: 15%; right: 15%; bottom: 5%; height: 12%; }
+  .popup-hit-x  { top: 1.5%; right: 2%; width: 10%; }
+  .popup-hit-btn{ left: 18%; right: 18%; top: 79%; }
 }

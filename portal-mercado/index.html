@@ -414,14 +414,14 @@
   <!-- POPUP BIENVENIDA -->
   <div id="popup-overlay" class="popup-overlay" hidden>
     <div class="popup-card" role="dialog" aria-modal="true" aria-label="Bienvenida Esencia y Taza">
-      <button id="popup-close" class="popup-close" aria-label="Cerrar">&#x2715;</button>
-      <a href="#cafes" id="popup-cta" class="popup-img-link">
-        <img src="./assets/images/popup-promo.png"
-             alt="Berriondo no te quedes sin probar esta ricura de café — Esencia y Taza"
-             class="popup-img-full">
-        <!-- Área clicable transparente sobre el botón naranja del flyer -->
-        <span class="popup-btn-area" aria-hidden="true"></span>
-      </a>
+      <!-- Imagen del flyer como fondo completo -->
+      <img src="./assets/images/popup-promo.png"
+           alt="Berriondo no te quedes sin probar esta ricura de café — Esencia y Taza"
+           class="popup-img-full">
+      <!-- Área transparente sobre la X del flyer -->
+      <button id="popup-close" class="popup-hit-x" aria-label="Cerrar"></button>
+      <!-- Área transparente sobre el botón naranja del flyer -->
+      <a href="#cafes" id="popup-cta" class="popup-hit-btn" aria-label="Pruébalo Ahora"></a>
     </div>
   </div>
 
