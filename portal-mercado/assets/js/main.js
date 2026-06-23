@@ -8,7 +8,9 @@ const WHATSAPP = '573022573244';
 const WOMPI = {
   publicKey: 'pub_prod_i8kgq0AwhbR6ZGuKKrvH1Nh6Fq8EnXZn',
   currency: 'COP',
-  activo: true
+  activo: true,
+  // URL del Apps Script que genera la firma de integridad (se llena tras desplegar)
+  scriptUrl: ''
 };
 
 // ── Catálogo: Café Origen Caicedo, presentaciones (grano o molido) ─────────
@@ -134,24 +136,42 @@ const Cart = (() => {
     window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
-  const checkoutWompi = () => {
-    const referencia = 'ET-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7).toUpperCase();
-    const montoEnCentavos = total() * 100;
+  const checkoutWompi = async () => {
+    const referencia      = 'ET-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7).toUpperCase();
+    const montoEnCentavos = String(total() * 100);
 
-    // Descripción compacta de los items para el campo redirect
-    const resumen = items.map(i =>
-      `${i.cantidad}x ${i.tamano} ${i.tipo}`
-    ).join(', ');
+    const btnPagar    = document.getElementById('cart-pagar');
+    const textoOrig   = btnPagar ? btnPagar.innerHTML : '';
+    if (btnPagar) { btnPagar.disabled = true; btnPagar.textContent = 'Generando pago…'; }
 
-    const params = new URLSearchParams({
-      'public-key'    : WOMPI.publicKey,
-      'currency'      : WOMPI.currency,
-      'amount-in-cents': String(montoEnCentavos),
-      'reference'     : referencia,
-      'redirect-url'  : window.location.origin + window.location.pathname,
-    });
+    const irAWompi = (signature) => {
+      const params = new URLSearchParams({
+        'public-key'      : WOMPI.publicKey,
+        'currency'        : WOMPI.currency,
+        'amount-in-cents' : montoEnCentavos,
+        'reference'       : referencia,
+        'redirect-url'    : window.location.origin + window.location.pathname,
+      });
+      if (signature) params.set('signature:integrity', signature);
+      window.location.href = 'https://checkout.wompi.co/p/?' + params.toString();
+    };
 
-    window.location.href = 'https://checkout.wompi.co/p/?' + params.toString();
+    // Si el Apps Script está configurado, obtener firma de integridad
+    if (WOMPI.scriptUrl) {
+      try {
+        const url = `${WOMPI.scriptUrl}?ref=${encodeURIComponent(referencia)}&amount=${montoEnCentavos}&cur=COP`;
+        const res = await fetch(url);
+        const { signature } = await res.json();
+        irAWompi(signature);
+      } catch (_) {
+        if (btnPagar) { btnPagar.disabled = false; btnPagar.innerHTML = textoOrig; }
+        const seguir = confirm('No se pudo iniciar el pago seguro.\n¿Completar pedido por WhatsApp?');
+        if (seguir) checkoutWhatsApp();
+      }
+    } else {
+      // Sin Apps Script: checkout sin firma (funcional, se añadirá la firma al desplegar)
+      irAWompi(null);
+    }
   };
 
   return { add, abrir, cerrar, render, checkout, pagar };
