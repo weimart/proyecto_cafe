@@ -104,12 +104,28 @@
           "latitude": "6.6483",
           "longitude": "-75.4617"
         },
-        "openingHoursSpecification": {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-          "opens": "08:00",
-          "closes": "18:00"
-        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"],
+            "opens": "08:00", "closes": "12:30"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"],
+            "opens": "13:30", "closes": "17:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Friday"],
+            "opens": "08:00", "closes": "17:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Saturday"],
+            "opens": "08:00", "closes": "14:00"
+          }
+        ],
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
           "name": "Café Origen Caicedo",
@@ -305,7 +321,10 @@
 
             <div class="contact-horario">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              Atención Lun–Sáb · 8 am a 6 pm
+              <span>
+                Lun–Jue: 8:00 am – 12:30 pm / 1:30 pm – 5:00 pm<br>
+                Viernes: 8:00 am – 5:00 pm &nbsp;·&nbsp; Sábado: 8:00 am – 2:00 pm
+              </span>
             </div>
           </div>
 
@@ -366,7 +385,7 @@
           <a href="tel:+573022573244">+57 302 257 3244</a>
         </div>
         <p class="footer-bottom-copy">
-          &copy; <span id="anio">2026</span> Esencia y Taza — Nombre comercial.
+          &copy; <span id="anio"></span> Esencia y Taza — Nombre comercial.
           Santa Rosa de Osos, Antioquia, Colombia.
         </p>
       </div>
