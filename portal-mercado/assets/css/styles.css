@@ -1141,6 +1141,71 @@ a:hover {
 /* ============================================================================
    FAQ — Preguntas Frecuentes
    =========================================================================== */
+/* ============================================================================
+   TESTIMONIOS
+   =========================================================================== */
+.section-testimonios { background: var(--color-dark); }
+.section-testimonios h2 { color: #fff; }
+.section-testimonios .section-subtitle { color: rgba(255,255,255,.55); }
+
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: .5rem;
+}
+@media (max-width: 900px) { .testi-grid { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; } }
+
+.testi-card {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 16px;
+  padding: 1.75rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: background .2s;
+}
+.testi-card:hover { background: rgba(255,255,255,.09); }
+
+.testi-stars { font-size: 1.2rem; color: var(--color-gold); letter-spacing: 2px; }
+
+.testi-texto {
+  font-size: .92rem;
+  color: rgba(255,255,255,.82);
+  line-height: 1.75;
+  font-style: italic;
+  margin: 0;
+  flex: 1;
+}
+
+.testi-autor {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+
+.testi-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  color: var(--color-dark);
+  font-size: .8rem;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: .02em;
+}
+.testi-avatar--biz { background: var(--color-medium); color: #fff; }
+
+.testi-info { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.testi-info strong { color: #fff; font-size: .9rem; font-weight: 700; }
+.testi-ciudad { color: rgba(255,255,255,.45); font-size: .75rem; }
+
+.testi-fecha { color: rgba(255,255,255,.3); font-size: .72rem; flex-shrink: 0; align-self: flex-start; }
+
 .section-faq { background: var(--color-cream); }
 
 .faq-list {

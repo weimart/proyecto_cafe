@@ -18,14 +18,14 @@ const PRESENTACIONES = [
     desc: 'Ideal para descubrir el perfil de taza de Caicedo. Notas de chocolate oscuro y caramelo con tueste medio, perfecto en espresso o prensa francesa.',
     tueste: 'Tueste medio', uso: 'Ideal para probar' },
   { id: '250g',  tamano: '250 g',  precio: 33000,
-    desc: 'Para quienes ya disfrutan de nuestro origen. Tueste medio‑oscuro que realza la dulzura natural del grano de altura, perfecto para consumo semanal.',
-    tueste: 'Tueste medio-oscuro', uso: 'Consumo semanal' },
+    desc: 'Para quienes ya disfrutan de nuestro origen. Tueste medio que realza la dulzura natural del grano de altura, perfecto para consumo semanal.',
+    tueste: 'Tueste medio', uso: 'Consumo semanal' },
   { id: '500g',  tamano: '500 g',  precio: 60000, destacado: true,
     desc: 'El favorito de nuestros clientes. Abastece el consumo diario de tu hogar por más de un mes. Granos seleccionados de Caicedo, tostados bajo pedido.',
-    tueste: 'Tueste medio-oscuro', uso: 'Consumo diario en casa' },
+    tueste: 'Tueste medio', uso: 'Consumo diario en casa' },
   { id: '2500g', tamano: '2.5 kg', precio: 180000,
     desc: 'Para cafeterías, restaurantes y familias grandes. Lote artesanal tostado bajo pedido con precio mayorista y la misma calidad de origen Caicedo.',
-    tueste: 'Tueste personalizable', uso: 'Negocios y cafeterías' }
+    tueste: 'Tueste medio', uso: 'Negocios y cafeterías' }
 ];
 
 const formatoCOP = (v) => '$' + v.toLocaleString('es-CO');
@@ -216,7 +216,7 @@ const Products = (() => {
         </div>
         <div class="product-body">
           <p class="product-origin">Caicedo · Antioquia</p>
-          <h3 class="product-title">Café Origen Caicedo</h3>
+          <h3 class="product-title">Café Origen Caicedo ${p.tamano}</h3>
           <p class="product-desc">${p.desc}</p>
           <div class="product-tags">
             <span class="product-tag">${p.tueste}</span>
