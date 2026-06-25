@@ -14,10 +14,18 @@ const WOMPI = {
 
 // ── Catálogo: Café Origen Caicedo, presentaciones (grano o molido) ─────────
 const PRESENTACIONES = [
-  { id: '125g',  tamano: '125 g',  precio: 20000 },
-  { id: '250g',  tamano: '250 g',  precio: 33000 },
-  { id: '500g',  tamano: '500 g',  precio: 60000, destacado: true },
-  { id: '2500g', tamano: '2.5 kg', precio: 180000 }
+  { id: '125g',  tamano: '125 g',  precio: 20000,
+    desc: 'Ideal para descubrir el perfil de taza de Caicedo. Notas de chocolate oscuro y caramelo con tueste medio, perfecto en espresso o prensa francesa.',
+    tueste: 'Tueste medio', uso: 'Ideal para probar' },
+  { id: '250g',  tamano: '250 g',  precio: 33000,
+    desc: 'Para quienes ya disfrutan de nuestro origen. Tueste medio‑oscuro que realza la dulzura natural del grano de altura, perfecto para consumo semanal.',
+    tueste: 'Tueste medio-oscuro', uso: 'Consumo semanal' },
+  { id: '500g',  tamano: '500 g',  precio: 60000, destacado: true,
+    desc: 'El favorito de nuestros clientes. Abastece el consumo diario de tu hogar por más de un mes. Granos seleccionados de Caicedo, tostados bajo pedido.',
+    tueste: 'Tueste medio-oscuro', uso: 'Consumo diario en casa' },
+  { id: '2500g', tamano: '2.5 kg', precio: 180000,
+    desc: 'Para cafeterías, restaurantes y familias grandes. Lote artesanal tostado bajo pedido con precio mayorista y la misma calidad de origen Caicedo.',
+    tueste: 'Tueste personalizable', uso: 'Negocios y cafeterías' }
 ];
 
 const formatoCOP = (v) => '$' + v.toLocaleString('es-CO');
@@ -64,6 +72,13 @@ const Cart = (() => {
     // Badge del botón del carrito
     const badge = document.getElementById('cart-count');
     if (badge) badge.textContent = totalItems();
+
+    // Basurero: visible solo cuando hay items
+    const btnVaciar = document.getElementById('cart-vaciar');
+    if (btnVaciar) {
+      if (items.length === 0) btnVaciar.setAttribute('hidden', '');
+      else btnVaciar.removeAttribute('hidden');
+    }
 
     // Lista de items en el panel
     const cont = document.getElementById('cart-items');
@@ -173,7 +188,13 @@ const Cart = (() => {
     }
   };
 
-  return { add, abrir, cerrar, render, checkout, pagar };
+  const vaciar = () => {
+    if (items.length === 0) return;
+    items = [];
+    render();
+  };
+
+  return { add, abrir, cerrar, render, checkout, pagar, vaciar };
 })();
 
 // ============================================================================
@@ -184,33 +205,35 @@ const Products = (() => {
     const grid = document.getElementById('products-grid');
     if (!grid) return;
 
-    grid.innerHTML = PRESENTACIONES.map((p, i) => `
-      <article class="product-card">
-        <div class="product-image product-placeholder">
-          <img src="./assets/images/logo.png" alt="Esencia y Taza" class="placeholder-logo">
-          <span class="placeholder-tamano">${p.tamano}</span>
-          ${p.destacado ? '<span class="product-flag">Más pedido</span>' : ''}
+    grid.innerHTML = PRESENTACIONES.map(p => `
+      <article class="product-card${p.destacado ? ' product-card--destacado' : ''}" data-tipo="En grano">
+        <div class="product-visual product-visual--${p.id}">
+          <span class="product-visual-tamano" aria-hidden="true">${p.tamano}</span>
+          <img src="./assets/images/logo.png"
+               alt="Café Origen Caicedo ${p.tamano} — Esencia y Taza, Caicedo Antioquia"
+               class="product-visual-logo">
+          ${p.destacado ? '<span class="product-flag">⭐ Más pedido</span>' : ''}
         </div>
-        <div class="product-info">
-          <div class="product-label">CAICEDO, ANTIOQUIA</div>
+        <div class="product-body">
+          <p class="product-origin">Caicedo · Antioquia</p>
           <h3 class="product-title">Café Origen Caicedo</h3>
-          <p class="product-desc">Café 100% colombiano, tostado bajo pedido. Notas de chocolate y caramelo.</p>
-          <div class="product-select">
-            <label for="tipo-${i}">Presentación:</label>
-            <select id="tipo-${i}" class="select-grind">
-              <option value="En grano">${p.tamano} · En grano</option>
-              <option value="Molido">${p.tamano} · Molido</option>
-            </select>
+          <p class="product-desc">${p.desc}</p>
+          <div class="product-tags">
+            <span class="product-tag">${p.tueste}</span>
+            <span class="product-tag product-tag--uso">${p.uso}</span>
           </div>
-          <div class="product-footer">
-            <div>
-              <div class="product-price">${formatoCOP(p.precio)}</div>
-              <div class="product-size">${p.tamano}</div>
+          <div class="product-tipo-group" role="group" aria-label="Tipo de molienda">
+            <button class="tipo-pill tipo-pill--active" data-tipo="En grano">En grano</button>
+            <button class="tipo-pill" data-tipo="Molido">Molido</button>
+          </div>
+          <div class="product-action">
+            <div class="product-pricing">
+              <span class="product-price">${formatoCOP(p.precio)}</span>
+              <span class="product-size-label">${p.tamano}</span>
             </div>
-            <button class="btn btn-primary btn-add"
+            <button class="btn-add-card"
                     data-tamano="${p.tamano}"
-                    data-precio="${p.precio}"
-                    data-tipo-id="tipo-${i}">
+                    data-precio="${p.precio}">
               + Añadir
             </button>
           </div>
@@ -218,14 +241,22 @@ const Products = (() => {
       </article>
     `).join('');
 
-    grid.querySelectorAll('.btn-add').forEach(btn => {
+    grid.querySelectorAll('.tipo-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        const card = pill.closest('.product-card');
+        card.querySelectorAll('.tipo-pill').forEach(p => p.classList.remove('tipo-pill--active'));
+        pill.classList.add('tipo-pill--active');
+        card.dataset.tipo = pill.dataset.tipo;
+      });
+    });
+
+    grid.querySelectorAll('.btn-add-card').forEach(btn => {
       btn.addEventListener('click', () => {
+        const card = btn.closest('.product-card');
         const tamano = btn.getAttribute('data-tamano');
         const precio = parseInt(btn.getAttribute('data-precio'));
-        const sel = document.getElementById(btn.getAttribute('data-tipo-id'));
-        const tipo = sel ? sel.value : 'En grano';
+        const tipo = card.dataset.tipo || 'En grano';
         Cart.add(tamano, tipo, precio);
-
         btn.textContent = '✓ Añadido';
         setTimeout(() => { btn.textContent = '+ Añadir'; }, 1500);
       });
@@ -377,6 +408,7 @@ const App = {
     document.getElementById('cart-overlay')?.addEventListener('click', Cart.cerrar);
     document.getElementById('cart-checkout')?.addEventListener('click', Cart.checkout);
     document.getElementById('cart-pagar')?.addEventListener('click', Cart.pagar);
+    document.getElementById('cart-vaciar')?.addEventListener('click', Cart.vaciar);
   }
 };
 
