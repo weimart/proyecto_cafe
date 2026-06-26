@@ -201,7 +201,8 @@ a:hover {
 
 /* HERO */
 .hero {
-  background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-medium) 50%, #8B7355 100%);
+  background: url('../images/hero-cafetal.jpg') center center / cover no-repeat;
+  position: relative;
   color: white;
   padding: 120px var(--spacing-4);
   text-align: center;
@@ -211,6 +212,13 @@ a:hover {
   align-items: center;
   min-height: 600px;
 }
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 7, 2, 0.68);
+}
+.hero .container { position: relative; z-index: 1; }
 
 .hero h1 {
   color: white;
@@ -340,42 +348,41 @@ a:hover {
 /* ── Visual (zona imagen) ── */
 .product-visual {
   position: relative;
-  height: 195px;
+  height: 220px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   overflow: hidden;
   flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
 }
-.product-visual--125g  { background: linear-gradient(145deg, #C4A882 0%, #A0826D 100%); }
-.product-visual--250g  { background: linear-gradient(145deg, #8B7355 0%, #6B5344 100%); }
-.product-visual--500g  { background: linear-gradient(145deg, #5A4030 0%, #3D2817 100%); }
-.product-visual--2500g { background: linear-gradient(145deg, #3D2817 0%, #1E1108 100%); }
+.product-visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.55) 0%, transparent 55%);
+  pointer-events: none;
+}
+.product-visual--125g  { background-image: url('../images/product-125g.jpg'); }
+.product-visual--250g  { background-image: url('../images/product-250g.jpg'); }
+.product-visual--500g  { background-image: url('../images/product-500g.jpg'); }
+.product-visual--2500g { background-image: url('../images/product-2500g.jpg'); }
 
 .product-visual-tamano {
   font-family: var(--font-serif);
-  font-size: 5rem;
+  font-size: 4rem;
   font-weight: 800;
-  color: rgba(255,255,255,.1);
+  color: rgba(255,255,255,.55);
   position: absolute;
-  bottom: -12px;
-  right: 10px;
+  bottom: 8px;
+  right: 12px;
   line-height: 1;
-  letter-spacing: -3px;
+  letter-spacing: -2px;
   pointer-events: none;
   user-select: none;
-}
-
-.product-visual-logo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2.5px solid rgba(212,175,55,.65);
-  background: rgba(255,255,255,.08);
-  position: relative;
   z-index: 1;
-  transition: transform .3s;
+  text-shadow: 0 2px 8px rgba(0,0,0,.6);
 }
 .product-card:hover .product-visual-logo { transform: scale(1.06); }
 

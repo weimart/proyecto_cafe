@@ -209,9 +209,6 @@ const Products = (() => {
       <article class="product-card${p.destacado ? ' product-card--destacado' : ''}" data-tipo="En grano">
         <div class="product-visual product-visual--${p.id}">
           <span class="product-visual-tamano" aria-hidden="true">${p.tamano}</span>
-          <img src="./assets/images/logo.png"
-               alt="Café Origen Caicedo ${p.tamano} — Esencia y Taza, Caicedo Antioquia"
-               class="product-visual-logo">
           ${p.destacado ? '<span class="product-flag">⭐ Más pedido</span>' : ''}
         </div>
         <div class="product-body">
