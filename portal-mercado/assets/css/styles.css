@@ -216,9 +216,17 @@ a:hover {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(15, 7, 2, 0.68);
+  background: linear-gradient(
+    to bottom,
+    rgba(25, 10, 2, 0.38) 0%,
+    rgba(20, 8, 2, 0.52) 100%
+  );
+  pointer-events: none;
 }
-.hero .container { position: relative; z-index: 1; }
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
 
 .hero h1 {
   color: white;
