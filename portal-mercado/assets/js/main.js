@@ -6,10 +6,11 @@
 const WHATSAPP = '573022573244';
 
 const WOMPI = {
-  publicKey: 'pub_prod_i8kgq0AwhbR6ZGuKKrvH1Nh6Fq8EnXZn',
-  currency: 'COP',
-  activo: true,
-  scriptUrl: 'https://script.google.com/macros/s/AKfycbxNxiFXnLsuD_K8g4p9xagimfgm8pC5DXvaRpqxTHNIIgUx78gWmKwrRFLMYbRaxjip/exec'
+  publicKey  : 'pub_prod_i8kgq0AwhbR6ZGuKKrvH1Nh6Fq8EnXZn',
+  currency   : 'COP',
+  activo     : true,
+  redirectUrl: 'https://esenciaytaza.com/',
+  scriptUrl  : 'https://script.google.com/macros/s/AKfycbxNxiFXnLsuD_K8g4p9xagimfgm8pC5DXvaRpqxTHNIIgUx78gWmKwrRFLMYbRaxjip/exec'
 };
 
 // ── Catálogo: Café Origen Caicedo, presentaciones (grano o molido) ─────────
@@ -154,9 +155,12 @@ const Cart = (() => {
     const referencia      = 'ET-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7).toUpperCase();
     const montoEnCentavos = String(total() * 100);
 
-    const btnPagar    = document.getElementById('cart-pagar');
-    const textoOrig   = btnPagar ? btnPagar.innerHTML : '';
+    const btnPagar   = document.getElementById('cart-pagar');
+    const textoOrig  = btnPagar ? btnPagar.innerHTML : '';
     if (btnPagar) { btnPagar.disabled = true; btnPagar.textContent = 'Generando pago…'; }
+
+    // redirect-url fijo para producción (evita exponer localhost a Wompi)
+    const redirectUrl = WOMPI.redirectUrl || (window.location.origin + window.location.pathname);
 
     const irAWompi = (signature) => {
       const params = new URLSearchParams({
@@ -164,26 +168,27 @@ const Cart = (() => {
         'currency'        : WOMPI.currency,
         'amount-in-cents' : montoEnCentavos,
         'reference'       : referencia,
-        'redirect-url'    : window.location.origin + window.location.pathname,
+        'redirect-url'    : redirectUrl,
       });
       if (signature) params.set('signature:integrity', signature);
       window.location.href = 'https://checkout.wompi.co/p/?' + params.toString();
     };
 
-    // Si el Apps Script está configurado, obtener firma de integridad
     if (WOMPI.scriptUrl) {
       try {
         const url = `${WOMPI.scriptUrl}?ref=${encodeURIComponent(referencia)}&amount=${montoEnCentavos}&cur=COP`;
-        const res = await fetch(url);
-        const { signature } = await res.json();
-        irAWompi(signature);
-      } catch (_) {
+        const res  = await fetch(url);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        if (!data.signature) throw new Error('Sin firma en respuesta');
+        irAWompi(data.signature);
+      } catch (e) {
+        console.error('[Wompi] Error al obtener firma:', e.message);
         if (btnPagar) { btnPagar.disabled = false; btnPagar.innerHTML = textoOrig; }
         const seguir = confirm('No se pudo iniciar el pago seguro.\n¿Completar pedido por WhatsApp?');
         if (seguir) checkoutWhatsApp();
       }
     } else {
-      // Sin Apps Script: checkout sin firma (funcional, se añadirá la firma al desplegar)
       irAWompi(null);
     }
   };

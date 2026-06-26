@@ -10,3 +10,6 @@
 
 # Notas internas del negocio (NO publicar — plan, precios, estrategia)
 notas.txt
+
+# Google Apps Script con llaves privadas — NO subir al repo
+wompi-firma.gs
