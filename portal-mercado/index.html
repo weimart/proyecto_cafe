@@ -293,6 +293,12 @@
   <!-- Skip to main content -->
   <a href="#main" class="skip-to-main">Ir al contenido principal</a>
 
+  <!-- ANNOUNCEMENT BAR -->
+  <div id="announcement-bar" class="announcement-bar" role="status">
+    🔒 Pagos seguros en línea con <strong>Wompi</strong> — Tarjeta de crédito, débito, PSE y Nequi
+    <button id="close-announcement" class="announcement-close" aria-label="Cerrar aviso">✕</button>
+  </div>
+
   <!-- HEADER -->
   <header role="banner" class="header">
     <nav role="navigation" aria-label="Navegación principal" class="navbar">
@@ -324,11 +330,15 @@
 
     <!-- SECTION 1: HERO -->
     <section id="inicio" class="hero" aria-labelledby="hero-title">
-      <div class="hero-content">
-        <h1 id="hero-title">Café Artesanal 100% Colombiano<br>de Origen Caicedo, Antioquia</h1>
-        <p class="hero-subtitle">Del árbol a tu taza · Sin intermediarios · Tostado bajo pedido</p>
-        <p class="hero-description">Una familia de Santa Rosa de Osos lleva el sabor del cafetal de Caicedo directo a tu hogar.</p>
-        <div class="hero-buttons">
+      <h1 id="hero-title" class="visually-hidden">Café Artesanal 100% Colombiano — El Origen en Cada Taza, Caicedo, Antioquia</h1>
+      <div class="hero-img-wrap">
+        <img
+          src="./assets/images/hero-banner.jpg"
+          alt="Esencia y Taza — El origen en cada taza. Café de especialidad de Caicedo, Antioquia. Origen único, tueste artesanal."
+          class="hero-img"
+          width="2400" height="1018"
+          fetchpriority="high">
+        <div class="hero-banner-cta">
           <a href="#cafes" class="btn btn-primary">Ver nuestros cafés</a>
           <a href="https://wa.me/573022573244?text=Hola%20Esencia%20y%20Taza,%20quiero%20más%20información" target="_blank" rel="noopener" class="btn btn-secondary">Escríbenos por WhatsApp</a>
         </div>
@@ -624,6 +634,16 @@
         <a href="./privacidad.html" class="legal-link">Política de privacidad</a>
         <span class="legal-sep">·</span>
         <a href="./terminos.html" class="legal-link">Términos y condiciones</a>
+      </div>
+
+      <div class="footer-medios" aria-label="Medios de pago aceptados">
+        <span class="footer-medios-label">Medios de pago</span>
+        <div class="footer-medios-icons">
+          <span class="medio-pago">VISA</span>
+          <span class="medio-pago">Mastercard</span>
+          <span class="medio-pago">PSE</span>
+          <span class="medio-pago">Nequi</span>
+        </div>
       </div>
 
       <div class="footer-bottom">

@@ -420,6 +420,20 @@ if (document.readyState === 'loading') {
   App.init();
 }
 
+// ── Barra de anuncio Wompi ────────────────────────────────────────────────
+(function () {
+  const bar = document.getElementById('announcement-bar');
+  const btn = document.getElementById('close-announcement');
+  if (!bar || !btn) return;
+  if (sessionStorage.getItem('et_announcement_closed')) {
+    bar.classList.add('hidden');
+  }
+  btn.addEventListener('click', () => {
+    bar.classList.add('hidden');
+    sessionStorage.setItem('et_announcement_closed', '1');
+  });
+}());
+
 // ── Banner de cookies ──────────────────────────────────────────────────────
 (function () {
   const banner = document.getElementById('cookie-banner');
