@@ -5,7 +5,7 @@
 
 const WHATSAPP = '573022573244';
 
-const PEDIDOS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzUDF_ajemKGrSRHIwca3IHIIyI0PWFP3E2RYVY-8mabJPcWy9ZzjoqcUNaTatbmr1F/exec';
+const PEDIDOS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwVbUa59Zlb-pD5dsLEKqw4AnnKBQdvQI3YhVgRAl4ZUwEC-hxhzafSXsrcJIB2FwU/exec';
 
 const WOMPI = {
   publicKey  : 'pub_prod_i8kgq0AwhbR6ZGuKKrvH1Nh6Fq8EnXZn',

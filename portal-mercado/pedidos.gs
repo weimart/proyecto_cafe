@@ -74,10 +74,12 @@ function guardarPedido(data) {
   // Guardar / actualizar cliente
   _upsertCliente(data);
 
-  // Notificar al vendedor si es WhatsApp (el pago Wompi se confirma después)
+  // Email al vendedor y al cliente
   if (data.metodo === 'whatsapp') {
     _notificarVendedor(data, data.idPedido, null);
+    _confirmarCliente(data, data.idPedido, null);
   }
+  // Para Wompi: los emails se envían al confirmar el pago (cuando tenemos el ID de transacción)
 
   return { ok: true, idPedido: data.idPedido };
 }
@@ -104,6 +106,7 @@ function confirmarPago(data) {
         razonSocial: filas[i][15], factura: filas[i][16] === 'Sí', metodo: 'wompi'
       };
       _notificarVendedor(pedido, pedido.idPedido, data.transaccionId);
+      _confirmarCliente(pedido, pedido.idPedido, data.transaccionId);
       return { ok: true };
     }
   }
@@ -145,6 +148,111 @@ function _upsertCliente(data) {
     data.tipoDoc || '', data.numeroDoc || '', data.razonSocial || '',
     1, Number(data.total)
   ]);
+}
+
+// ── Email de confirmación al cliente ─────────────────────────────────────────
+function _confirmarCliente(p, idPedido, transaccionId) {
+  if (!p.email) return;
+
+  const fecha    = Utilities.formatDate(new Date(), 'America/Bogota', 'dd/MM/yyyy HH:mm');
+  const metodo   = p.metodo === 'wompi' ? 'Pago en línea (Wompi)' : 'Pedido por WhatsApp';
+  const txnLinea = transaccionId ? `<tr><td style="color:#6B4226;padding:4px 0">ID transacción</td><td style="font-weight:600;text-align:right">${transaccionId}</td></tr>` : '';
+  const factLinea = p.factura
+    ? `<tr><td style="color:#6B4226;padding:4px 0">Documento</td><td style="font-weight:600;text-align:right">${p.tipoDoc}: ${p.numeroDoc}${p.razonSocial ? ' — ' + p.razonSocial : ''}</td></tr>`
+    : '';
+  const complemento = p.complemento ? `, ${p.complemento}` : '';
+
+  const waUrl = `https://wa.me/573022573244?text=${encodeURIComponent('Hola Esencia y Taza, tengo una consulta sobre mi pedido ' + idPedido)}`;
+
+  const html = `<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Confirmación de pedido</title></head>
+<body style="margin:0;padding:0;background:#FAF5EE;font-family:'Helvetica Neue',Arial,sans-serif">
+<table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:32px 16px">
+<table width="100%" style="max-width:560px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)">
+
+  <!-- Header -->
+  <tr><td style="background:#3D2817;padding:28px 32px;text-align:center">
+    <p style="margin:0;font-size:22px;font-weight:700;color:#C8962E;letter-spacing:.5px">Esencia y Taza</p>
+    <p style="margin:6px 0 0;font-size:13px;color:rgba(255,255,255,.7)">Café artesanal de origen · Caicedo, Antioquia</p>
+  </td></tr>
+
+  <!-- Estado -->
+  <tr><td style="background:${p.metodo === 'wompi' ? '#2E7D32' : '#1565C0'};padding:20px 32px;text-align:center">
+    <p style="margin:0;font-size:28px">${p.metodo === 'wompi' ? '✅' : '💬'}</p>
+    <p style="margin:6px 0 0;font-size:18px;font-weight:700;color:#fff">${p.metodo === 'wompi' ? '¡Pedido confirmado!' : '¡Pedido recibido!'}</p>
+    <p style="margin:4px 0 0;font-size:13px;color:rgba(255,255,255,.85)">${p.metodo === 'wompi' ? 'Tu pago fue procesado exitosamente.' : 'Nos pondremos en contacto para coordinar el envío.'}</p>
+  </td></tr>
+
+  <!-- Cuerpo -->
+  <tr><td style="padding:28px 32px">
+
+    <!-- Referencia -->
+    <table width="100%" style="background:#FAF5EE;border-radius:8px;margin-bottom:24px"><tr>
+      <td style="padding:12px 16px">
+        <p style="margin:0;font-size:11px;color:#6B4226;text-transform:uppercase;letter-spacing:.08em">Número de pedido</p>
+        <p style="margin:4px 0 0;font-size:16px;font-weight:700;color:#3D2817;font-family:monospace">${idPedido}</p>
+      </td>
+      <td style="padding:12px 16px;text-align:right">
+        <p style="margin:0;font-size:11px;color:#6B4226;text-transform:uppercase;letter-spacing:.08em">Fecha</p>
+        <p style="margin:4px 0 0;font-size:14px;font-weight:600;color:#3D2817">${fecha}</p>
+      </td>
+    </tr></table>
+
+    <!-- Productos -->
+    <p style="margin:0 0 8px;font-size:11px;font-weight:700;color:#C8962E;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid rgba(200,150,46,.2);padding-bottom:6px">Productos</p>
+    <p style="margin:0 0 4px;font-size:13px;color:#2C1A0E;white-space:pre-line">${p.productos}</p>
+    <table width="100%" style="margin-top:10px;border-top:2px solid #3D2817;padding-top:8px"><tr>
+      <td style="font-size:15px;font-weight:700;color:#3D2817;padding-top:8px">Total</td>
+      <td style="font-size:16px;font-weight:700;color:#3D2817;text-align:right;padding-top:8px">$${Number(p.total).toLocaleString('es-CO')} COP</td>
+    </tr></table>
+
+    <!-- Método y transacción -->
+    <p style="margin:24px 0 8px;font-size:11px;font-weight:700;color:#C8962E;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid rgba(200,150,46,.2);padding-bottom:6px">Pago</p>
+    <table width="100%">
+      <tr><td style="color:#6B4226;padding:4px 0">Método</td><td style="font-weight:600;text-align:right">${metodo}</td></tr>
+      ${txnLinea}
+    </table>
+
+    <!-- Envío -->
+    <p style="margin:24px 0 8px;font-size:11px;font-weight:700;color:#C8962E;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid rgba(200,150,46,.2);padding-bottom:6px">Dirección de envío</p>
+    <table width="100%">
+      <tr><td style="color:#6B4226;padding:4px 0">Destinatario</td><td style="font-weight:600;text-align:right">${p.nombre}</td></tr>
+      <tr><td style="color:#6B4226;padding:4px 0">Teléfono</td><td style="font-weight:600;text-align:right">${p.telefono}</td></tr>
+      <tr><td style="color:#6B4226;padding:4px 0">Ciudad</td><td style="font-weight:600;text-align:right">${p.ciudad}, ${p.departamento}</td></tr>
+      <tr><td style="color:#6B4226;padding:4px 0">Dirección</td><td style="font-weight:600;text-align:right">${p.direccion}${complemento}</td></tr>
+    </table>
+
+    ${p.factura ? `
+    <!-- Factura -->
+    <p style="margin:24px 0 8px;font-size:11px;font-weight:700;color:#C8962E;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid rgba(200,150,46,.2);padding-bottom:6px">Datos de factura</p>
+    <table width="100%">${factLinea}</table>` : ''}
+
+    <!-- CTA -->
+    <div style="text-align:center;margin:28px 0 0">
+      <a href="${waUrl}" style="display:inline-block;background:#25D366;color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:12px 28px;border-radius:8px">
+        💬 Contactar por WhatsApp
+      </a>
+    </div>
+
+  </td></tr>
+
+  <!-- Footer -->
+  <tr><td style="background:#FAF5EE;padding:20px 32px;text-align:center;border-top:1px solid rgba(0,0,0,.06)">
+    <p style="margin:0;font-size:12px;color:#6B4226">¿Preguntas? Escríbenos a <a href="mailto:comercial@esenciaytaza.com" style="color:#C8962E">comercial@esenciaytaza.com</a></p>
+    <p style="margin:6px 0 0;font-size:11px;color:#999">© ${new Date().getFullYear()} Esencia y Taza · Santa Rosa de Osos, Antioquia, Colombia</p>
+  </td></tr>
+
+</table>
+</td></tr></table>
+</body></html>`;
+
+  MailApp.sendEmail({
+    to: p.email,
+    subject: `✅ Pedido ${idPedido} — Esencia y Taza`,
+    htmlBody: html,
+    replyTo: EMAIL_VENDEDOR,
+  });
 }
 
 // ── Email al vendedor ─────────────────────────────────────────────────────────
