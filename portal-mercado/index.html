@@ -58,6 +58,12 @@
   <link rel="stylesheet" href="./assets/css/styles.css">
 
   <!-- ═══════════════════════════════════════════════
+       PRELOAD — imágenes críticas above-the-fold
+  ════════════════════════════════════════════════ -->
+  <link rel="preload" as="image" href="./assets/images/hero-banner.jpg">
+  <link rel="preload" as="image" href="./assets/images/popup-promo.jpg">
+
+  <!-- ═══════════════════════════════════════════════
        SCHEMA.ORG — Datos estructurados para Google
   ════════════════════════════════════════════════ -->
   <script type="application/ld+json">
@@ -654,7 +660,7 @@
           <a href="tel:+573022573244">+57 302 257 3244</a>
         </div>
         <p class="footer-bottom-copy">
-          &copy; <span id="anio"></span> Esencia y Taza — Nombre comercial.
+          &copy; <span id="anio"></span> Esencia y Taza — Café artesanal de origen.
           Santa Rosa de Osos, Antioquia, Colombia.
         </p>
       </div>
@@ -713,9 +719,10 @@
   <div id="popup-overlay" class="popup-overlay" hidden>
     <div class="popup-card" role="dialog" aria-modal="true" aria-label="Bienvenida Esencia y Taza">
       <!-- Imagen del flyer como fondo completo -->
-      <img src="./assets/images/popup-promo.png"
+      <img src="./assets/images/popup-promo.jpg"
            alt="Café artesanal Esencia y Taza — Promoción de bienvenida, café de origen Caicedo Antioquia"
-           class="popup-img-full">
+           class="popup-img-full"
+           fetchpriority="high" decoding="async">
       <!-- Área transparente sobre la X del flyer -->
       <button id="popup-close" class="popup-hit-x" aria-label="Cerrar"></button>
       <!-- Área transparente sobre el botón naranja del flyer -->

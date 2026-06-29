@@ -621,42 +621,27 @@ a:hover {
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
+  h1 { font-size: 1.9rem; }
+  h2 { font-size: 1.6rem; }
+
+  .origin-content { grid-template-columns: 1fr; }
+  .navbar-menu { display: none; }
+  .section { padding: 2rem var(--spacing-4); }
+  .footer-content { grid-template-columns: 1fr; }
+
+  /* Announcement bar — texto más compacto en móvil */
+  .announcement-bar {
+    font-size: 0.75rem;
+    padding: 0.45rem 2.2rem 0.45rem 0.75rem;
+    line-height: 1.35;
   }
 
-  h2 {
-    font-size: 1.8rem;
-  }
+  /* Hero — sin estilos del hero anterior (ahora es img) */
+  .hero { min-height: unset; padding: 0; }
 
-  .origin-content {
-    grid-template-columns: 1fr;
-  }
-
-  .navbar-menu {
-    display: none;
-  }
-
-  .hero {
-    min-height: 400px;
-    padding: 60px var(--spacing-4);
-  }
-
-  .hero-buttons {
-    flex-direction: column;
-  }
-
-  .hero-buttons .btn {
-    width: 100%;
-  }
-
-  .section {
-    padding: 2rem var(--spacing-4);
-  }
-
-  .footer-content {
-    grid-template-columns: 1fr;
-  }
+  /* Footer bottom wrap */
+  .footer-bottom-copy { font-size: 0.72rem; text-align: center; }
+  .footer-bottom-contacto { flex-direction: column; gap: 0.4rem; align-items: center; font-size: 0.82rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
