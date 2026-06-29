@@ -23,88 +23,148 @@
 <!-- NAV -->
 <nav class="blog-nav" aria-label="Navegación principal">
   <div class="blog-nav-inner">
-    <a href="./index.html" class="blog-nav-logo">
-      <img src="./assets/images/logo.png" alt="Esencia y Taza">
-      <span>Esencia y Taza</span>
+    <a href="./index.html" class="blog-nav-logo" aria-label="Esencia y Taza — Inicio">
+      <img src="./assets/images/logo.png" alt="Logo Esencia y Taza" class="blog-nav-logo-img">
+      <div class="blog-nav-logo-text">
+        <span class="blog-nav-logo-name">Esencia y Taza</span>
+        <span class="blog-nav-logo-tagline">Café de especialidad</span>
+      </div>
     </a>
     <ul class="blog-nav-links" role="list">
+      <li><a href="./index.html">Inicio</a></li>
       <li><a href="./index.html#nosotros">Nosotros</a></li>
       <li><a href="./index.html#cafes">Cafés</a></li>
       <li><a href="./blog.html" class="active">Blog</a></li>
       <li><a href="./index.html#contacto">Contacto</a></li>
     </ul>
-    <a href="./index.html#cafes" class="blog-nav-cta">🛒 Comprar café</a>
-    <button class="blog-hamburger" id="blog-ham" aria-label="Abrir menú" aria-expanded="false">
-      <span class="bh-line"></span><span class="bh-line"></span><span class="bh-line"></span>
+    <a href="./index.html#cafes" class="blog-nav-cta">Comprar café</a>
+    <button class="blog-hamburger" id="blog-ham" aria-label="Abrir menú" aria-expanded="false" aria-controls="blog-mobile-menu">
+      <span class="bh-line"></span>
+      <span class="bh-line"></span>
+      <span class="bh-line"></span>
     </button>
   </div>
 </nav>
+
 <nav class="blog-mobile-menu" id="blog-mobile-menu" hidden aria-label="Menú móvil">
   <ul class="blog-mobile-list" role="list">
-    <li><a href="./index.html" class="blog-mobile-link">Inicio</a></li>
-    <li><a href="./index.html#nosotros" class="blog-mobile-link">Nosotros</a></li>
-    <li><a href="./index.html#cafes" class="blog-mobile-link">Cafés</a></li>
-    <li><a href="./blog.html" class="blog-mobile-link">Blog</a></li>
-    <li><a href="./index.html#contacto" class="blog-mobile-link">Contacto</a></li>
+    <li><a href="./index.html"           class="blog-mobile-link">Inicio</a></li>
+    <li><a href="./index.html#nosotros"  class="blog-mobile-link">Nosotros</a></li>
+    <li><a href="./index.html#cafes"     class="blog-mobile-link">Cafés</a></li>
+    <li><a href="./blog.html"            class="blog-mobile-link active">Blog</a></li>
+    <li><a href="./index.html#contacto"  class="blog-mobile-link">Contacto</a></li>
   </ul>
-  <a href="./index.html#cafes" class="blog-mobile-cta">🛒 Comprar café</a>
+  <a href="./index.html#cafes" class="blog-mobile-cta">Comprar café →</a>
 </nav>
 
 <!-- HERO -->
 <header class="blog-hero">
-  <div class="blog-hero-tag">Conocimiento cafetero</div>
-  <h1>El Rincón del Café</h1>
-  <p>Todo lo que necesitas saber sobre el café: métodos de preparación, variedades, origen y el fascinante proceso de la semilla a tu taza.</p>
+  <div class="blog-hero-bg" aria-hidden="true"></div>
+  <div class="blog-hero-overlay" aria-hidden="true"></div>
+  <div class="blog-hero-content">
+    <div class="blog-hero-tag">Conocimiento cafetero</div>
+    <h1>El Rincón del Café</h1>
+    <p>Todo lo que necesitas saber sobre el café: métodos de preparación, variedades, origen y el fascinante proceso de la semilla a tu taza.</p>
+    <div class="blog-hero-stats" aria-label="Estadísticas del blog">
+      <div class="blog-stat">
+        <span class="blog-stat-num">3</span>
+        <span class="blog-stat-lbl">Artículos</span>
+      </div>
+      <div class="blog-stat">
+        <span class="blog-stat-num">37</span>
+        <span class="blog-stat-lbl">Min de lectura</span>
+      </div>
+      <div class="blog-stat">
+        <span class="blog-stat-num">100%</span>
+        <span class="blog-stat-lbl">Origen propio</span>
+      </div>
+    </div>
+  </div>
 </header>
 
 <!-- ARTÍCULOS -->
-<section class="blog-grid-section">
-  <h2 class="blog-grid-title">Artículos</h2>
-  <p class="blog-grid-sub">Guías completas escritas por los productores de Esencia y Taza</p>
+<section class="blog-grid-section" aria-labelledby="blog-titulo">
+  <div class="blog-grid-header">
+    <div>
+      <p class="blog-grid-eyebrow">Guías y artículos</p>
+      <h2 class="blog-grid-title" id="blog-titulo">Artículos</h2>
+      <p class="blog-grid-sub">Escritos por los productores de Esencia y Taza directamente desde Caicedo, Antioquia</p>
+    </div>
+  </div>
 
   <div class="blog-grid">
 
-    <!-- Card 1 -->
+    <!-- Card 1 — Métodos de preparación -->
     <a href="./blog/metodos-preparacion.html" class="blog-card">
-      <div class="blog-card-img bg-metodos" aria-hidden="true">☕</div>
+      <div class="blog-card-img">
+        <img src="./assets/images/hero-banner.jpg"
+             alt="Métodos de preparación de café"
+             class="blog-card-photo"
+             style="object-position: center 35%"
+             loading="lazy" decoding="async"
+             width="600" height="220">
+        <span class="blog-card-badge badge-preparacion">Preparación</span>
+      </div>
       <div class="blog-card-body">
-        <div class="blog-card-cat">Preparación</div>
         <h3 class="blog-card-title">Métodos de Preparación: Guía Completa</h3>
         <p class="blog-card-desc">De la cafetera italiana al V60, el AeroPress o el Cold Brew. Descubre cuál se adapta mejor a tu estilo y cómo sacarle el máximo a cada método.</p>
-        <div class="blog-card-meta">
-          <span>☕ 8 métodos</span>
-          <span>·</span>
-          <span>12 min de lectura</span>
+        <div class="blog-card-footer">
+          <div class="blog-card-meta">
+            <span>8 métodos</span>
+            <span class="blog-card-meta-dot">·</span>
+            <span>12 min</span>
+          </div>
+          <span class="blog-card-read">Leer →</span>
         </div>
       </div>
     </a>
 
-    <!-- Card 2 -->
+    <!-- Card 2 — Tipos de café -->
     <a href="./blog/tipos-de-cafe.html" class="blog-card">
-      <div class="blog-card-img bg-tipos" aria-hidden="true">🌱</div>
+      <div class="blog-card-img">
+        <img src="./assets/images/hero-cafetal.jpg"
+             alt="Tipos y variedades de café"
+             class="blog-card-photo"
+             style="object-position: center 50%"
+             loading="lazy" decoding="async"
+             width="600" height="220">
+        <span class="blog-card-badge badge-variedades">Variedades</span>
+      </div>
       <div class="blog-card-body">
-        <div class="blog-card-cat">Variedades</div>
         <h3 class="blog-card-title">Tipos y Variedades de Café que Debes Conocer</h3>
         <p class="blog-card-desc">Arábica, Robusta, Caturra, Castillo, Geisha y más. Aprende a distinguir las especies, variedades y qué hace especial al café colombiano de origen.</p>
-        <div class="blog-card-meta">
-          <span>🌱 6 variedades</span>
-          <span>·</span>
-          <span>10 min de lectura</span>
+        <div class="blog-card-footer">
+          <div class="blog-card-meta">
+            <span>6 variedades</span>
+            <span class="blog-card-meta-dot">·</span>
+            <span>10 min</span>
+          </div>
+          <span class="blog-card-read">Leer →</span>
         </div>
       </div>
     </a>
 
-    <!-- Card 3 -->
+    <!-- Card 3 — Del grano a la taza -->
     <a href="./blog/del-grano-a-la-taza.html" class="blog-card">
-      <div class="blog-card-img bg-proceso" aria-hidden="true">🫘</div>
+      <div class="blog-card-img">
+        <img src="./assets/images/hero-banner-mobile.jpg"
+             alt="Del grano a la taza: el viaje del café"
+             class="blog-card-photo"
+             style="object-position: center 40%"
+             loading="lazy" decoding="async"
+             width="600" height="220">
+        <span class="blog-card-badge badge-proceso">Proceso</span>
+      </div>
       <div class="blog-card-body">
-        <div class="blog-card-cat">Proceso</div>
         <h3 class="blog-card-title">Del Grano a la Taza: El Viaje Completo del Café</h3>
         <p class="blog-card-desc">Desde la semilla en tierra hasta el vapor en tu taza: cultivo, cosecha, beneficio, tostión, molienda y preparación. El recorrido que pocas personas conocen.</p>
-        <div class="blog-card-meta">
-          <span>🫘 9 etapas</span>
-          <span>·</span>
-          <span>15 min de lectura</span>
+        <div class="blog-card-footer">
+          <div class="blog-card-meta">
+            <span>9 etapas</span>
+            <span class="blog-card-meta-dot">·</span>
+            <span>15 min</span>
+          </div>
+          <span class="blog-card-read">Leer →</span>
         </div>
       </div>
     </a>
@@ -113,31 +173,52 @@
 </section>
 
 <!-- CTA -->
-<section style="background:#FAF5EE;padding:3.5rem 1.5rem;text-align:center">
-  <p style="font-size:0.85rem;color:#6B4226;text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:0.6rem">Café de especialidad</p>
-  <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;color:#3D2817;margin-bottom:0.8rem">Prueba el café que producimos</h2>
-  <p style="color:#6B4226;max-width:480px;margin:0 auto 1.5rem;font-size:0.95rem">Café de origen único de Caicedo, Antioquia. Tostado artesanal, empaque hermético y envío a toda Colombia.</p>
-  <a href="./index.html#cafes" style="display:inline-block;background:#C8962E;color:#3D2817;font-weight:700;padding:0.85rem 2rem;border-radius:8px;text-decoration:none;font-size:0.95rem">Ver nuestros cafés →</a>
+<section class="blog-cta">
+  <div class="blog-cta-bg" aria-hidden="true"></div>
+  <div class="blog-cta-overlay" aria-hidden="true"></div>
+  <div class="blog-cta-inner">
+    <p class="blog-cta-tag">Café de especialidad · Caicedo, Antioquia</p>
+    <h2>Prueba el café que nosotros producimos</h2>
+    <p>Café de origen único tostado artesanalmente, con envío a toda Colombia. Sin intermediarios, directo del cafetal a tu mesa.</p>
+    <a href="./index.html#cafes" class="blog-cta-btn">Ver nuestros cafés →</a>
+  </div>
 </section>
 
 <!-- FOOTER -->
 <footer class="blog-footer">
   <p>© <span id="anio"></span> <a href="./index.html">Esencia y Taza</a> — Café artesanal de origen · Santa Rosa de Osos, Antioquia</p>
-  <p style="margin-top:0.4rem"><a href="mailto:comercial@esenciaytaza.com">comercial@esenciaytaza.com</a> · <a href="tel:+573022573244">+57 302 257 3244</a></p>
+  <p><a href="mailto:comercial@esenciaytaza.com">comercial@esenciaytaza.com</a> · <a href="tel:+573022573244">+57 302 257 3244</a></p>
 </footer>
 
 <script>
 document.getElementById('anio').textContent = new Date().getFullYear();
-(function(){
-  const btn=document.getElementById('blog-ham'),menu=document.getElementById('blog-mobile-menu');
-  if(!btn||!menu)return;
-  btn.addEventListener('click',()=>{
-    const open=menu.hasAttribute('hidden');
-    if(open){menu.removeAttribute('hidden');btn.classList.add('is-open');btn.setAttribute('aria-expanded','true');}
-    else{menu.setAttribute('hidden','');btn.classList.remove('is-open');btn.setAttribute('aria-expanded','false');}
-  });
-  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.setAttribute('hidden','');btn.classList.remove('is-open');btn.setAttribute('aria-expanded','false');}));
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){menu.setAttribute('hidden','');btn.classList.remove('is-open');}});
+
+(function () {
+  const btn  = document.getElementById('blog-ham');
+  const menu = document.getElementById('blog-mobile-menu');
+  const nav  = document.querySelector('.blog-nav');
+  if (!btn || !menu) return;
+
+  function navH() { return nav ? nav.offsetHeight : 66; }
+
+  function open() {
+    menu.style.top = navH() + 'px';
+    menu.removeAttribute('hidden');
+    btn.classList.add('is-open');
+    btn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    menu.setAttribute('hidden', '');
+    btn.classList.remove('is-open');
+    btn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  btn.addEventListener('click', () => menu.hasAttribute('hidden') ? open() : close());
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  window.addEventListener('resize', () => { if (!menu.hasAttribute('hidden')) menu.style.top = navH() + 'px'; });
 }());
 </script>
 </body>

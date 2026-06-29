@@ -21,41 +21,52 @@
 <body>
 
 <!-- NAV -->
-<nav class="blog-nav">
+<nav class="blog-nav" aria-label="Navegación principal">
   <div class="blog-nav-inner">
-    <a href="../index.html" class="blog-nav-logo">
-      <img src="../assets/images/logo.png" alt="Esencia y Taza">
-      <span>Esencia y Taza</span>
+    <a href="../index.html" class="blog-nav-logo" aria-label="Esencia y Taza — Inicio">
+      <img src="../assets/images/logo.png" alt="Logo Esencia y Taza" class="blog-nav-logo-img">
+      <div class="blog-nav-logo-text">
+        <span class="blog-nav-logo-name">Esencia y Taza</span>
+        <span class="blog-nav-logo-tagline">Café de especialidad</span>
+      </div>
     </a>
     <ul class="blog-nav-links" role="list">
+      <li><a href="../index.html">Inicio</a></li>
       <li><a href="../index.html#nosotros">Nosotros</a></li>
       <li><a href="../index.html#cafes">Cafés</a></li>
       <li><a href="../blog.html" class="active">Blog</a></li>
       <li><a href="../index.html#contacto">Contacto</a></li>
     </ul>
-    <a href="../index.html#cafes" class="blog-nav-cta">🛒 Comprar café</a>
-    <button class="blog-hamburger" id="blog-ham" aria-label="Abrir menú" aria-expanded="false">
-      <span class="bh-line"></span><span class="bh-line"></span><span class="bh-line"></span>
+    <a href="../index.html#cafes" class="blog-nav-cta">Comprar café</a>
+    <button class="blog-hamburger" id="blog-ham" aria-label="Abrir menú" aria-expanded="false" aria-controls="blog-mobile-menu">
+      <span class="bh-line"></span>
+      <span class="bh-line"></span>
+      <span class="bh-line"></span>
     </button>
   </div>
 </nav>
+
 <nav class="blog-mobile-menu" id="blog-mobile-menu" hidden aria-label="Menú móvil">
   <ul class="blog-mobile-list" role="list">
-    <li><a href="../index.html" class="blog-mobile-link">Inicio</a></li>
-    <li><a href="../index.html#nosotros" class="blog-mobile-link">Nosotros</a></li>
-    <li><a href="../index.html#cafes" class="blog-mobile-link">Cafés</a></li>
-    <li><a href="../blog.html" class="blog-mobile-link">Blog</a></li>
-    <li><a href="../index.html#contacto" class="blog-mobile-link">Contacto</a></li>
+    <li><a href="../index.html"           class="blog-mobile-link">Inicio</a></li>
+    <li><a href="../index.html#nosotros"  class="blog-mobile-link">Nosotros</a></li>
+    <li><a href="../index.html#cafes"     class="blog-mobile-link">Cafés</a></li>
+    <li><a href="../blog.html"            class="blog-mobile-link active">Blog</a></li>
+    <li><a href="../index.html#contacto"  class="blog-mobile-link">Contacto</a></li>
   </ul>
-  <a href="../index.html#cafes" class="blog-mobile-cta">🛒 Comprar café</a>
+  <a href="../index.html#cafes" class="blog-mobile-cta">Comprar café →</a>
 </nav>
 
 <!-- HERO -->
-<header class="art-hero" style="background:linear-gradient(135deg,#0a0a1a,#1a1a3a,#2a2a5C)">
-  <div class="art-hero-cat">🫘 Proceso</div>
+<header class="art-hero">
+  <div class="art-hero-bg" aria-hidden="true"></div>
+  <div class="art-hero-overlay" aria-hidden="true"></div>
+  <div class="art-hero-inner">
+  <div class="art-hero-cat">Proceso</div>
   <h1>Del Grano a la Taza: El Viaje Completo del Café</h1>
   <p class="art-hero-lead">Desde la semilla que germina en tierra andina hasta el vapor que sube de tu taza — un recorrido por las 9 etapas que transforman un fruto tropical en la bebida más compleja del mundo.</p>
   <p class="art-meta">Por el equipo de Esencia y Taza · 15 min de lectura · Proceso</p>
+  </div>
 </header>
 
 <div class="art-layout">
@@ -357,15 +368,15 @@
 <script>
 document.getElementById('anio').textContent = new Date().getFullYear();
 (function(){
-  const btn=document.getElementById('blog-ham'),menu=document.getElementById('blog-mobile-menu');
+  const btn=document.getElementById('blog-ham'),menu=document.getElementById('blog-mobile-menu'),nav=document.querySelector('.blog-nav');
   if(!btn||!menu)return;
-  btn.addEventListener('click',()=>{
-    const open=menu.hasAttribute('hidden');
-    if(open){menu.removeAttribute('hidden');btn.classList.add('is-open');btn.setAttribute('aria-expanded','true');}
-    else{menu.setAttribute('hidden','');btn.classList.remove('is-open');btn.setAttribute('aria-expanded','false');}
-  });
-  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.setAttribute('hidden','');btn.classList.remove('is-open');btn.setAttribute('aria-expanded','false');}));
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){menu.setAttribute('hidden','');btn.classList.remove('is-open');}});
+  function navH(){return nav?nav.offsetHeight:66;}
+  function openM(){menu.style.top=navH()+'px';menu.removeAttribute('hidden');btn.classList.add('is-open');btn.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';}
+  function closeM(){menu.setAttribute('hidden','');btn.classList.remove('is-open');btn.setAttribute('aria-expanded','false');document.body.style.overflow='';}
+  btn.addEventListener('click',()=>menu.hasAttribute('hidden')?openM():closeM());
+  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeM));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM();});
+  window.addEventListener('resize',()=>{if(!menu.hasAttribute('hidden'))menu.style.top=navH()+'px';});
 }());
 </script>
 </body>
