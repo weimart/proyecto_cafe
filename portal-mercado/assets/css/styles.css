@@ -277,7 +277,7 @@ a:hover {
     height: 100%;
     width: 100%;
     object-fit: cover;
-    object-position: 38% center;
+    object-position: center center;
   }
   .hero-banner-cta {
     bottom: 5%;
