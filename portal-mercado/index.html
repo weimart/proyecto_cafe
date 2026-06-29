@@ -715,6 +715,123 @@
     </a>
   </div>
 
+  <!-- MODAL CHECKOUT (datos de envío + factura) -->
+  <div id="checkout-overlay" class="co-overlay" hidden aria-modal="true" role="dialog" aria-label="Datos de envío">
+    <div class="co-modal">
+      <button id="co-close" class="co-close" aria-label="Cerrar">✕</button>
+      <h2 class="co-title">Datos de envío y factura</h2>
+      <p class="co-subtitle">Los necesitamos para entregar tu café y emitir el comprobante.</p>
+
+      <form id="co-form" novalidate autocomplete="on">
+
+        <!-- DATOS PERSONALES -->
+        <fieldset class="co-fieldset">
+          <legend class="co-legend">Datos del cliente</legend>
+          <div class="co-field">
+            <label for="co-nombre">Nombre completo *</label>
+            <input id="co-nombre" name="nombre" type="text" placeholder="Ej: María García López" required autocomplete="name">
+          </div>
+          <div class="co-row2">
+            <div class="co-field">
+              <label for="co-email">Correo electrónico *</label>
+              <input id="co-email" name="email" type="email" placeholder="tu@correo.com" required autocomplete="email">
+            </div>
+            <div class="co-field">
+              <label for="co-tel">Teléfono / Celular *</label>
+              <input id="co-tel" name="telefono" type="tel" placeholder="300 123 4567" required autocomplete="tel">
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- DIRECCIÓN DE ENVÍO -->
+        <fieldset class="co-fieldset">
+          <legend class="co-legend">Dirección de envío</legend>
+          <div class="co-row2">
+            <div class="co-field">
+              <label for="co-depto">Departamento *</label>
+              <select id="co-depto" name="departamento" required autocomplete="address-level1">
+                <option value="">Seleccionar…</option>
+                <option>Antioquia</option><option>Atlántico</option><option>Bogotá D.C.</option>
+                <option>Bolívar</option><option>Boyacá</option><option>Caldas</option>
+                <option>Caquetá</option><option>Casanare</option><option>Cauca</option>
+                <option>Cesar</option><option>Chocó</option><option>Córdoba</option>
+                <option>Cundinamarca</option><option>Guainía</option><option>Guaviare</option>
+                <option>Huila</option><option>La Guajira</option><option>Magdalena</option>
+                <option>Meta</option><option>Nariño</option><option>Norte de Santander</option>
+                <option>Putumayo</option><option>Quindío</option><option>Risaralda</option>
+                <option>San Andrés y Providencia</option><option>Santander</option>
+                <option>Sucre</option><option>Tolima</option><option>Valle del Cauca</option>
+                <option>Vaupés</option><option>Vichada</option><option>Arauca</option><option>Amazonas</option>
+              </select>
+            </div>
+            <div class="co-field">
+              <label for="co-ciudad">Ciudad / Municipio *</label>
+              <input id="co-ciudad" name="ciudad" type="text" placeholder="Ej: Medellín" required autocomplete="address-level2">
+            </div>
+          </div>
+          <div class="co-field">
+            <label for="co-dir">Dirección *</label>
+            <input id="co-dir" name="direccion" type="text" placeholder="Ej: Calle 10 # 5-23, Barrio El Centro" required autocomplete="street-address">
+          </div>
+          <div class="co-field">
+            <label for="co-comp">Apartamento / Casa / Referencia</label>
+            <input id="co-comp" name="complemento" type="text" placeholder="Ej: Apto 301, Torre B">
+          </div>
+        </fieldset>
+
+        <!-- FACTURA ELECTRÓNICA -->
+        <fieldset class="co-fieldset">
+          <legend class="co-legend">Factura electrónica</legend>
+          <label class="co-toggle">
+            <input id="co-req-factura" type="checkbox" name="factura">
+            <span>Requiero factura electrónica</span>
+          </label>
+          <div id="co-factura-fields" class="co-factura-fields" hidden>
+            <div class="co-row2">
+              <div class="co-field">
+                <label for="co-tipo-doc">Tipo de documento *</label>
+                <select id="co-tipo-doc" name="tipoDoc" autocomplete="off">
+                  <option value="">Seleccionar…</option>
+                  <option value="CC">Cédula de ciudadanía</option>
+                  <option value="NIT">NIT</option>
+                  <option value="CE">Cédula de extranjería</option>
+                  <option value="PAS">Pasaporte</option>
+                </select>
+              </div>
+              <div class="co-field">
+                <label for="co-num-doc">Número de documento *</label>
+                <input id="co-num-doc" name="numeroDoc" type="text" placeholder="Sin puntos ni guiones" autocomplete="off">
+              </div>
+            </div>
+            <div class="co-field" id="co-razon-field" hidden>
+              <label for="co-razon">Razón social *</label>
+              <input id="co-razon" name="razonSocial" type="text" placeholder="Nombre de la empresa">
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- RESUMEN PEDIDO -->
+        <div class="co-resumen">
+          <span>Total a pagar</span>
+          <strong id="co-total-resumen">$0</strong>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="co-actions">
+          <button type="submit" id="co-btn-pagar" class="co-btn co-btn-pagar" data-metodo="wompi">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+            Pagar en línea
+          </button>
+          <button type="submit" id="co-btn-wa" class="co-btn co-btn-wa" data-metodo="whatsapp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2z"/></svg>
+            Pedir por WhatsApp
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
   <!-- POPUP BIENVENIDA -->
   <div id="popup-overlay" class="popup-overlay" hidden>
     <div class="popup-card" role="dialog" aria-modal="true" aria-label="Bienvenida Esencia y Taza">

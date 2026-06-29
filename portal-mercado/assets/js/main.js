@@ -5,6 +5,9 @@
 
 const WHATSAPP = '573022573244';
 
+// URL del Apps Script de pedidos (pegar aquí después de desplegar)
+const PEDIDOS_SCRIPT_URL = '';
+
 const WOMPI = {
   publicKey  : 'pub_prod_i8kgq0AwhbR6ZGuKKrvH1Nh6Fq8EnXZn',
   currency   : 'COP',
@@ -199,7 +202,9 @@ const Cart = (() => {
     render();
   };
 
-  return { add, abrir, cerrar, render, checkout, pagar, vaciar };
+  return { add, abrir, cerrar, render, checkout, pagar, vaciar,
+           totalActual: total,
+           itemsActuales: () => [...items] };
 })();
 
 // ============================================================================
@@ -393,6 +398,190 @@ const Popup = (() => {
 })();
 
 // ============================================================================
+// MÓDULO: Checkout — formulario de envío + factura
+// ============================================================================
+const Checkout = (() => {
+  let _metodo = 'wompi'; // 'wompi' | 'whatsapp'
+
+  const abrir = (metodo) => {
+    _metodo = metodo || 'wompi';
+    const overlay = document.getElementById('checkout-overlay');
+    if (!overlay) return;
+    // Actualizar total visible
+    const total = Cart.totalActual ? Cart.totalActual() : 0;
+    const el = document.getElementById('co-total-resumen');
+    if (el) el.textContent = '$' + total.toLocaleString('es-CO') + ' COP';
+    overlay.removeAttribute('hidden');
+    overlay.querySelector('#co-nombre')?.focus();
+    Cart.cerrar();
+  };
+
+  const cerrar = () => {
+    document.getElementById('checkout-overlay')?.setAttribute('hidden', '');
+  };
+
+  const _guardarEnScript = (payload) => {
+    if (!PEDIDOS_SCRIPT_URL) return;
+    fetch(PEDIDOS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(() => {});
+  };
+
+  const init = () => {
+    const overlay = document.getElementById('checkout-overlay');
+    const form    = document.getElementById('co-form');
+    if (!overlay || !form) return;
+
+    // Cerrar modal
+    document.getElementById('co-close')?.addEventListener('click', cerrar);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) cerrar(); });
+
+    // Toggle factura
+    const chkFactura  = document.getElementById('co-req-factura');
+    const factFields  = document.getElementById('co-factura-fields');
+    const tipoDocSel  = document.getElementById('co-tipo-doc');
+    const razonField  = document.getElementById('co-razon-field');
+    chkFactura?.addEventListener('change', () => {
+      factFields.hidden = !chkFactura.checked;
+    });
+    tipoDocSel?.addEventListener('change', () => {
+      razonField.hidden = tipoDocSel.value !== 'NIT';
+    });
+
+    // Determinar qué botón se pulsó
+    form.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-metodo]');
+      if (btn) _metodo = btn.dataset.metodo;
+    });
+
+    // Envío del formulario
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!_validar(form)) return;
+
+      const data = new FormData(form);
+      const items = Cart.itemsActuales ? Cart.itemsActuales() : [];
+      const total = Cart.totalActual  ? Cart.totalActual()  : 0;
+
+      const lineasProducto = items.map(i =>
+        `• ${i.cantidad}x Café Origen Caicedo ${i.tamano} (${i.tipo}) — $${(i.precio * i.cantidad).toLocaleString('es-CO')}`
+      ).join('\n');
+
+      const referencia = 'ET-' + Date.now() + '-' + Math.random().toString(36).slice(2,6).toUpperCase();
+      const idPedido   = referencia;
+
+      const pedido = {
+        accion      : 'nuevo_pedido',
+        idPedido,
+        referencia,
+        metodo      : _metodo,
+        productos   : lineasProducto,
+        total,
+        items,
+        nombre      : data.get('nombre').trim(),
+        email       : data.get('email').trim(),
+        telefono    : data.get('telefono').trim(),
+        departamento: data.get('departamento'),
+        ciudad      : data.get('ciudad').trim(),
+        direccion   : data.get('direccion').trim(),
+        complemento : data.get('complemento').trim(),
+        factura     : chkFactura.checked,
+        tipoDoc     : data.get('tipoDoc') || '',
+        numeroDoc   : data.get('numeroDoc').trim(),
+        razonSocial : data.get('razonSocial')?.trim() || '',
+      };
+
+      // Guardar en localStorage para gracias.html
+      localStorage.setItem('et_pedido_pendiente', JSON.stringify(pedido));
+
+      // Enviar a Google Sheets (async, no bloqueante)
+      _guardarEnScript(pedido);
+
+      cerrar();
+
+      if (_metodo === 'whatsapp') {
+        let msg = `Hola Esencia y Taza, quiero hacer este pedido:\n\n${lineasProducto}\n\n*Total: $${total.toLocaleString('es-CO')} COP*\n\n`;
+        msg += `📦 *Envío a:* ${pedido.ciudad}, ${pedido.departamento}\n${pedido.direccion}${pedido.complemento ? ', ' + pedido.complemento : ''}\n`;
+        msg += `👤 *Nombre:* ${pedido.nombre}\n📱 *Tel:* ${pedido.telefono}\n`;
+        if (pedido.factura) msg += `🧾 *Factura:* ${pedido.tipoDoc} ${pedido.numeroDoc}${pedido.razonSocial ? ' — ' + pedido.razonSocial : ''}\n`;
+        msg += `\n¿Me confirman disponibilidad y costo de envío?`;
+        // Redirigir a gracias.html y abrir WhatsApp
+        const graciasUrl = new URL('gracias.html', window.location.href).href;
+        window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+        window.location.href = graciasUrl;
+      } else {
+        // Pago Wompi
+        await _pagarWompi(pedido);
+      }
+    });
+  };
+
+  const _validar = (form) => {
+    let ok = true;
+    form.querySelectorAll('[required]').forEach(el => {
+      el.classList.remove('error');
+      if (!el.value.trim()) { el.classList.add('error'); ok = false; }
+    });
+    // Campos de factura requeridos si está activo
+    const chk = document.getElementById('co-req-factura');
+    if (chk?.checked) {
+      ['co-tipo-doc','co-num-doc'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && !el.value.trim()) { el.classList.add('error'); ok = false; }
+      });
+      const tipoDoc = document.getElementById('co-tipo-doc');
+      const razon   = document.getElementById('co-razon');
+      if (tipoDoc?.value === 'NIT' && razon && !razon.value.trim()) {
+        razon.classList.add('error'); ok = false;
+      }
+    }
+    if (!ok) form.querySelector('.error')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return ok;
+  };
+
+  const _pagarWompi = async (pedido) => {
+    const montoEnCentavos = String(pedido.total * 100);
+    const redirectUrl = new URL('gracias.html', window.location.href).href;
+
+    const irAWompi = (signature) => {
+      const params = new URLSearchParams({
+        'public-key'       : WOMPI.publicKey,
+        'currency'         : WOMPI.currency,
+        'amount-in-cents'  : montoEnCentavos,
+        'reference'        : pedido.referencia,
+        'redirect-url'     : redirectUrl,
+        'customer-data:email'      : pedido.email,
+        'customer-data:full-name'  : pedido.nombre,
+        'customer-data:phone-number': pedido.telefono.replace(/\s/g,''),
+        'shipping-address:address-line-1': pedido.direccion,
+        'shipping-address:city'    : pedido.ciudad,
+        'shipping-address:country' : 'CO',
+      });
+      if (signature) params.set('signature:integrity', signature);
+      window.location.href = 'https://checkout.wompi.co/p/?' + params.toString();
+    };
+
+    if (WOMPI.scriptUrl) {
+      try {
+        const url  = `${WOMPI.scriptUrl}?ref=${encodeURIComponent(pedido.referencia)}&amount=${montoEnCentavos}&cur=COP`;
+        const res  = await fetch(url);
+        const json = await res.json();
+        irAWompi(json.signature || null);
+      } catch {
+        irAWompi(null);
+      }
+    } else {
+      irAWompi(null);
+    }
+  };
+
+  return { init, abrir };
+})();
+
+// ============================================================================
 // APP INIT
 // ============================================================================
 const App = {
@@ -403,14 +592,15 @@ const App = {
     Cart.render();
     ContactForm.init();
     Popup.init();
+    Checkout.init();
 
-    // Botones del carrito
+    // Botones del carrito → abren el modal de checkout
     document.getElementById('cart-toggle')?.addEventListener('click', Cart.abrir);
     document.getElementById('cart-close')?.addEventListener('click', Cart.cerrar);
     document.getElementById('cart-overlay')?.addEventListener('click', Cart.cerrar);
-    document.getElementById('cart-checkout')?.addEventListener('click', Cart.checkout);
-    document.getElementById('cart-pagar')?.addEventListener('click', Cart.pagar);
     document.getElementById('cart-vaciar')?.addEventListener('click', Cart.vaciar);
+    document.getElementById('cart-checkout')?.addEventListener('click', () => Checkout.abrir('whatsapp'));
+    document.getElementById('cart-pagar')?.addEventListener('click',    () => Checkout.abrir('wompi'));
   }
 };
 
