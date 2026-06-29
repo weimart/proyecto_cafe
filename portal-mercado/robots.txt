@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
-Disallow: /assets/
+
+Disallow: /gracias.html
 
 Sitemap: https://esenciaytaza.com/sitemap.xml

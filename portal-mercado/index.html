@@ -58,10 +58,10 @@
   <link rel="stylesheet" href="./assets/css/styles.css">
 
   <!-- ═══════════════════════════════════════════════
-       PRELOAD — imágenes críticas above-the-fold
+       PRELOAD — condicional por breakpoint
   ════════════════════════════════════════════════ -->
-  <link rel="preload" as="image" href="./assets/images/hero-banner.jpg">
-  <link rel="preload" as="image" href="./assets/images/popup-promo.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-cafetal.jpg" media="(max-width: 767px)">
+  <link rel="preload" as="image" href="./assets/images/hero-banner.jpg"  media="(min-width: 768px)">
 
   <!-- ═══════════════════════════════════════════════
        SCHEMA.ORG — Datos estructurados para Google
@@ -319,6 +319,7 @@
             <li><a href="#inicio" role="menuitem" class="navbar-link navbar-link--active">Inicio</a></li>
             <li><a href="#nosotros" role="menuitem" class="navbar-link">Nosotros</a></li>
             <li><a href="#cafes" role="menuitem" class="navbar-link">Cafés</a></li>
+            <li><a href="./blog.html" role="menuitem" class="navbar-link">Blog</a></li>
             <li><a href="#contacto" role="menuitem" class="navbar-link">Contacto</a></li>
             <li><a href="#faq" role="menuitem" class="navbar-link">FAQ</a></li>
           </ul>
@@ -326,10 +327,29 @@
           <button id="cart-toggle" class="btn btn-primary btn-sm btn-cart" aria-label="Ver carrito">
             🛒 Carrito (<span id="cart-count">0</span>)
           </button>
+
+          <button id="nav-hamburger" class="nav-hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-mobile-menu">
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+          </button>
         </div>
       </div>
     </nav>
   </header>
+
+  <!-- MENÚ MÓVIL (drawer oculto por defecto) -->
+  <nav id="nav-mobile-menu" class="nav-mobile" aria-label="Menú móvil" hidden>
+    <ul class="nav-mobile-list" role="list">
+      <li><a href="#inicio"   class="nav-mobile-link">Inicio</a></li>
+      <li><a href="#nosotros" class="nav-mobile-link">Nosotros</a></li>
+      <li><a href="#cafes"    class="nav-mobile-link">Cafés</a></li>
+      <li><a href="./blog.html" class="nav-mobile-link">Blog</a></li>
+      <li><a href="#contacto" class="nav-mobile-link">Contacto</a></li>
+      <li><a href="#faq"      class="nav-mobile-link">FAQ</a></li>
+    </ul>
+    <a href="#cafes" class="nav-mobile-cta" id="nav-mobile-comprar">🛒 Comprar café</a>
+  </nav>
 
   <!-- MAIN CONTENT -->
   <main id="main" role="main">
@@ -338,12 +358,15 @@
     <section id="inicio" class="hero" aria-labelledby="hero-title">
       <h1 id="hero-title" class="visually-hidden">Café Artesanal 100% Colombiano — El Origen en Cada Taza, Caicedo, Antioquia</h1>
       <div class="hero-img-wrap">
-        <img
-          src="./assets/images/hero-banner.jpg"
-          alt="Esencia y Taza — El origen en cada taza. Café de especialidad de Caicedo, Antioquia. Origen único, tueste artesanal."
-          class="hero-img"
-          width="2400" height="1018"
-          fetchpriority="high">
+        <picture>
+          <source media="(max-width: 767px)" srcset="./assets/images/hero-cafetal.jpg">
+          <img
+            src="./assets/images/hero-banner.jpg"
+            alt="Esencia y Taza — El origen en cada taza. Café de especialidad de Caicedo, Antioquia. Origen único, tueste artesanal."
+            class="hero-img"
+            width="2400" height="1018"
+            fetchpriority="high">
+        </picture>
         <div class="hero-banner-cta">
           <a href="#cafes" class="btn btn-primary">Ver nuestros cafés</a>
           <a href="https://wa.me/573022573244?text=Hola%20Esencia%20y%20Taza,%20quiero%20más%20información" target="_blank" rel="noopener" class="btn btn-secondary">Escríbenos por WhatsApp</a>
@@ -358,7 +381,7 @@
         <h2 id="about-title">Nuestro Origen</h2>
         <div class="origin-content">
           <div class="origin-image">
-            <img src="./assets/images/logo-grande.png" alt="Cafetal de origen Caicedo, Antioquia — Esencia y Taza, café artesanal colombiano cultivado en altura" loading="lazy" class="origin-img-placeholder">
+            <img src="./assets/images/hero-cafetal.jpg" alt="Cafetal de origen Caicedo, Antioquia — Esencia y Taza, café artesanal colombiano cultivado en altura" loading="lazy" decoding="async" class="origin-img-placeholder">
           </div>
           <article class="origin-text">
             <h3>Caicedo, Antioquia</h3>
@@ -597,6 +620,23 @@
       </div>
     </section>
 
+    <!-- NEWSLETTER -->
+    <section class="section-newsletter" aria-labelledby="newsletter-title">
+      <div class="newsletter-inner">
+        <span class="newsletter-tag">Novedades</span>
+        <h2 id="newsletter-title">Mantente al tanto de nuestros cafés</h2>
+        <p>Recibe por WhatsApp cuando haya cosechas nuevas, lotes especiales o descuentos exclusivos.</p>
+        <form class="newsletter-form" id="newsletter-form" novalidate>
+          <div class="newsletter-row">
+            <input type="text"  id="nl-nombre"   name="nombre"   placeholder="Tu nombre"          required autocomplete="given-name">
+            <input type="tel"   id="nl-telefono" name="telefono" placeholder="WhatsApp (Colombia)" required autocomplete="tel">
+          </div>
+          <button type="submit" class="newsletter-submit">Quiero enterarme primero ☕</button>
+        </form>
+        <p class="newsletter-nota">Sin spam. Solo avisamos cuando hay algo que vale la pena.</p>
+      </div>
+    </section>
+
   </main>
 
   <!-- FOOTER -->
@@ -619,6 +659,7 @@
           <ul role="list">
             <li><a href="#nosotros">Nosotros</a></li>
             <li><a href="#cafes">Cafés</a></li>
+            <li><a href="./blog.html">Blog</a></li>
             <li><a href="#contacto">Contacto</a></li>
           </ul>
         </div>
@@ -701,6 +742,9 @@
       <p class="cart-nota">El envío se calcula al confirmar. Pago en línea seguro con Wompi (Bancolombia).</p>
     </div>
   </aside>
+
+  <!-- BOTÓN SCROLL TO TOP -->
+  <button id="scroll-top" class="scroll-top" aria-label="Volver al inicio" hidden>↑</button>
 
   <!-- BARRA FLOTANTE DE REDES (visible siempre) -->
   <div class="redes-flotantes" aria-label="Redes sociales">
@@ -836,10 +880,11 @@
   <div id="popup-overlay" class="popup-overlay" hidden>
     <div class="popup-card" role="dialog" aria-modal="true" aria-label="Bienvenida Esencia y Taza">
       <!-- Imagen del flyer como fondo completo -->
-      <img src="./assets/images/popup-promo.jpg"
+      <img data-src="./assets/images/popup-promo.jpg"
            alt="Café artesanal Esencia y Taza — Promoción de bienvenida, café de origen Caicedo Antioquia"
            class="popup-img-full"
-           fetchpriority="high" decoding="async">
+           width="600" height="434"
+           decoding="async">
       <!-- Área transparente sobre la X del flyer -->
       <button id="popup-close" class="popup-hit-x" aria-label="Cerrar"></button>
       <!-- Área transparente sobre el botón naranja del flyer -->

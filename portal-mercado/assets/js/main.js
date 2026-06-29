@@ -216,7 +216,11 @@ const Products = (() => {
 
     grid.innerHTML = PRESENTACIONES.map(p => `
       <article class="product-card${p.destacado ? ' product-card--destacado' : ''}" data-tipo="En grano">
-        <div class="product-visual product-visual--${p.id}">
+        <div class="product-visual">
+          <img src="./assets/images/product-${p.id}.jpg"
+               alt="Café Origen Caicedo ${p.tamano} — Esencia y Taza"
+               class="product-visual-img"
+               loading="lazy" decoding="async" width="400" height="220">
           <span class="product-visual-tamano" aria-hidden="true">${p.tamano}</span>
           ${p.destacado ? '<span class="product-flag">⭐ Más pedido</span>' : ''}
         </div>
@@ -276,6 +280,14 @@ const Products = (() => {
 // MÓDULO: Navegación
 // ============================================================================
 const Navigation = (() => {
+  const _cerrarMovil = () => {
+    const menu = document.getElementById('nav-mobile-menu');
+    const btn  = document.getElementById('nav-hamburger');
+    menu?.setAttribute('hidden', '');
+    btn?.classList.remove('is-open');
+    btn?.setAttribute('aria-expanded', 'false');
+  };
+
   const init = () => {
     const header = document.querySelector('.header');
     window.addEventListener('scroll', () => {
@@ -283,14 +295,60 @@ const Navigation = (() => {
       else header?.classList.remove('sticky');
     }, { passive: true });
 
+    // Hamburguesa
+    const hamburger = document.getElementById('nav-hamburger');
+    const mobileMenu = document.getElementById('nav-mobile-menu');
+    const _abrirMovil = () => {
+      // Posicionar el drawer exactamente debajo del header real
+      const headerH = document.querySelector('.header')?.offsetHeight || 60;
+      mobileMenu.style.top = headerH + 'px';
+      mobileMenu.removeAttribute('hidden');
+      hamburger.classList.add('is-open');
+      hamburger.setAttribute('aria-expanded', 'true');
+    };
+
+    hamburger?.addEventListener('click', () => {
+      const isOpen = !mobileMenu.hasAttribute('hidden');
+      if (isOpen) _cerrarMovil();
+      else _abrirMovil();
+    });
+
+    // Cerrar menú móvil al pulsar cualquier enlace dentro
+    mobileMenu?.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', _cerrarMovil);
+    });
+
+    // Cerrar menú móvil al hacer scroll
+    window.addEventListener('scroll', () => {
+      if (!mobileMenu?.hasAttribute('hidden')) _cerrarMovil();
+    }, { passive: true });
+
+    // IntersectionObserver: resalta el link activo al scrollear
+    const navLinks = document.querySelectorAll('.navbar-link[href^="#"]');
+    const sections = document.querySelectorAll('section[id]');
+    if (sections.length && navLinks.length) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            navLinks.forEach(l => l.classList.remove('navbar-link--active'));
+            const active = document.querySelector(`.navbar-link[href="#${entry.target.id}"]`);
+            active?.classList.add('navbar-link--active');
+          }
+        });
+      }, { threshold: 0.35, rootMargin: '-60px 0px -35% 0px' });
+      sections.forEach(s => observer.observe(s));
+    }
+
+    // Click en link del nav desktop también cierra el menú móvil
     document.querySelectorAll('.navbar-link').forEach(link => {
       link.addEventListener('click', () => {
         document.querySelectorAll('.navbar-link').forEach(l => l.classList.remove('navbar-link--active'));
         link.classList.add('navbar-link--active');
+        _cerrarMovil();
       });
     });
   };
-  return { init };
+  return { init, cerrarMovil: _cerrarMovil };
 })();
 
 // ============================================================================
@@ -382,7 +440,12 @@ const Popup = (() => {
 
     if (sessionStorage.getItem('et_popup_ok')) return;
 
-    setTimeout(() => { overlay.removeAttribute('hidden'); }, 1200);
+    setTimeout(() => {
+      // Cargar imagen justo antes de mostrar (evita descarga al inicio de página)
+      const img = overlay.querySelector('img[data-src]');
+      if (img) { img.src = img.dataset.src; }
+      overlay.removeAttribute('hidden');
+    }, 1200);
 
     const cerrar = () => {
       overlay.setAttribute('hidden', '');
@@ -608,6 +671,44 @@ if (document.readyState === 'loading') {
 } else {
   App.init();
 }
+
+// ── Newsletter → WhatsApp ─────────────────────────────────────────────────
+(function () {
+  const form = document.getElementById('newsletter-form');
+  if (!form) return;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nombre   = document.getElementById('nl-nombre')?.value.trim()   || '';
+    const telefono = document.getElementById('nl-telefono')?.value.trim() || '';
+    if (!nombre || !telefono) {
+      alert('Por favor completa tu nombre y número de WhatsApp.');
+      return;
+    }
+    const msg = `Hola Esencia y Taza, soy *${nombre}* (${telefono}) y me gustaría recibir novedades sobre sus cafés por WhatsApp. ☕`;
+    window.open(`https://wa.me/573022573244?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+    form.reset();
+  });
+}());
+
+// ── Tecla ESC cierra modales ──────────────────────────────────────────────
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  Cart.cerrar();
+  document.getElementById('checkout-overlay')?.setAttribute('hidden', '');
+  document.getElementById('popup-overlay')?.setAttribute('hidden', '');
+  Navigation.cerrarMovil?.();
+});
+
+// ── Botón scroll-to-top ───────────────────────────────────────────────────
+(function () {
+  const btn = document.getElementById('scroll-top');
+  if (!btn) return;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 450) btn.removeAttribute('hidden');
+    else btn.setAttribute('hidden', '');
+  }, { passive: true });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}());
 
 // ── Barra de anuncio Wompi ────────────────────────────────────────────────
 (function () {
