@@ -5,8 +5,7 @@
 
 const WHATSAPP = '573022573244';
 
-// URL del Apps Script de pedidos (pegar aquí después de desplegar)
-const PEDIDOS_SCRIPT_URL = '';
+const PEDIDOS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzUDF_ajemKGrSRHIwca3IHIIyI0PWFP3E2RYVY-8mabJPcWy9ZzjoqcUNaTatbmr1F/exec';
 
 const WOMPI = {
   publicKey  : 'pub_prod_i8kgq0AwhbR6ZGuKKrvH1Nh6Fq8EnXZn',

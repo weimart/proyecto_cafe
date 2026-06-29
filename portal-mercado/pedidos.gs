@@ -3,46 +3,45 @@
    Despliega como: Aplicación web → Ejecutar como: Yo → Acceso: Cualquier usuario
    =========================================================================== */
 
-const SHEET_PEDIDOS  = '1NQHwHHU5-Q9kozbuad84Q-EAGg_3ZJMQ';
-const SHEET_CLIENTES = '1gfID-GV-gSW_3nJMmXXortu92ZbEMkzS';
+const SHEET_PEDIDOS  = '1hyx7y9qdXwfiXFlLsm4hcCCiBUm_tH3xzwvZ7uRBR4Y';
+const SHEET_CLIENTES = '1brrITidrtD78AbLOagFTVLQ47KXqNzq7Bk1WflGDjBE';
 const EMAIL_VENDEDOR = 'comercial@esenciaytaza.com';
 const WHATSAPP_VENDEDOR = '573022573244';
 
-// ── Cabeceras CORS ────────────────────────────────────────────────────────────
-function setCORS(output) {
-  return output
-    .setHeader('Access-Control-Allow-Origin', '*')
-    .setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-    .setHeader('Access-Control-Allow-Headers', 'Content-Type');
+// Ejecuta esta función desde el editor para autorizar permisos (solo 1 vez)
+function _autorizar() {
+  const ss = SpreadsheetApp.openById(SHEET_PEDIDOS);
+  Logger.log('✅ Sheet pedidos OK: ' + ss.getName());
+  const ss2 = SpreadsheetApp.openById(SHEET_CLIENTES);
+  Logger.log('✅ Sheet clientes OK: ' + ss2.getName());
+  MailApp.sendEmail({
+    to: EMAIL_VENDEDOR,
+    subject: '✅ Esencia y Taza — Script de pedidos autorizado',
+    body: 'El script de pedidos quedó correctamente autorizado. Ya puede recibir pedidos en línea.'
+  });
+  Logger.log('✅ Email de prueba enviado a ' + EMAIL_VENDEDOR);
+  Logger.log('🎉 Autorización completa. El web app está listo.');
 }
 
-function doOptions() {
-  return setCORS(ContentService.createTextOutput(''));
+function _json(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 function doGet(e) {
-  const accion = e.parameter.accion || '';
-  if (accion === 'confirmar_pago') {
-    const result = confirmarPago(e.parameter);
-    return setCORS(ContentService.createTextOutput(JSON.stringify(result))
-      .setMimeType(ContentService.MimeType.JSON));
-  }
-  return setCORS(ContentService.createTextOutput(JSON.stringify({ status: 'ok' }))
-    .setMimeType(ContentService.MimeType.JSON));
+  const accion = (e && e.parameter && e.parameter.accion) || '';
+  if (accion === 'confirmar_pago') return _json(confirmarPago(e.parameter));
+  return _json({ status: 'ok' });
 }
 
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
-    let result;
-    if (data.accion === 'nuevo_pedido')   result = guardarPedido(data);
-    else if (data.accion === 'confirmar_pago') result = confirmarPago(data);
-    else result = { error: 'Acción desconocida' };
-    return setCORS(ContentService.createTextOutput(JSON.stringify(result))
-      .setMimeType(ContentService.MimeType.JSON));
+    if (data.accion === 'nuevo_pedido')    return _json(guardarPedido(data));
+    if (data.accion === 'confirmar_pago')  return _json(confirmarPago(data));
+    return _json({ error: 'Acción desconocida' });
   } catch (err) {
-    return setCORS(ContentService.createTextOutput(JSON.stringify({ error: err.message }))
-      .setMimeType(ContentService.MimeType.JSON));
+    return _json({ error: err.message });
   }
 }
 
