@@ -1530,12 +1530,12 @@ a:hover {
   margin-left: 0.5rem;
   flex-shrink: 0;
 }
-.nav-hamburger:hover { background: rgba(255,255,255,.1); }
+.nav-hamburger:hover { background: rgba(200,150,46,.12); }
 .ham-line {
   display: block;
   width: 22px;
   height: 2px;
-  background: #fff;
+  background: #C8962E;
   border-radius: 2px;
   transition: transform .28s ease, opacity .2s ease;
   transform-origin: center;

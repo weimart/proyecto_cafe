@@ -95,10 +95,10 @@ body {
   cursor: pointer; border-radius: 8px; flex-shrink: 0;
   transition: background .2s;
 }
-.blog-hamburger:hover { background: rgba(255,255,255,.18); }
+.blog-hamburger:hover { background: rgba(200,150,46,.15); }
 .bh-line {
   display: block; width: 20px; height: 2px;
-  background: #fff; border-radius: 2px;
+  background: #C8962E; border-radius: 2px;
   transition: transform .26s ease, opacity .2s, transform .26s;
   transform-origin: center;
 }
