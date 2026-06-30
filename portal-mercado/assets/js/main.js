@@ -242,8 +242,7 @@ const Products = (() => {
               <span class="product-size-label">${p.tamano}</span>
             </div>
             <button class="btn-add-card"
-                    data-tamano="${p.tamano}"
-                    data-precio="${p.precio}">
+                    data-tamano="${p.tamano}">
               + Añadir
             </button>
           </div>
@@ -264,9 +263,11 @@ const Products = (() => {
       btn.addEventListener('click', () => {
         const card = btn.closest('.product-card');
         const tamano = btn.getAttribute('data-tamano');
-        const precio = parseInt(btn.getAttribute('data-precio'));
         const tipo = card.dataset.tipo || 'En grano';
-        Cart.add(tamano, tipo, precio);
+        // Precio siempre desde PRESENTACIONES (fuente autoritativa), no desde el DOM
+        const pres = PRESENTACIONES.find(p => p.tamano === tamano);
+        if (!pres) return;
+        Cart.add(tamano, tipo, pres.precio);
         CartToast.show(`Café ${tamano}`);
         btn.textContent = '✓ Añadido';
         setTimeout(() => { btn.textContent = '+ Añadir'; }, 1500);
@@ -600,8 +601,9 @@ const Checkout = (() => {
         razonSocial : data.get('razonSocial')?.trim() || '',
       };
 
-      // Guardar en localStorage para gracias.html
-      localStorage.setItem('et_pedido_pendiente', JSON.stringify(pedido));
+      // Guardar en localStorage para gracias.html (se borra tras 30 min)
+      const payload = { ...pedido, _exp: Date.now() + 30 * 60 * 1000 };
+      localStorage.setItem('et_pedido_pendiente', JSON.stringify(payload));
 
       // Enviar a Google Sheets (async, no bloqueante)
       _guardarEnScript(pedido);
@@ -631,6 +633,16 @@ const Checkout = (() => {
       el.classList.remove('error');
       if (!el.value.trim()) { el.classList.add('error'); ok = false; }
     });
+    // Validar formato de email
+    const emailEl = document.getElementById('co-email');
+    if (emailEl && emailEl.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim())) {
+      emailEl.classList.add('error'); ok = false;
+    }
+    // Validar formato de teléfono (mínimo 7 dígitos)
+    const telEl = document.getElementById('co-tel');
+    if (telEl && telEl.value.trim() && !/^\+?[\d\s\-()]{7,15}$/.test(telEl.value.trim())) {
+      telEl.classList.add('error'); ok = false;
+    }
     // Campos de factura requeridos si está activo
     const chk = document.getElementById('co-req-factura');
     if (chk?.checked) {

@@ -2,5 +2,8 @@ User-agent: *
 Allow: /
 
 Disallow: /gracias.html
+Disallow: /pedidos.gs
+Disallow: /wompi-firma.gs
+Disallow: /assets/js/
 
 Sitemap: https://esenciaytaza.com/sitemap.xml
