@@ -21,11 +21,11 @@ const PRESENTACIONES = [
     desc: 'Ideal para descubrir el perfil de taza de Caicedo. Notas de chocolate oscuro y caramelo con tueste medio, perfecto en espresso o prensa francesa.',
     tueste: 'Tueste medio', uso: 'Ideal para probar' },
   { id: '250g',  tamano: '250 g',  precio: 33000,
-    desc: 'Para quienes ya disfrutan de nuestro origen. Tueste medio que realza la dulzura natural del grano de altura, perfecto para consumo semanal.',
-    tueste: 'Tueste medio', uso: 'Consumo semanal' },
+    desc: 'Para tu consumo diario de café en casa. Tueste medio que realza la dulzura natural del grano de altura, ideal para espresso, V60 o prensa francesa.',
+    tueste: 'Tueste medio', uso: 'Consumo diario' },
   { id: '500g',  tamano: '500 g',  precio: 60000, destacado: true,
-    desc: 'El favorito de nuestros clientes. Abastece el consumo diario de tu hogar por más de un mes. Granos seleccionados de Caicedo, tostados bajo pedido.',
-    tueste: 'Tueste medio', uso: 'Consumo diario en casa' },
+    desc: 'El favorito de nuestros clientes. Abastece el consumo semanal de tu hogar con granos seleccionados de Caicedo, tostados bajo pedido a precio justo.',
+    tueste: 'Tueste medio', uso: 'Consumo semanal' },
   { id: '2500g', tamano: '2.5 kg', precio: 180000,
     desc: 'Para cafeterías, restaurantes y familias grandes. Lote artesanal tostado bajo pedido con precio mayorista y la misma calidad de origen Caicedo.',
     tueste: 'Tueste medio', uso: 'Negocios y cafeterías' }
@@ -267,6 +267,7 @@ const Products = (() => {
         const precio = parseInt(btn.getAttribute('data-precio'));
         const tipo = card.dataset.tipo || 'En grano';
         Cart.add(tamano, tipo, precio);
+        CartToast.show(`Café ${tamano}`);
         btn.textContent = '✓ Añadido';
         setTimeout(() => { btn.textContent = '+ Añadir'; }, 1500);
       });
@@ -274,6 +275,49 @@ const Products = (() => {
   };
 
   return { render };
+})();
+
+// ============================================================================
+// MÓDULO: CartToast — notificación al añadir al carrito
+// ============================================================================
+const CartToast = (() => {
+  let timer;
+
+  const _crear = () => {
+    const t = document.createElement('div');
+    t.id = 'cart-toast';
+    t.className = 'cart-toast';
+    t.setAttribute('role', 'status');
+    t.setAttribute('aria-live', 'polite');
+    t.innerHTML = `
+      <div class="ct-info">
+        <span class="ct-check" aria-hidden="true">✓</span>
+        <span class="ct-msg"></span>
+      </div>
+      <div class="ct-actions">
+        <button class="ct-seguir">Seguir comprando</button>
+        <button class="ct-ver">Ver carrito →</button>
+      </div>`;
+    document.body.appendChild(t);
+    t.querySelector('.ct-seguir').addEventListener('click', hide);
+    t.querySelector('.ct-ver').addEventListener('click', () => { hide(); Cart.abrir(); });
+    return t;
+  };
+
+  const show = (nombre) => {
+    const t = document.getElementById('cart-toast') || _crear();
+    t.querySelector('.ct-msg').textContent = `${nombre} añadido al carrito`;
+    t.classList.add('cart-toast--visible');
+    clearTimeout(timer);
+    timer = setTimeout(hide, 4500);
+  };
+
+  const hide = () => {
+    clearTimeout(timer);
+    document.getElementById('cart-toast')?.classList.remove('cart-toast--visible');
+  };
+
+  return { show, hide };
 })();
 
 // ============================================================================
