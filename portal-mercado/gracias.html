@@ -181,7 +181,7 @@
 
     <!-- Botones -->
     <div class="gr-btns">
-      <a id="gr-btn-wa" href="#" class="gr-btn gr-btn-wa" target="_blank">
+      <a id="gr-btn-wa" href="#" class="gr-btn gr-btn-wa" target="_blank" rel="noopener noreferrer">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2z"/></svg>
         Confirmar por WhatsApp
       </a>
@@ -205,8 +205,12 @@
   const PEDIDOS_URL = 'https://script.google.com/macros/s/AKfycbwVbUa59Zlb-pD5dsLEKqw4AnnKBQdvQI3YhVgRAl4ZUwEC-hxhzafSXsrcJIB2FwU/exec';
   const WHATSAPP    = '573022573244';
 
-  // Leer datos guardados antes del pago
-  const pedido = JSON.parse(localStorage.getItem('et_pedido_pendiente') || 'null');
+  // Leer datos guardados antes del pago (con verificación de TTL)
+  let pedido = JSON.parse(localStorage.getItem('et_pedido_pendiente') || 'null');
+  if (pedido && pedido._exp && Date.now() > pedido._exp) {
+    localStorage.removeItem('et_pedido_pendiente');
+    pedido = null;
+  }
 
   // Leer params de Wompi en URL
   const params  = new URLSearchParams(window.location.search);

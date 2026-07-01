@@ -48,7 +48,6 @@ const Cart = (() => {
       items.push({ key, nombre: 'Café Origen Caicedo', tamano, tipo, precio, cantidad: 1 });
     }
     render();
-    abrir();
   };
 
   const cambiarCantidad = (key, delta) => {
