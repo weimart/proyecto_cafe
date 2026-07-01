@@ -675,7 +675,9 @@ const Checkout = (() => {
         'customer-data:phone-number': pedido.telefono.replace(/\s/g,''),
         'shipping-address:address-line-1': pedido.direccion,
         'shipping-address:city'    : pedido.ciudad,
+        'shipping-address:region'  : pedido.departamento,
         'shipping-address:country' : 'CO',
+        'shipping-address:phone-number': pedido.telefono.replace(/\s/g,''),
       });
       if (signature) params.set('signature:integrity', signature);
       window.location.href = 'https://checkout.wompi.co/p/?' + params.toString();
