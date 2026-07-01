@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Esencia y Taza ☕ — Café Artesanal Colombia</title>
+  <meta name="description" content="Café artesanal 100% colombiano de Caicedo, Antioquia. Compra directo, sin intermediarios. Envíos a toda Colombia.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="./assets/images/favicon.png">
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Esencia y Taza ☕ — Café Artesanal">
+  <meta property="og:description" content="Café de origen Caicedo, Antioquia. Del cafetal a tu taza, tostado bajo pedido.">
+  <meta property="og:image"       content="https://weimart.github.io/proyecto_cafe/portal-mercado/assets/images/logo-grande.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cafe:  #2C1A0E;
+      --cafe2: #3D2817;
+      --gold:  #C8962E;
+      --gold2: #E8B84B;
+      --cream: #FAF5EE;
+      --wa:    #25D366;
+      --muted: rgba(255,255,255,.55);
+      --card:  rgba(255,255,255,.07);
+      --brd:   rgba(255,255,255,.1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+      background: var(--cafe);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 0 env(safe-area-inset-bottom);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Fondo textura cafetal */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: url('./assets/images/hero-cafetal.jpg') center / cover no-repeat;
+      opacity: .07;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Wrapper central ── */
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+      padding: 2.5rem 1.2rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    /* ── Perfil ── */
+    .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.6rem;
+    }
+    .avatar-wrap {
+      position: relative;
+      width: 90px; height: 90px;
+      margin-bottom: 0.4rem;
+    }
+    .avatar {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--gold);
+      box-shadow: 0 0 0 5px rgba(200,150,46,.2), 0 8px 24px rgba(0,0,0,.4);
+    }
+    .avatar-badge {
+      position: absolute;
+      bottom: 2px; right: 2px;
+      width: 22px; height: 22px;
+      background: var(--wa);
+      border-radius: 50%;
+      border: 2px solid var(--cafe);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px;
+    }
+    .profile-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.15;
+      letter-spacing: -.01em;
+    }
+    .profile-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+    .profile-bio {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 320px;
+      line-height: 1.55;
+    }
+    .profile-stars {
+      color: var(--gold);
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      margin-top: 0.1rem;
+    }
+
+    /* ── Botones principales ── */
+    .main-ctas {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.95rem 1.4rem;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .2s, opacity .2s, box-shadow .2s;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+      min-height: 56px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .cta-btn:active { transform: scale(.97); }
+
+    .cta-primary {
+      background: var(--gold);
+      color: var(--cafe);
+      box-shadow: 0 4px 20px rgba(200,150,46,.35);
+    }
+    .cta-primary:hover { background: var(--gold2); box-shadow: 0 6px 28px rgba(200,150,46,.45); transform: translateY(-2px); }
+
+    .cta-wa {
+      background: var(--wa);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(37,211,102,.3);
+    }
+    .cta-wa:hover { opacity: .92; transform: translateY(-2px); }
+
+    .cta-outline {
+      background: var(--card);
+      color: #fff;
+      border: 1px solid var(--brd);
+      backdrop-filter: blur(8px);
+    }
+    .cta-outline:hover { background: rgba(255,255,255,.12); transform: translateY(-2px); }
+
+    /* ── Separador de sección ── */
+    .sec-label {
+      text-align: center;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      color: rgba(255,255,255,.35);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .sec-label::before, .sec-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,.1);
+    }
+
+    /* ── Grilla de productos ── */
+    .prod-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+    .prod-card {
+      background: var(--card);
+      border: 1px solid var(--brd);
+      border-radius: 16px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: transform .25s, box-shadow .25s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .prod-card:active { transform: scale(.97); }
+    .prod-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.3); }
+
+    .prod-card.destacado {
+      border-color: rgba(200,150,46,.4);
+      box-shadow: 0 0 0 1px rgba(200,150,46,.2);
+    }
+
+    .prod-img-wrap {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+    .prod-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .5s ease;
+      display: block;
+    }
+    .prod-card:hover .prod-img { transform: scale(1.06); }
+
+    .prod-badge {
+      position: absolute;
+      top: 0.5rem; left: 0.5rem;
+      background: var(--gold);
+      color: var(--cafe);
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 20px;
+    }
+
+    .prod-body {
+      padding: 0.75rem 0.8rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      flex: 1;
+    }
+    .prod-size {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .prod-uso {
+      font-size: 0.7rem;
+      color: var(--gold);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+    }
+    .prod-price {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 0.3rem;
+    }
+    .prod-cta {
+      margin-top: 0.6rem;
+      display: block;
+      text-align: center;
+      background: rgba(200,150,46,.15);
+      border: 1px solid rgba(200,150,46,.3);
+      color: var(--gold);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.4rem;
+      border-radius: 8px;
+      transition: background .2s;
+      text-decoration: none;
+    }
+    .prod-card:hover .prod-cta { background: var(--gold); color: var(--cafe); }
+
+    /* ── Links secundarios ── */
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .link-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.85rem 1.1rem;
+      background: var(--card);
+      border: 1px solid var(--brd);
+      border-radius: 12px;
+      text-decoration: none;
+      color: rgba(255,255,255,.85);
+      font-size: 0.92rem;
+      font-weight: 600;
+      transition: background .2s, transform .2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .link-btn:active { transform: scale(.97); }
+    .link-btn:hover { background: rgba(255,255,255,.12); color: #fff; }
+    .link-btn-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .icon-blog  { background: rgba(200,150,46,.15); }
+    .icon-ig    { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
+    .icon-tt    { background: #000; }
+    .icon-mail  { background: rgba(255,255,255,.1); }
+    .icon-tienda { background: rgba(200,150,46,.2); }
+
+    .link-arrow {
+      margin-left: auto;
+      color: rgba(255,255,255,.3);
+      font-size: 0.9rem;
+    }
+
+    /* ── Redes sociales mini ── */
+    .social-row {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .social-link {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 1px solid var(--brd);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      transition: transform .2s, background .2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .social-link:hover { transform: translateY(-3px); background: rgba(255,255,255,.15); }
+
+    /* ── Footer ── */
+    .foot {
+      text-align: center;
+      padding: 0.5rem 0 0;
+    }
+    .foot p {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,.25);
+    }
+    .foot a { color: var(--gold); text-decoration: none; }
+    .foot a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ── PERFIL ─────────────────────────────────────── -->
+  <div class="profile">
+    <div class="avatar-wrap">
+      <img src="./assets/images/logo.png"
+           alt="Esencia y Taza"
+           class="avatar"
+           width="90" height="90">
+      <span class="avatar-badge" aria-hidden="true">✓</span>
+    </div>
+    <h1 class="profile-name">Esencia y Taza</h1>
+    <p class="profile-tag">☕ Café Artesanal · Caicedo, Antioquia 🇨🇴</p>
+    <p class="profile-bio">Del cafetal a tu mesa. Tostado bajo pedido, sin intermediarios.<br>Envíos a toda Colombia.</p>
+    <p class="profile-stars" aria-label="5 estrellas">★★★★★</p>
+  </div>
+
+  <!-- ── BOTONES PRINCIPALES ────────────────────────── -->
+  <div class="main-ctas">
+    <a href="./index.html#cafes"
+       class="cta-btn cta-primary">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      Ver cafés y precios
+    </a>
+    <a href="https://wa.me/573022573244?text=Hola%20Esencia%20y%20Taza%20%F0%9F%91%8B%20Quiero%20hacer%20un%20pedido.%20%C2%BFPueden%20contarme%20las%20opciones%20disponibles%3F"
+       target="_blank" rel="noopener"
+       class="cta-btn cta-wa">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.7.9-.1.2-.3.2-.5.1-1.3-.6-2.1-1.1-3-2.6-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7c-.2-.4-.4-.4-.5-.4h-.5c-.2 0-.5.1-.7.3-.2.2-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.7 3.1.6.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1-.1-.1-.2-.2-.5-.3z"/></svg>
+      Hacer pedido por WhatsApp
+    </a>
+  </div>
+
+  <!-- ── PRODUCTOS ──────────────────────────────────── -->
+  <div class="sec-label">Nuestros cafés</div>
+
+  <div class="prod-grid">
+
+    <a href="https://wa.me/573022573244?text=Hola%20Esencia%20y%20Taza%20%F0%9F%91%8B%20Quiero%20pedir%20el%20Caf%C3%A9%20Origen%20Caicedo%20125%20g%20(%2420.000%20COP).%20%C2%BFTienen%20disponibilidad%20y%20cu%C3%A1nto%20es%20el%20env%C3%ADo%3F"
+       target="_blank" rel="noopener"
+       class="prod-card">
+      <div class="prod-img-wrap">
+        <img src="./assets/images/product-125g.jpg"
+             alt="Café Origen Caicedo 125 g"
+             class="prod-img"
+             loading="lazy" decoding="async" width="240" height="180">
+      </div>
+      <div class="prod-body">
+        <span class="prod-size">125 g</span>
+        <span class="prod-uso">Ideal para probar</span>
+        <span class="prod-price">$20.000</span>
+        <span class="prod-cta">Pedir por WhatsApp →</span>
+      </div>
+    </a>
+
+    <a href="https://wa.me/573022573244?text=Hola%20Esencia%20y%20Taza%20%F0%9F%91%8B%20Quiero%20pedir%20el%20Caf%C3%A9%20Origen%20Caicedo%20250%20g%20(%2433.000%20COP).%20%C2%BFTienen%20disponibilidad%20y%20cu%C3%A1nto%20es%20el%20env%C3%ADo%3F"
+       target="_blank" rel="noopener"
+       class="prod-card">
+      <div class="prod-img-wrap">
+        <img src="./assets/images/product-250g.jpg"
+             alt="Café Origen Caicedo 250 g"
+             class="prod-img"
+             loading="lazy" decoding="async" width="240" height="180">
+      </div>
+      <div class="prod-body">
+        <span class="prod-size">250 g</span>
+        <span class="prod-uso">Consumo diario</span>
+        <span class="prod-price">$33.000</span>
+        <span class="prod-cta">Pedir por WhatsApp →</span>
+      </div>
+    </a>
+
+    <a href="https://wa.me/573022573244?text=Hola%20Esencia%20y%20Taza%20%F0%9F%91%8B%20Quiero%20pedir%20el%20Caf%C3%A9%20Origen%20Caicedo%20500%20g%20(%2460.000%20COP).%20%C2%BFTienen%20disponibilidad%20y%20cu%C3%A1nto%20es%20el%20env%C3%ADo%3F"
+       target="_blank" rel="noopener"
+       class="prod-card destacado">
+      <div class="prod-img-wrap">
+        <img src="./assets/images/product-500g.jpg"
+             alt="Café Origen Caicedo 500 g"
+             class="prod-img"
+             loading="lazy" decoding="async" width="240" height="180">
+        <span class="prod-badge">⭐ Más pedido</span>
+      </div>
+      <div class="prod-body">
+        <span class="prod-size">500 g</span>
+        <span class="prod-uso">Consumo semanal</span>
+        <span class="prod-price">$60.000</span>
+        <span class="prod-cta">Pedir por WhatsApp →</span>
+      </div>
+    </a>
+
+    <a href="https://wa.me/573022573244?text=Hola%20Esencia%20y%20Taza%20%F0%9F%91%8B%20Quiero%20pedir%20el%20Caf%C3%A9%20Origen%20Caicedo%202.5%20kg%20(%24180.000%20COP)%20para%20mi%20negocio.%20%C2%BFPueden%20darme%20m%C3%A1s%20informaci%C3%B3n%3F"
+       target="_blank" rel="noopener"
+       class="prod-card">
+      <div class="prod-img-wrap">
+        <img src="./assets/images/product-2500g.jpg"
+             alt="Café Origen Caicedo 2.5 kg"
+             class="prod-img"
+             loading="lazy" decoding="async" width="240" height="180">
+      </div>
+      <div class="prod-body">
+        <span class="prod-size">2.5 kg</span>
+        <span class="prod-uso">Negocios y cafeterías</span>
+        <span class="prod-price">$180.000</span>
+        <span class="prod-cta">Consultar →</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ── LINKS SECUNDARIOS ──────────────────────────── -->
+  <div class="sec-label">Más información</div>
+
+  <div class="links">
+
+    <a href="./index.html" class="link-btn">
+      <span class="link-btn-icon icon-tienda" aria-hidden="true">🏪</span>
+      Tienda completa y pago en línea
+      <span class="link-arrow">›</span>
+    </a>
+
+    <a href="./blog.html" class="link-btn">
+      <span class="link-btn-icon icon-blog" aria-hidden="true">📖</span>
+      Blog — Todo sobre el café
+      <span class="link-arrow">›</span>
+    </a>
+
+    <a href="https://instagram.com/esenciaytazacafe"
+       target="_blank" rel="noopener"
+       class="link-btn">
+      <span class="link-btn-icon icon-ig" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="#fff" stroke="none"/></svg>
+      </span>
+      Instagram @esenciaytazacafe
+      <span class="link-arrow">›</span>
+    </a>
+
+    <a href="https://tiktok.com/@esenciaytazacafe"
+       target="_blank" rel="noopener"
+       class="link-btn">
+      <span class="link-btn-icon icon-tt" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M16.5 3c.3 2.1 1.5 3.6 3.5 3.9v2.4c-1.2.1-2.4-.2-3.5-.8v5.7c0 3-2.1 5.3-5 5.3a5 5 0 0 1-5-5c0-2.9 2.4-5.1 5.4-4.9v2.5c-.4-.1-.8-.2-1.2-.1-1.3.1-2.2 1.1-2.1 2.5 0 1.3 1.1 2.3 2.4 2.2 1.3 0 2.2-1 2.2-2.4V3h2.8z"/></svg>
+      </span>
+      TikTok @esenciaytazacafe
+      <span class="link-arrow">›</span>
+    </a>
+
+    <a href="mailto:comercial@esenciaytaza.com" class="link-btn">
+      <span class="link-btn-icon icon-mail" aria-hidden="true">✉️</span>
+      comercial@esenciaytaza.com
+      <span class="link-arrow">›</span>
+    </a>
+
+  </div>
+
+  <!-- ── FOOTER ─────────────────────────────────────── -->
+  <div class="foot">
+    <p>© <span id="anio"></span> <a href="./index.html">Esencia y Taza</a> · Caicedo, Antioquia, Colombia</p>
+  </div>
+
+</div>
+
+<script>
+  document.getElementById('anio').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
