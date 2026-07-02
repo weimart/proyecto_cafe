@@ -684,17 +684,44 @@ const Checkout = (() => {
     };
 
     if (WOMPI.scriptUrl) {
+      // Timeout de seguridad: si el Apps Script no responde en 15s, no dejar
+      // al cliente colgado — avisar y ofrecer WhatsApp como alternativa.
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15000);
       try {
         const url  = `${WOMPI.scriptUrl}?ref=${encodeURIComponent(pedido.referencia)}&amount=${montoEnCentavos}&cur=COP`;
-        const res  = await fetch(url);
+        const res  = await fetch(url, { redirect: 'follow', signal: controller.signal });
+        clearTimeout(timeout);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
         const json = await res.json();
-        irAWompi(json.signature || null);
-      } catch {
-        irAWompi(null);
+        if (!json.signature) throw new Error('Sin firma en la respuesta');
+        irAWompi(json.signature);
+      } catch (e) {
+        clearTimeout(timeout);
+        console.error('[Wompi] Error al obtener firma:', e.message);
+        // Re-habilitar el botón de pago para que el cliente pueda reintentar
+        const btnPagar = document.getElementById('co-pagar') || document.querySelector('[data-metodo="wompi"]');
+        if (btnPagar) { btnPagar.disabled = false; }
+        const seguir = confirm(
+          'No pudimos iniciar el pago en línea en este momento.\n\n' +
+          '¿Quieres completar tu pedido por WhatsApp? Te enviamos el link de pago seguro.'
+        );
+        if (seguir) _enviarWhatsApp(pedido);
       }
     } else {
       irAWompi(null);
     }
+  };
+
+  // Envía el pedido por WhatsApp (usado como fallback si el pago en línea falla)
+  const _enviarWhatsApp = (pedido) => {
+    let msg = `Hola Esencia y Taza, quiero hacer este pedido:\n\n`;
+    msg += `${pedido.productos || ''}\n\n`;
+    msg += `*Total: $${(pedido.total || 0).toLocaleString('es-CO')} COP*\n\n`;
+    msg += `📦 *Envío a:* ${pedido.ciudad || ''}, ${pedido.departamento || ''}\n${pedido.direccion || ''}\n`;
+    msg += `👤 *Nombre:* ${pedido.nombre || ''}\n📱 *Tel:* ${pedido.telefono || ''}\n`;
+    msg += `\n¿Me confirman disponibilidad y costo de envío?`;
+    window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
   return { init, abrir };
