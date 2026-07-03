@@ -218,21 +218,70 @@
   const ref     = params.get('ref') || (pedido && pedido.referencia) || '';
 
   // Determinar estado
-  const esPago  = txnId !== '';          // viene de Wompi
-  const esWA    = pedido && pedido.metodo === 'whatsapp';
+  const esPago = txnId !== '';           // viene de Wompi
+  const esWA   = pedido && pedido.metodo === 'whatsapp';
 
-  // Pintar estado
-  const statusEl = document.getElementById('gr-status');
+  const statusEl  = document.getElementById('gr-status');
+  const iconEl    = document.getElementById('gr-icon');
+  const tituloEl  = document.getElementById('gr-titulo');
+  const subtitEl  = document.getElementById('gr-subtitulo');
+
+  const _pintarAprobado = () => {
+    iconEl.textContent  = '✅';
+    tituloEl.textContent = '¡Pedido confirmado!';
+    subtitEl.textContent = 'Gracias por tu compra. Pronto nos pondremos en contacto contigo.';
+  };
+  const _pintarPendiente = () => {
+    statusEl.style.background = '#E65100';
+    iconEl.textContent  = '⏳';
+    tituloEl.textContent = 'Pago en proceso';
+    subtitEl.textContent = 'Tu pago está siendo verificado. Te avisaremos cuando se confirme.';
+  };
+  const _pintarRechazado = () => {
+    statusEl.style.background = '#B71C1C';
+    iconEl.textContent  = '❌';
+    tituloEl.textContent = 'Pago no completado';
+    subtitEl.textContent = 'El pago no pudo procesarse. Puedes intentar de nuevo o completar tu pedido por WhatsApp.';
+  };
+
+  // Pintar estado inicial
   if (!esPago && !esWA) {
     statusEl.classList.add('pending');
-    document.getElementById('gr-icon').textContent = '⏳';
-    document.getElementById('gr-titulo').textContent = 'Pedido en proceso';
-    document.getElementById('gr-subtitulo').textContent = 'Completa el pago para confirmar tu pedido.';
+    iconEl.textContent  = '⏳';
+    tituloEl.textContent = 'Pedido en proceso';
+    subtitEl.textContent = 'Completa el pago para confirmar tu pedido.';
   } else if (esWA) {
     statusEl.style.background = '#1565C0';
-    document.getElementById('gr-icon').textContent = '💬';
-    document.getElementById('gr-titulo').textContent = '¡Pedido recibido por WhatsApp!';
-    document.getElementById('gr-subtitulo').textContent = 'Te contactaremos para confirmar disponibilidad y envío.';
+    iconEl.textContent  = '💬';
+    tituloEl.textContent = '¡Pedido recibido por WhatsApp!';
+    subtitEl.textContent = 'Te contactaremos para confirmar disponibilidad y envío.';
+  } else {
+    // Wompi: mostrar "verificando" mientras consultamos el estado real
+    statusEl.style.background = '#5C6BC0';
+    iconEl.textContent  = '⏳';
+    tituloEl.textContent = 'Verificando pago…';
+    subtitEl.textContent = 'Consultando el estado de tu transacción con Wompi.';
+
+    // Consultar API pública de Wompi para obtener el estado real
+    fetch(`https://production.wompi.co/v1/transactions/${txnId}`)
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(data => {
+        const status = data?.data?.status || '';
+        if (status === 'APPROVED') {
+          statusEl.style.background = '';  // vuelve al verde por defecto (.gr-status)
+          _pintarAprobado();
+        } else if (status === 'PENDING') {
+          _pintarPendiente();
+        } else {
+          // DECLINED, VOIDED, ERROR u otro
+          _pintarRechazado();
+        }
+      })
+      .catch(() => {
+        // Si la API no responde asumimos aprobado (Wompi redirige tras completar)
+        statusEl.style.background = '';
+        _pintarAprobado();
+      });
   }
 
   // Rellenar datos del pedido

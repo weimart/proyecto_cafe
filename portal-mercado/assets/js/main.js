@@ -11,7 +11,7 @@ const WOMPI = {
   publicKey  : 'pub_prod_i8kgq0AwhbR6ZGuKKrvH1Nh6Fq8EnXZn',
   currency   : 'COP',
   activo     : true,
-  redirectUrl: 'https://esenciaytaza.com/',
+  redirectUrl: 'https://esenciaytaza.com/gracias.html',
   scriptUrl  : 'https://script.google.com/macros/s/AKfycbxNxiFXnLsuD_K8g4p9xagimfgm8pC5DXvaRpqxTHNIIgUx78gWmKwrRFLMYbRaxjip/exec'
 };
 
