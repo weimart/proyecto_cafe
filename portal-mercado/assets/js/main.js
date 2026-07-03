@@ -737,7 +737,7 @@ const App = {
     AnioDinamico.init();
     Cart.render();
     ContactForm.init();
-    Popup.init();
+    // Popup.init(); // desactivado temporalmente — pendiente rediseño
     Checkout.init();
 
     // Botones del carrito → abren el modal de checkout
