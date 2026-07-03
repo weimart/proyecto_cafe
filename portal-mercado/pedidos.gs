@@ -237,6 +237,50 @@ function _confirmarCliente(p, idPedido, transaccionId) {
 
   </td></tr>
 
+  <!-- Brochure de productos -->
+  <tr><td style="background:#2C1A0E;padding:28px 32px">
+    <p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#C8962E;text-transform:uppercase;letter-spacing:.1em;text-align:center">También te puede interesar</p>
+    <p style="margin:0 0 20px;font-size:15px;font-weight:700;color:#FAF5EE;text-align:center">Nuestra línea completa de café</p>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="49%" valign="top" style="background:rgba(255,255,255,.07);border:1px solid rgba(200,150,46,.25);padding:14px 12px;border-radius:8px">
+          <p style="margin:0 0 2px;font-size:10px;color:#C8962E;font-weight:700;text-transform:uppercase;letter-spacing:.05em">125 g · $20.000 COP</p>
+          <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#FAF5EE">Ideal para probar</p>
+          <p style="margin:0 0 12px;font-size:11px;color:rgba(250,245,238,.75);line-height:1.5">Notas de chocolate oscuro y caramelo. Perfecto en espresso o prensa francesa.</p>
+          <a href="https://wa.me/573022573244?text=Hola%20Esencia%20y%20Taza%20%F0%9F%91%8B%20Quiero%20pedir%20el%20Caf%C3%A9%20Origen%20Caicedo%20125%20g%20(%2420.000%20COP).%20%C2%BFTienen%20disponibilidad%3F" style="display:inline-block;background:#C8962E;color:#fff;text-decoration:none;font-size:11px;font-weight:700;padding:7px 14px;border-radius:6px">Pedir →</a>
+        </td>
+        <td width="2%"></td>
+        <td width="49%" valign="top" style="background:rgba(255,255,255,.07);border:1px solid rgba(200,150,46,.25);padding:14px 12px;border-radius:8px">
+          <p style="margin:0 0 2px;font-size:10px;color:#C8962E;font-weight:700;text-transform:uppercase;letter-spacing:.05em">250 g · $33.000 COP</p>
+          <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#FAF5EE">Consumo diario</p>
+          <p style="margin:0 0 12px;font-size:11px;color:rgba(250,245,238,.75);line-height:1.5">Dulzura natural del grano de altura. Ideal para V60, espresso o drip.</p>
+          <a href="https://wa.me/573022573244?text=Hola%20Esencia%20y%20Taza%20%F0%9F%91%8B%20Quiero%20pedir%20el%20Caf%C3%A9%20Origen%20Caicedo%20250%20g%20(%2433.000%20COP).%20%C2%BFTienen%20disponibilidad%3F" style="display:inline-block;background:#C8962E;color:#fff;text-decoration:none;font-size:11px;font-weight:700;padding:7px 14px;border-radius:6px">Pedir →</a>
+        </td>
+      </tr>
+      <tr><td colspan="3" style="height:10px"></td></tr>
+      <tr>
+        <td width="49%" valign="top" style="background:rgba(200,150,46,.15);border:1px solid rgba(200,150,46,.5);padding:14px 12px;border-radius:8px">
+          <p style="margin:0 0 2px;font-size:10px;color:#C8962E;font-weight:700;text-transform:uppercase;letter-spacing:.05em">⭐ Más pedido · 500 g · $60.000 COP</p>
+          <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#FAF5EE">Consumo semanal</p>
+          <p style="margin:0 0 12px;font-size:11px;color:rgba(250,245,238,.75);line-height:1.5">El favorito. Granos seleccionados de Caicedo tostados bajo pedido a precio justo.</p>
+          <a href="https://wa.me/573022573244?text=Hola%20Esencia%20y%20Taza%20%F0%9F%91%8B%20Quiero%20pedir%20el%20Caf%C3%A9%20Origen%20Caicedo%20500%20g%20(%2460.000%20COP).%20%C2%BFTienen%20disponibilidad%3F" style="display:inline-block;background:#C8962E;color:#fff;text-decoration:none;font-size:11px;font-weight:700;padding:7px 14px;border-radius:6px">Pedir →</a>
+        </td>
+        <td width="2%"></td>
+        <td width="49%" valign="top" style="background:rgba(255,255,255,.07);border:1px solid rgba(200,150,46,.25);padding:14px 12px;border-radius:8px">
+          <p style="margin:0 0 2px;font-size:10px;color:#C8962E;font-weight:700;text-transform:uppercase;letter-spacing:.05em">2.5 kg · $180.000 COP</p>
+          <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#FAF5EE">Negocios y cafeterías</p>
+          <p style="margin:0 0 12px;font-size:11px;color:rgba(250,245,238,.75);line-height:1.5">Lote mayorista tostado bajo pedido. Precio directo de productor, sin intermediarios.</p>
+          <a href="https://wa.me/573022573244?text=Hola%20Esencia%20y%20Taza%20%F0%9F%91%8B%20Quiero%20informaci%C3%B3n%20sobre%20el%20Caf%C3%A9%20Origen%20Caicedo%202.5%20kg%20(%24180.000%20COP)%20para%20mi%20negocio" style="display:inline-block;background:#C8962E;color:#fff;text-decoration:none;font-size:11px;font-weight:700;padding:7px 14px;border-radius:6px">Consultar →</a>
+        </td>
+      </tr>
+    </table>
+    <p style="margin:20px 0 0;text-align:center">
+      <a href="https://esenciaytaza.com/#cafes" style="display:inline-block;border:1px solid rgba(200,150,46,.5);color:#C8962E;text-decoration:none;font-size:12px;font-weight:700;padding:10px 24px;border-radius:8px">
+        🛒 Ver tienda completa →
+      </a>
+    </p>
+  </td></tr>
+
   <!-- Footer -->
   <tr><td style="background:#FAF5EE;padding:20px 32px;text-align:center;border-top:1px solid rgba(0,0,0,.06)">
     <p style="margin:0;font-size:12px;color:#6B4226">¿Preguntas? Escríbenos a <a href="mailto:comercial@esenciaytaza.com" style="color:#C8962E">comercial@esenciaytaza.com</a></p>
