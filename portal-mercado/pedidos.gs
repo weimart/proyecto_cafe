@@ -267,10 +267,10 @@ function _confirmarCliente(p, idPedido, transaccionId) {
         </td>
         <td width="2%"></td>
         <td width="49%" valign="top" style="background:rgba(255,255,255,.07);border:1px solid rgba(200,150,46,.25);padding:14px 12px;border-radius:8px">
-          <p style="margin:0 0 2px;font-size:10px;color:#C8962E;font-weight:700;text-transform:uppercase;letter-spacing:.05em">2.5 kg · $180.000 COP</p>
+          <p style="margin:0 0 2px;font-size:10px;color:#C8962E;font-weight:700;text-transform:uppercase;letter-spacing:.05em">2.5 kg · $199.999 COP</p>
           <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#FAF5EE">Negocios y cafeterías</p>
           <p style="margin:0 0 12px;font-size:11px;color:rgba(250,245,238,.75);line-height:1.5">Lote mayorista tostado bajo pedido. Precio directo de productor, sin intermediarios.</p>
-          <a href="https://wa.me/573022573244?text=Hola%20Esencia%20y%20Taza%20%F0%9F%91%8B%20Quiero%20informaci%C3%B3n%20sobre%20el%20Caf%C3%A9%20Origen%20Caicedo%202.5%20kg%20(%24180.000%20COP)%20para%20mi%20negocio" style="display:inline-block;background:#C8962E;color:#fff;text-decoration:none;font-size:11px;font-weight:700;padding:7px 14px;border-radius:6px">Consultar →</a>
+          <a href="https://wa.me/573022573244?text=Hola%20Esencia%20y%20Taza%20%F0%9F%91%8B%20Quiero%20informaci%C3%B3n%20sobre%20el%20Caf%C3%A9%20Origen%20Caicedo%202.5%20kg%20(%24199.999%20COP)%20para%20mi%20negocio" style="display:inline-block;background:#C8962E;color:#fff;text-decoration:none;font-size:11px;font-weight:700;padding:7px 14px;border-radius:6px">Consultar →</a>
         </td>
       </tr>
     </table>

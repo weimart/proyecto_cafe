@@ -26,7 +26,7 @@ const PRESENTACIONES = [
   { id: '500g',  tamano: '500 g',  precio: 60000, destacado: true,
     desc: 'El favorito de nuestros clientes. Abastece el consumo semanal de tu hogar con granos seleccionados de Caicedo, tostados bajo pedido a precio justo.',
     tueste: 'Tueste medio', uso: 'Consumo semanal' },
-  { id: '2500g', tamano: '2.5 kg', precio: 180000,
+  { id: '2500g', tamano: '2.5 kg', precio: 199999,
     desc: 'Para cafeterías, restaurantes y familias grandes. Lote artesanal tostado bajo pedido con precio mayorista y la misma calidad de origen Caicedo.',
     tueste: 'Tueste medio', uso: 'Negocios y cafeterías' }
 ];
