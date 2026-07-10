@@ -1,6 +1,6 @@
 [build]
   base    = "portal-mercado"
-  publish = "portal-mercado"
+  publish = "."
 
 [[headers]]
   for = "/*"
