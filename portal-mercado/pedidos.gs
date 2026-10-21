@@ -15,9 +15,28 @@ const CLIENT_TOKEN = 'et_cli_v1_9f3a2b7c1d';
 // API pública de Wompi para verificar el estado real de una transacción.
 const WOMPI_API = 'https://production.wompi.co/v1/transactions/';
 
+// Llaves secretas de Wompi: NO van en el código. Se guardan en
+// Configuración del proyecto → Propiedades del script:
+//   WOMPI_INTEGRITY_SECRET → Panel Wompi → Desarrolladores → "Integridad"
+//   WOMPI_EVENTS_SECRET    → Panel Wompi → Desarrolladores → "Eventos"
+function _secreto(nombre) {
+  return PropertiesService.getScriptProperties().getProperty(nombre) || '';
+}
+
+// ── Catálogo (fuente autoritativa del precio) ─────────────────────────────────
+// Debe coincidir con PRESENTACIONES en main.js. Si cambias un precio, cámbialo
+// en los dos sitios: el que se cobra es SIEMPRE el de aquí.
+const PRECIOS = { '125 g': 20000, '250 g': 33000, '500 g': 60000, '2.5 kg': 199999 };
+const TIPOS   = ['En grano', 'Molido'];
+
+// Envío. Debe coincidir con ENVIO en main.js (allí solo se usa para mostrarlo).
+const ENVIO = { tarifa: 12000, gratisDesde: 120000 };
+function _costoEnvio(subtotal) {
+  return subtotal >= ENVIO.gratisDesde ? 0 : ENVIO.tarifa;
+}
+
 // Límites anti-abuso
 const MAX_PEDIDOS_POR_MINUTO = 8;   // global
-const COOLDOWN_EMAIL_SEG     = 45;  // un mismo correo no puede repetir pedido tan seguido
 const TOTAL_MAX_COP          = 5000000;
 const MAX_ITEMS              = 30;
 
@@ -66,31 +85,49 @@ function _validarPedido(d) {
   const nombre   = _limpiar(d.nombre, 100);
   const email    = _limpiar(d.email, 120).toLowerCase();
   const telefono = _limpiar(d.telefono, 25).replace(/[^\d+\s()-]/g, '');
-  const total    = Number(d.total);
 
   if (nombre.length < 2)        throw new Error('Nombre inválido');
   if (!_esEmail(email))         throw new Error('Correo inválido');
   if (telefono.replace(/\D/g, '').length < 7) throw new Error('Teléfono inválido');
-  if (!isFinite(total) || total <= 0 || total > TOTAL_MAX_COP) throw new Error('Total inválido');
 
-  let items = Array.isArray(d.items) ? d.items.slice(0, MAX_ITEMS) : [];
-  items = items.map(function (i) {
-    return {
-      nombre:   _limpiar(i && i.nombre, 80),
-      tamano:   _limpiar(i && i.tamano, 20),
-      tipo:     _limpiar(i && i.tipo, 20),
-      precio:   Math.max(0, Number(i && i.precio) || 0),
-      cantidad: Math.max(0, Math.min(999, parseInt(i && i.cantidad, 10) || 0))
-    };
+  // El total se recalcula aquí con PRECIOS: se ignoran el total y los precios
+  // que mande el navegador (se pueden manipular).
+  const crudos = Array.isArray(d.items) ? d.items.slice(0, MAX_ITEMS) : [];
+  const items = [];
+  crudos.forEach(function (i) {
+    const tamano   = _limpiar(i && i.tamano, 20);
+    const tipo     = _limpiar(i && i.tipo, 20);
+    const cantidad = parseInt(i && i.cantidad, 10);
+    if (!PRECIOS.hasOwnProperty(tamano)) throw new Error('Producto inválido');
+    if (TIPOS.indexOf(tipo) < 0)          throw new Error('Molienda inválida');
+    if (!(cantidad >= 1 && cantidad <= 99)) throw new Error('Cantidad inválida');
+    items.push({ nombre: 'Café Origen Caicedo', tamano: tamano, tipo: tipo,
+                 precio: PRECIOS[tamano], cantidad: cantidad });
   });
+  if (!items.length) throw new Error('Carrito vacío');
+
+  const subtotal = items.reduce(function (s, i) { return s + i.precio * i.cantidad; }, 0);
+  const envio    = _costoEnvio(subtotal);
+  const total    = subtotal + envio;
+  if (total > TOTAL_MAX_COP) throw new Error('Total inválido');
+
+  const fmt = function (v) { return '$' + Number(v).toLocaleString('es-CO'); };
+  const productos = items.map(function (i) {
+    return '• ' + i.cantidad + 'x Café Origen Caicedo ' + i.tamano + ' (' + i.tipo + ') — ' + fmt(i.precio * i.cantidad);
+  }).join('\n') + '\n• Envío — ' + (envio ? fmt(envio) : 'gratis');
+
+  const referencia = _limpiar(d.referencia, 40).replace(/[^A-Za-z0-9_-]/g, '');
+  if (!referencia) throw new Error('Referencia inválida');
 
   return {
     accion:       'nuevo_pedido',
-    idPedido:     _limpiar(d.idPedido, 40).replace(/[^A-Za-z0-9_-]/g, '') || ('ET-' + Date.now()),
-    referencia:   _limpiar(d.referencia, 40).replace(/[^A-Za-z0-9_-]/g, ''),
+    idPedido:     referencia,
+    referencia:   referencia,
     metodo:       d.metodo === 'wompi' ? 'wompi' : 'whatsapp',
-    productos:    _limpiar(d.productos, 1500),
-    total:        Math.round(total),
+    productos:    productos,
+    subtotal:     subtotal,
+    envio:        envio,
+    total:        total,
     items:        items,
     nombre:       nombre,
     email:        email,
@@ -106,25 +143,30 @@ function _validarPedido(d) {
   };
 }
 
-// Límite de tasa: global por minuto + cooldown por correo.
-function _rateOk(email) {
+// Límite de tasa global por minuto. (Ya no hay bloqueo por correo: hacía que
+// un cliente que reintentaba el pago perdiera el pedido sin enterarse.)
+function _rateOk() {
   try {
     const cache = CacheService.getScriptCache();
     const gKey  = 'ped_g_' + Math.floor(Date.now() / 60000);
     const g     = Number(cache.get(gKey) || 0) + 1;
     cache.put(gKey, String(g), 120);
-    if (g > MAX_PEDIDOS_POR_MINUTO) return false;
-
-    if (email) {
-      const eKey = 'ped_e_' + Utilities.base64EncodeWebSafe(
-        Utilities.computeDigest(Utilities.DigestAlgorithm.MD5, email));
-      if (cache.get(eKey)) return false;
-      cache.put(eKey, '1', COOLDOWN_EMAIL_SEG);
-    }
-    return true;
+    return g <= MAX_PEDIDOS_POR_MINUTO;
   } catch (err) {
     return true;
   }
+}
+
+function _sha256Hex(texto) {
+  return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, texto, Utilities.Charset.UTF_8)
+    .map(function (b) { return ('0' + (b & 0xFF).toString(16)).slice(-2); }).join('');
+}
+
+// Firma de integridad de Wompi, calculada con el monto que guardó el servidor.
+function _firmaIntegridad(referencia, montoEnCentavos) {
+  const secreto = _secreto('WOMPI_INTEGRITY_SECRET');
+  if (!secreto) throw new Error('Falta WOMPI_INTEGRITY_SECRET en las propiedades del script');
+  return _sha256Hex(referencia + montoEnCentavos + 'COP' + secreto);
 }
 
 function doGet(e) {
@@ -137,11 +179,15 @@ function doGet(e) {
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
+
+    // Evento de Wompi (webhook). No trae CLIENT_TOKEN: se valida con su checksum.
+    if (data && data.event && data.signature) return _json(eventoWompi(data));
+
     if (String(data.token || '') !== CLIENT_TOKEN) return _json({ error: 'No autorizado' });
 
     if (data.accion === 'nuevo_pedido') {
       const limpio = _validarPedido(data);
-      if (!_rateOk(limpio.email)) return _json({ error: 'Demasiadas solicitudes. Intenta en un momento.' });
+      if (!_rateOk()) return _json({ error: 'Demasiadas solicitudes. Intenta en un momento.' });
       return _json(guardarPedido(limpio));
     }
     if (data.accion === 'confirmar_pago') return _json(confirmarPago(data));
@@ -168,36 +214,60 @@ function guardarPedido(data) {
       hoja.getRange(1,1,1,18).setFontWeight('bold');
     }
 
-    const fecha = Utilities.formatDate(new Date(), 'America/Bogota', 'dd/MM/yyyy HH:mm:ss');
-    const estado = data.metodo === 'wompi' ? 'PAGO_PENDIENTE' : 'WHATSAPP_PENDIENTE';
-
-    // Prefijo ' para que Sheets nunca interprete un campo como fórmula.
-    const safe = function (v) {
-      var s = String(v == null ? '' : v);
-      return /^[=+\-@]/.test(s) ? "'" + s : s;
-    };
-
-    hoja.appendRow([
-      safe(data.idPedido), fecha, estado, safe(data.referencia),
-      safe(data.productos), data.total,
-      safe(data.nombre), safe(data.email), safe(data.telefono),
-      safe(data.departamento), safe(data.ciudad), safe(data.direccion), safe(data.complemento),
-      safe(data.tipoDoc), safe(data.numeroDoc), safe(data.razonSocial),
-      data.factura ? 'Sí' : 'No', ''
-    ]);
-
-    _upsertCliente(data);
-
-    if (data.metodo === 'whatsapp') {
-      _notificarVendedor(data, data.idPedido, null);
-      _confirmarCliente(data, data.idPedido, null);
+    // Idempotente: si el navegador reenvía la misma referencia, no se duplica
+    // y se cobra el total que ya quedó guardado.
+    const previo = _buscarFila(hoja, data.referencia);
+    if (previo.fila >= 0) {
+      data.total = Number(previo.filas[previo.fila][5]) || data.total;
+    } else {
+      _agregarFila(hoja, data);
+      _upsertCliente(data);
+      if (data.metodo === 'whatsapp') {
+        _notificarVendedor(data, data.idPedido, null);
+        _confirmarCliente(data, data.idPedido, null);
+      }
+      // Para Wompi: los emails se envían al confirmar el pago (ya verificado).
     }
-    // Para Wompi: los emails se envían al confirmar el pago (ya verificado).
-
-    return { ok: true, idPedido: data.idPedido };
   } finally {
     lock.releaseLock();
   }
+
+  const resp = { ok: true, idPedido: data.idPedido, referencia: data.referencia,
+                 subtotal: data.subtotal, envio: data.envio, total: data.total };
+  if (data.metodo === 'wompi') {
+    resp.montoEnCentavos = String(data.total * 100);
+    resp.firma = _firmaIntegridad(data.referencia, resp.montoEnCentavos);
+  }
+  return resp;
+}
+
+// Devuelve { filas, fila } con la fila (base 0, sin encabezado = 1..n) de una referencia, o -1.
+function _buscarFila(hoja, referencia) {
+  const filas = hoja.getDataRange().getValues();
+  for (let i = 1; i < filas.length; i++) {
+    if (String(filas[i][3]) === referencia) return { filas: filas, fila: i };
+  }
+  return { filas: filas, fila: -1 };
+}
+
+function _agregarFila(hoja, data) {
+  const fecha = Utilities.formatDate(new Date(), 'America/Bogota', 'dd/MM/yyyy HH:mm:ss');
+  const estado = data.metodo === 'wompi' ? 'PAGO_PENDIENTE' : 'WHATSAPP_PENDIENTE';
+
+  // Prefijo ' para que Sheets nunca interprete un campo como fórmula.
+  const safe = function (v) {
+    var s = String(v == null ? '' : v);
+    return /^[=+\-@]/.test(s) ? "'" + s : s;
+  };
+
+  hoja.appendRow([
+    safe(data.idPedido), fecha, estado, safe(data.referencia),
+    safe(data.productos), data.total,
+    safe(data.nombre), safe(data.email), safe(data.telefono),
+    safe(data.departamento), safe(data.ciudad), safe(data.direccion), safe(data.complemento),
+    safe(data.tipoDoc), safe(data.numeroDoc), safe(data.razonSocial),
+    data.factura ? 'Sí' : 'No', ''
+  ]);
 }
 
 // ── Confirmar pago Wompi (con verificación real contra la API de Wompi) ───────
@@ -213,11 +283,9 @@ function confirmarPago(data) {
     const hoja = ssPedidos.getSheetByName('Pedidos');
     if (!hoja) return { ok: false, error: 'Hoja no encontrada' };
 
-    const filas = hoja.getDataRange().getValues();
-    let fila = -1;
-    for (let i = 1; i < filas.length; i++) {
-      if (String(filas[i][3]) === referencia) { fila = i; break; }
-    }
+    const busq  = _buscarFila(hoja, referencia);
+    const filas = busq.filas;
+    const fila  = busq.fila;
     if (fila < 0) return { ok: false, error: 'Referencia no encontrada' };
 
     // Ya procesado → idempotente, no re-notificar.
@@ -257,6 +325,57 @@ function confirmarPago(data) {
     _notificarVendedor(pedido, pedido.idPedido, transaccionId);
     _confirmarCliente(pedido, pedido.idPedido, transaccionId);
     return { ok: true };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// ── Webhook de Wompi ─────────────────────────────────────────────────────────
+// Panel Wompi → Desarrolladores → URL de eventos = la URL /exec de este script.
+// Confirma el pago aunque el cliente nunca regrese a gracias.html, y resuelve
+// los pagos PSE/Nequi que quedan PENDING y se aprueban minutos después.
+function eventoWompi(evt) {
+  const secreto = _secreto('WOMPI_EVENTS_SECRET');
+  if (!secreto) return { ok: false, error: 'Falta WOMPI_EVENTS_SECRET' };
+
+  // checksum = SHA256( valores de signature.properties + timestamp + secreto )
+  const props = (evt.signature && evt.signature.properties) || [];
+  const valores = props.map(function (ruta) {
+    return String(ruta.split('.').reduce(function (o, k) { return o == null ? o : o[k]; }, evt.data));
+  }).join('');
+  const calculado = _sha256Hex(valores + evt.timestamp + secreto);
+  if (calculado !== String(evt.signature.checksum || '').toLowerCase()) {
+    return { ok: false, error: 'Checksum inválido' };
+  }
+
+  if (evt.event !== 'transaction.updated') return { ok: true, ignorado: evt.event };
+  const txn = (evt.data && evt.data.transaction) || {};
+
+  if (txn.status === 'APPROVED') {
+    // confirmarPago vuelve a consultar la API de Wompi y compara referencia y monto.
+    return confirmarPago({ referencia: txn.reference, transaccionId: txn.id });
+  }
+  if (['DECLINED', 'VOIDED', 'ERROR'].indexOf(txn.status) >= 0) {
+    return marcarPagoFallido(txn.reference, txn.id, txn.status);
+  }
+  return { ok: true, status: txn.status };
+}
+
+function marcarPagoFallido(referenciaCruda, transaccionIdCruda, status) {
+  const referencia = _limpiar(referenciaCruda, 40).replace(/[^A-Za-z0-9_-]/g, '');
+  const lock = LockService.getScriptLock();
+  try { lock.waitLock(20000); } catch (e) { return { ok: false, error: 'Sistema ocupado' }; }
+  try {
+    const hoja = SpreadsheetApp.openById(SHEET_PEDIDOS).getSheetByName('Pedidos');
+    if (!hoja) return { ok: false, error: 'Hoja no encontrada' };
+    const busq = _buscarFila(hoja, referencia);
+    if (busq.fila < 0) return { ok: false, error: 'Referencia no encontrada' };
+    // Solo se toca un pedido que sigue esperando pago; nunca uno ya PAGADO.
+    if (String(busq.filas[busq.fila][2]) !== 'PAGO_PENDIENTE') return { ok: true, sinCambios: true };
+    hoja.getRange(busq.fila + 1, 3).setValue('CANCELADO');
+    hoja.getRange(busq.fila + 1, 18).setValue(
+      _limpiar(transaccionIdCruda, 64).replace(/[^A-Za-z0-9_-]/g, '') + ' (' + _limpiar(status, 20) + ')');
+    return { ok: true, cancelado: true };
   } finally {
     lock.releaseLock();
   }

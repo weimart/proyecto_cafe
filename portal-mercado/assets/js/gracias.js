@@ -123,6 +123,16 @@
       d.appendChild(span);
       prodEl.appendChild(d);
     });
+    if (pedido.envio != null) {
+      const d = document.createElement('div');
+      d.className = 'gr-item';
+      d.appendChild(document.createTextNode('Envío '));
+      const span = document.createElement('span');
+      const envio = Number(pedido.envio) || 0;
+      span.textContent = envio ? '$' + envio.toLocaleString('es-CO') : 'Gratis';
+      d.appendChild(span);
+      prodEl.appendChild(d);
+    }
 
     // Factura
     if (pedido.factura) {

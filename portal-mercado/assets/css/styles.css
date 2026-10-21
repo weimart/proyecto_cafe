@@ -1142,6 +1142,7 @@ a:hover {
   margin-bottom: 1rem; font-size: 1.1rem;
 }
 .cart-total-row strong { color: var(--color-dark); font-size: 1.4rem; }
+.cart-envio-row { margin-bottom: .4rem; font-size: .95rem; color: var(--color-text-light, #6B5344); }
 .btn-checkout {
   width: 100%; padding: 1rem;
   background: #25D366; color: #fff; border: none; border-radius: 8px;

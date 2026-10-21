@@ -56,7 +56,7 @@
   <!-- ═══════════════════════════════════════════════
        HOJA DE ESTILOS
   ════════════════════════════════════════════════ -->
-  <link rel="stylesheet" href="./assets/css/styles.css">
+  <link rel="stylesheet" href="./assets/css/styles.css?v=20261021">
 
   <!-- ═══════════════════════════════════════════════
        PRELOAD — condicional por breakpoint
@@ -239,7 +239,7 @@
             "name": "¿Cuánto tarda el envío a mi ciudad?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Los envíos a las principales ciudades de Colombia (Medellín, Bogotá, Cali, Barranquilla) tardan entre 2 y 4 días hábiles desde que confirmamos tu pedido. A municipios y zonas apartadas puede tomar 4–6 días. El costo de envío se calcula al confirmar el pedido."
+              "text": "Los envíos a las principales ciudades de Colombia (Medellín, Bogotá, Cali, Barranquilla) tardan entre 2 y 4 días hábiles desde que confirmamos tu pedido. A municipios y zonas apartadas puede tomar 4–6 días. El envío cuesta $12.000 a cualquier ciudad de Colombia y es gratis en pedidos desde $120.000."
             }
           },
           {
@@ -505,7 +505,7 @@
           <details class="faq-item">
             <summary class="faq-pregunta">¿Cuánto tarda el envío a mi ciudad?</summary>
             <div class="faq-respuesta">
-              <p>A las principales ciudades de Colombia (Medellín, Bogotá, Cali, Barranquilla) el envío tarda entre <strong>2 y 4 días hábiles</strong> desde que confirmamos tu pedido. A municipios y zonas apartadas puede tomar 4–6 días. El costo de envío se calcula al confirmar el pedido y te lo informamos antes de que pagues.</p>
+              <p>A las principales ciudades de Colombia (Medellín, Bogotá, Cali, Barranquilla) el envío tarda entre <strong>2 y 4 días hábiles</strong> desde que confirmamos tu pedido. A municipios y zonas apartadas puede tomar 4–6 días. El envío cuesta <strong>$12.000</strong> a cualquier ciudad de Colombia y es <strong>gratis en pedidos desde $120.000</strong>; lo ves sumado en el carrito antes de pagar.</p>
             </div>
           </details>
 
@@ -634,6 +634,10 @@
     </div>
     <div id="cart-items" class="cart-items"></div>
     <div class="cart-footer">
+      <div class="cart-total-row cart-envio-row">
+        <span>Envío</span>
+        <span id="cart-envio">—</span>
+      </div>
       <div class="cart-total-row">
         <span>Total</span>
         <strong id="cart-total">$0</strong>
@@ -646,7 +650,7 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2z"/></svg>
         Pedir por WhatsApp
       </button>
-      <p class="cart-nota">El envío se calcula al confirmar. Pago en línea seguro con Wompi (Bancolombia).</p>
+      <p class="cart-nota">Envío a toda Colombia: $12.000, gratis desde $120.000. Pago en línea seguro con Wompi (Bancolombia).</p>
     </div>
   </aside>
 
@@ -816,7 +820,7 @@
   </div>
 
   <!-- Scripts -->
-  <script src="./assets/js/main.js" defer></script>
+  <script src="./assets/js/main.js?v=20261021" defer></script>
 <script src="./assets/js/resenas-google.js" defer></script>
 </body>
 </html>

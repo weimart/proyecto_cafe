@@ -9,7 +9,7 @@ const PEDIDOS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwVbUa59Zlb-
 
 // Token compartido con los Apps Script. NO es un secreto (viaja en este JS público);
 // solo sirve para que los endpoints rechacen bots y peticiones directas triviales.
-// Debe coincidir con CLIENT_TOKEN en pedidos.gs y wompi-firma.gs.
+// Debe coincidir con CLIENT_TOKEN en pedidos.gs.
 const CLIENT_TOKEN = 'et_cli_v1_9f3a2b7c1d';
 
 // ── Utilidades de seguridad ──────────────────────────────────────────────────
@@ -23,13 +23,16 @@ const limpiarTexto = (s, max) => String(s == null ? '' : s)
   .trim()
   .slice(0, max || 500);
 
+// El monto y la firma de integridad los calcula pedidos.gs (no el navegador).
 const WOMPI = {
   publicKey  : 'pub_prod_i8kgq0AwhbR6ZGuKKrvH1Nh6Fq8EnXZn',
-  currency   : 'COP',
-  activo     : true,
-  redirectUrl: 'https://esenciaytaza.com/gracias.html',
-  scriptUrl  : 'https://script.google.com/macros/s/AKfycbxNxiFXnLsuD_K8g4p9xagimfgm8pC5DXvaRpqxTHNIIgUx78gWmKwrRFLMYbRaxjip/exec'
+  currency   : 'COP'
 };
+
+// Envío. Aquí solo se usa para MOSTRARLO: el que se cobra lo calcula
+// pedidos.gs (ENVIO). Si cambias la regla, cámbiala en los dos sitios.
+const ENVIO = { tarifa: 12000, gratisDesde: 120000 };
+const costoEnvio = (subtotal) => (subtotal >= ENVIO.gratisDesde ? 0 : ENVIO.tarifa);
 
 // ── Catálogo: Café Origen Caicedo, presentaciones (grano o molido) ─────────
 const PRESENTACIONES = [
@@ -74,7 +77,9 @@ const Cart = (() => {
     render();
   };
 
-  const total = () => items.reduce((s, i) => s + i.precio * i.cantidad, 0);
+  const subtotal = () => items.reduce((s, i) => s + i.precio * i.cantidad, 0);
+  const envio    = () => (items.length ? costoEnvio(subtotal()) : 0);
+  const total    = () => subtotal() + envio();
   const totalItems = () => items.reduce((s, i) => s + i.cantidad, 0);
 
   const abrir = () => {
@@ -106,6 +111,8 @@ const Cart = (() => {
     if (items.length === 0) {
       cont.innerHTML = '<p class="cart-vacio">Tu carrito está vacío.<br>Agrega tu café favorito ☕</p>';
       if (totalEl) totalEl.textContent = formatoCOP(0);
+      const envioVacio = document.getElementById('cart-envio');
+      if (envioVacio) envioVacio.textContent = '—';
       document.getElementById('cart-checkout')?.setAttribute('disabled', 'true');
       document.getElementById('cart-pagar')?.setAttribute('disabled', 'true');
       return;
@@ -126,6 +133,11 @@ const Cart = (() => {
       </div>
     `).join('');
 
+    const envioEl = document.getElementById('cart-envio');
+    if (envioEl) {
+      const e = envio();
+      envioEl.textContent = e ? formatoCOP(e) : 'Gratis';
+    }
     if (totalEl) totalEl.textContent = formatoCOP(total());
     document.getElementById('cart-checkout')?.removeAttribute('disabled');
     document.getElementById('cart-pagar')?.removeAttribute('disabled');
@@ -136,87 +148,15 @@ const Cart = (() => {
     });
   };
 
-  // ── Pedido por WhatsApp (siempre funcional) ──
-  const checkout = () => {
-    if (items.length === 0) return;
-    checkoutWhatsApp();
-  };
-
-  // ── Pago en línea con Wompi (botón visible; activo cuando llegue la llave) ──
-  const pagar = () => {
-    if (items.length === 0) return;
-
-    if (WOMPI.activo && WOMPI.publicKey) {
-      checkoutWompi();
-    } else {
-      // Aún sin llave: mensaje claro + opción de seguir por WhatsApp
-      const seguir = confirm(
-        'El pago en línea estará disponible muy pronto 🔒\n\n' +
-        'Por ahora puedes completar tu pedido por WhatsApp y te ' +
-        'enviamos el link de pago seguro.\n\n¿Continuar por WhatsApp?'
-      );
-      if (seguir) checkoutWhatsApp();
-    }
-  };
-
-  const checkoutWhatsApp = () => {
-    let msg = 'Hola Esencia y Taza, quiero hacer este pedido:\n\n';
-    items.forEach(i => {
-      msg += `• ${i.cantidad}x Café Origen Caicedo ${i.tamano} (${i.tipo}) — ${formatoCOP(i.precio * i.cantidad)}\n`;
-    });
-    msg += `\n*Total: ${formatoCOP(total())}*\n\n¿Me confirman disponibilidad y costo de envío?`;
-    window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
-  };
-
-  const checkoutWompi = async () => {
-    const referencia      = 'ET-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7).toUpperCase();
-    const montoEnCentavos = String(total() * 100);
-
-    const btnPagar   = document.getElementById('cart-pagar');
-    const textoOrig  = btnPagar ? btnPagar.innerHTML : '';
-    if (btnPagar) { btnPagar.disabled = true; btnPagar.textContent = 'Generando pago…'; }
-
-    // redirect-url fijo para producción (evita exponer localhost a Wompi)
-    const redirectUrl = WOMPI.redirectUrl || (window.location.origin + window.location.pathname);
-
-    const irAWompi = (signature) => {
-      const params = new URLSearchParams({
-        'public-key'      : WOMPI.publicKey,
-        'currency'        : WOMPI.currency,
-        'amount-in-cents' : montoEnCentavos,
-        'reference'       : referencia,
-        'redirect-url'    : redirectUrl,
-      });
-      if (signature) params.set('signature:integrity', signature);
-      window.location.href = 'https://checkout.wompi.co/p/?' + params.toString();
-    };
-
-    if (WOMPI.scriptUrl) {
-      try {
-        const url = `${WOMPI.scriptUrl}?ref=${encodeURIComponent(referencia)}&amount=${encodeURIComponent(montoEnCentavos)}&cur=COP&token=${encodeURIComponent(CLIENT_TOKEN)}`;
-        const res  = await fetch(url);
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
-        if (!data.signature) throw new Error('Sin firma en respuesta');
-        irAWompi(data.signature);
-      } catch (e) {
-        console.error('[Wompi] Error al obtener firma:', e.message);
-        if (btnPagar) { btnPagar.disabled = false; btnPagar.innerHTML = textoOrig; }
-        const seguir = confirm('No se pudo iniciar el pago seguro.\n¿Completar pedido por WhatsApp?');
-        if (seguir) checkoutWhatsApp();
-      }
-    } else {
-      irAWompi(null);
-    }
-  };
-
   const vaciar = () => {
     if (items.length === 0) return;
     items = [];
     render();
   };
 
-  return { add, abrir, cerrar, render, checkout, pagar, vaciar,
+  return { add, abrir, cerrar, render, vaciar,
+           subtotalActual: subtotal,
+           envioActual: envio,
            totalActual: total,
            itemsActuales: () => [...items] };
 })();
@@ -546,7 +486,9 @@ const Checkout = (() => {
     // Actualizar total visible
     const total = Cart.totalActual ? Cart.totalActual() : 0;
     const el = document.getElementById('co-total-resumen');
-    if (el) el.textContent = '$' + total.toLocaleString('es-CO') + ' COP';
+    const envio = Cart.envioActual ? Cart.envioActual() : 0;
+    if (el) el.textContent = '$' + total.toLocaleString('es-CO') + ' COP'
+      + (envio ? ` (incluye envío ${formatoCOP(envio)})` : ' (envío gratis)');
     overlay.removeAttribute('hidden');
     overlay.querySelector('#co-nombre')?.focus();
     Cart.cerrar();
@@ -556,14 +498,40 @@ const Checkout = (() => {
     document.getElementById('checkout-overlay')?.setAttribute('hidden', '');
   };
 
+  // Pedido por WhatsApp: no esperamos respuesta. keepalive evita que el
+  // navegador corte el envío al pasar a gracias.html.
   const _guardarEnScript = (payload) => {
     if (!PEDIDOS_SCRIPT_URL) return;
     fetch(PEDIDOS_SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
+      keepalive: true,
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({ ...payload, token: CLIENT_TOKEN })
     }).catch(() => {});
+  };
+
+  // Pago en línea: registra el pedido y espera el monto y la firma que calcula
+  // el servidor. text/plain evita la petición previa (preflight) de CORS, que
+  // Apps Script no admite.
+  const _registrarParaPago = async (payload) => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
+    try {
+      const res = await fetch(PEDIDOS_SCRIPT_URL, {
+        method: 'POST',
+        redirect: 'follow',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ ...payload, token: CLIENT_TOKEN }),
+        signal: controller.signal
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const json = await res.json();
+      if (!json.ok || !json.firma || !json.montoEnCentavos) throw new Error(json.error || 'Respuesta incompleta');
+      return json;
+    } finally {
+      clearTimeout(timeout);
+    }
   };
 
   const init = () => {
@@ -605,6 +573,8 @@ const Checkout = (() => {
       const lineasProducto = items.map(i =>
         `• ${i.cantidad}x Café Origen Caicedo ${i.tamano} (${i.tipo}) — $${(i.precio * i.cantidad).toLocaleString('es-CO')}`
       ).join('\n');
+      const envio = Cart.envioActual ? Cart.envioActual() : 0;
+      const lineaEnvio = `• Envío — ${envio ? formatoCOP(envio) : 'gratis'}`;
 
       const referencia = 'ET-' + Date.now() + '-' + Math.random().toString(36).slice(2,6).toUpperCase();
       const idPedido   = referencia;
@@ -614,8 +584,9 @@ const Checkout = (() => {
         idPedido,
         referencia,
         metodo      : _metodo,
-        productos   : lineasProducto,
-        total,
+        productos   : lineasProducto + '\n' + lineaEnvio,
+        envio,
+        total,       // solo para mostrar; el servidor recalcula el que se cobra
         items,
         nombre      : data.get('nombre').trim(),
         email       : data.get('email').trim(),
@@ -631,27 +602,29 @@ const Checkout = (() => {
       };
 
       // Guardar en localStorage para gracias.html (se borra tras 30 min)
-      const payload = { ...pedido, _exp: Date.now() + 30 * 60 * 1000 };
-      localStorage.setItem('et_pedido_pendiente', JSON.stringify(payload));
-
-      // Enviar a Google Sheets (async, no bloqueante)
-      _guardarEnScript(pedido);
-
-      cerrar();
+      const guardarLocal = () => {
+        try {
+          const payload = { ...pedido, _exp: Date.now() + 30 * 60 * 1000 };
+          localStorage.setItem('et_pedido_pendiente', JSON.stringify(payload));
+        } catch (_) { /* sin almacenamiento: gracias.html muestra lo básico */ }
+      };
 
       if (_metodo === 'whatsapp') {
-        let msg = `Hola Esencia y Taza, quiero hacer este pedido:\n\n${lineasProducto}\n\n*Total: $${total.toLocaleString('es-CO')} COP*\n\n`;
+        guardarLocal();
+        _guardarEnScript(pedido);
+        cerrar();
+        let msg = `Hola Esencia y Taza, quiero hacer este pedido:\n\n${lineasProducto}\n${lineaEnvio}\n\n*Total: $${total.toLocaleString('es-CO')} COP*\n\n`;
         msg += `📦 *Envío a:* ${pedido.ciudad}, ${pedido.departamento}\n${pedido.direccion}${pedido.complemento ? ', ' + pedido.complemento : ''}\n`;
         msg += `👤 *Nombre:* ${pedido.nombre}\n📱 *Tel:* ${pedido.telefono}\n`;
         if (pedido.factura) msg += `🧾 *Factura:* ${pedido.tipoDoc} ${pedido.numeroDoc}${pedido.razonSocial ? ' — ' + pedido.razonSocial : ''}\n`;
-        msg += `\n¿Me confirman disponibilidad y costo de envío?`;
+        msg += `\n¿Me confirman disponibilidad?`;
         // Redirigir a gracias.html y abrir WhatsApp
         const graciasUrl = new URL('gracias.html', window.location.href).href;
         window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
         window.location.href = graciasUrl;
       } else {
         // Pago Wompi
-        await _pagarWompi(pedido);
+        await _pagarWompi(pedido, guardarLocal);
       }
     });
   };
@@ -689,58 +662,48 @@ const Checkout = (() => {
     return ok;
   };
 
-  const _pagarWompi = async (pedido) => {
-    const montoEnCentavos = String(pedido.total * 100);
-    const redirectUrl = new URL('gracias.html', window.location.href).href;
+  const _pagarWompi = async (pedido, guardarLocal) => {
+    const btnPagar = document.getElementById('co-btn-pagar');
+    const textoOrig = btnPagar ? btnPagar.innerHTML : '';
+    if (btnPagar) { btnPagar.disabled = true; btnPagar.textContent = 'Preparando pago seguro…'; }
 
-    const irAWompi = (signature) => {
-      const params = new URLSearchParams({
-        'public-key'       : WOMPI.publicKey,
-        'currency'         : WOMPI.currency,
-        'amount-in-cents'  : montoEnCentavos,
-        'reference'        : pedido.referencia,
-        'redirect-url'     : redirectUrl,
-        'customer-data:email'      : pedido.email,
-        'customer-data:full-name'  : pedido.nombre,
-        'customer-data:phone-number': pedido.telefono.replace(/\s/g,''),
-        'shipping-address:address-line-1': pedido.direccion,
-        'shipping-address:city'    : pedido.ciudad,
-        'shipping-address:region'  : pedido.departamento,
-        'shipping-address:country' : 'CO',
-        'shipping-address:phone-number': pedido.telefono.replace(/\s/g,''),
-      });
-      if (signature) params.set('signature:integrity', signature);
-      window.location.href = 'https://checkout.wompi.co/p/?' + params.toString();
-    };
-
-    if (WOMPI.scriptUrl) {
-      // Timeout de seguridad: si el Apps Script no responde en 15s, no dejar
-      // al cliente colgado — avisar y ofrecer WhatsApp como alternativa.
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 15000);
-      try {
-        const url  = `${WOMPI.scriptUrl}?ref=${encodeURIComponent(pedido.referencia)}&amount=${encodeURIComponent(montoEnCentavos)}&cur=COP&token=${encodeURIComponent(CLIENT_TOKEN)}`;
-        const res  = await fetch(url, { redirect: 'follow', signal: controller.signal });
-        clearTimeout(timeout);
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const json = await res.json();
-        if (!json.signature) throw new Error('Sin firma en la respuesta');
-        irAWompi(json.signature);
-      } catch (e) {
-        clearTimeout(timeout);
-        console.error('[Wompi] Error al obtener firma:', e.message);
-        // Re-habilitar el botón de pago para que el cliente pueda reintentar
-        const btnPagar = document.getElementById('co-pagar') || document.querySelector('[data-metodo="wompi"]');
-        if (btnPagar) { btnPagar.disabled = false; }
-        const seguir = confirm(
-          'No pudimos iniciar el pago en línea en este momento.\n\n' +
-          '¿Quieres completar tu pedido por WhatsApp? Te enviamos el link de pago seguro.'
-        );
-        if (seguir) _enviarWhatsApp(pedido);
-      }
-    } else {
-      irAWompi(null);
+    let resp;
+    try {
+      resp = await _registrarParaPago(pedido);
+    } catch (e) {
+      console.error('[Wompi] No se pudo registrar el pedido:', e.message);
+      if (btnPagar) { btnPagar.disabled = false; btnPagar.innerHTML = textoOrig; }
+      const seguir = confirm(
+        'No pudimos iniciar el pago en línea en este momento.\n\n' +
+        '¿Quieres completar tu pedido por WhatsApp? Te enviamos el link de pago seguro.'
+      );
+      if (seguir) _enviarWhatsApp(pedido);
+      return;
     }
+
+    // El total que se muestra en gracias.html es el que cobró el servidor.
+    pedido.total = Number(resp.total) || pedido.total;
+    guardarLocal();
+    cerrar();
+
+    const telefono = pedido.telefono.replace(/[^\d]/g, '').slice(-10);
+    const params = new URLSearchParams({
+      'public-key'                     : WOMPI.publicKey,
+      'currency'                       : WOMPI.currency,
+      'amount-in-cents'                : resp.montoEnCentavos,
+      'reference'                      : resp.referencia,
+      'signature:integrity'            : resp.firma,
+      'redirect-url'                   : new URL('gracias.html', window.location.href).href,
+      'customer-data:email'            : pedido.email,
+      'customer-data:full-name'        : pedido.nombre,
+      'customer-data:phone-number'     : telefono,
+      'shipping-address:address-line-1': pedido.direccion,
+      'shipping-address:city'          : pedido.ciudad,
+      'shipping-address:region'        : pedido.departamento,
+      'shipping-address:country'       : 'CO',
+      'shipping-address:phone-number'  : telefono,
+    });
+    window.location.href = 'https://checkout.wompi.co/p/?' + params.toString();
   };
 
   // Envía el pedido por WhatsApp (usado como fallback si el pago en línea falla)
@@ -750,7 +713,7 @@ const Checkout = (() => {
     msg += `*Total: $${(pedido.total || 0).toLocaleString('es-CO')} COP*\n\n`;
     msg += `📦 *Envío a:* ${pedido.ciudad || ''}, ${pedido.departamento || ''}\n${pedido.direccion || ''}\n`;
     msg += `👤 *Nombre:* ${pedido.nombre || ''}\n📱 *Tel:* ${pedido.telefono || ''}\n`;
-    msg += `\n¿Me confirman disponibilidad y costo de envío?`;
+    msg += `\n¿Me confirman disponibilidad?`;
     window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
