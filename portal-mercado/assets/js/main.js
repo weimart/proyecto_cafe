@@ -112,13 +112,26 @@ const Cart = (() => {
   const total    = () => subtotal() + envio();
   const totalItems = () => items.reduce((s, i) => s + i.cantidad, 0);
 
+  // Al abrir, el foco pasa al panel; al cerrar, vuelve al botón que lo abrió,
+  // para que quien navega con teclado o lector de pantalla no se pierda.
+  let focoPrevio = null;
   const abrir = () => {
-    document.getElementById('cart-panel')?.classList.add('abierto');
+    const panel = document.getElementById('cart-panel');
+    if (!panel || panel.classList.contains('abierto')) return;
+    focoPrevio = document.activeElement;
+    panel.classList.add('abierto');
     document.getElementById('cart-overlay')?.classList.add('visible');
+    document.getElementById('cart-toggle')?.setAttribute('aria-expanded', 'true');
+    document.getElementById('cart-close')?.focus();
   };
-  const cerrar = () => {
-    document.getElementById('cart-panel')?.classList.remove('abierto');
+  const cerrar = (devolverFoco = true) => {
+    const panel = document.getElementById('cart-panel');
+    if (!panel || !panel.classList.contains('abierto')) return;
+    panel.classList.remove('abierto');
     document.getElementById('cart-overlay')?.classList.remove('visible');
+    document.getElementById('cart-toggle')?.setAttribute('aria-expanded', 'false');
+    if (devolverFoco && focoPrevio && document.contains(focoPrevio)) focoPrevio.focus();
+    focoPrevio = null;
   };
 
   const render = () => {
@@ -523,8 +536,8 @@ const Checkout = (() => {
     if (el) el.textContent = '$' + total.toLocaleString('es-CO') + ' COP'
       + (envio ? ` (incluye envío ${formatoCOP(envio)})` : ' (envío gratis)');
     overlay.removeAttribute('hidden');
+    Cart.cerrar(false);
     overlay.querySelector('#co-nombre')?.focus();
-    Cart.cerrar();
   };
 
   const cerrar = () => {
@@ -768,8 +781,8 @@ const App = {
 
     // Botones del carrito → abren el modal de checkout
     document.getElementById('cart-toggle')?.addEventListener('click', Cart.abrir);
-    document.getElementById('cart-close')?.addEventListener('click', Cart.cerrar);
-    document.getElementById('cart-overlay')?.addEventListener('click', Cart.cerrar);
+    document.getElementById('cart-close')?.addEventListener('click', () => Cart.cerrar());
+    document.getElementById('cart-overlay')?.addEventListener('click', () => Cart.cerrar());
     document.getElementById('cart-vaciar')?.addEventListener('click', Cart.vaciar);
     document.getElementById('cart-checkout')?.addEventListener('click', () => Checkout.abrir('whatsapp'));
     document.getElementById('cart-pagar')?.addEventListener('click',    () => Checkout.abrir('wompi'));
