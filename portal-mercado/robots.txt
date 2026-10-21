@@ -1,8 +1,7 @@
 User-agent: *
 Allow: /
 
-Disallow: /gracias.html
-Disallow: /pedidos.gs
-Disallow: /wompi-firma.gs
+# gracias.html no se bloquea aquí a propósito: lleva <meta name="robots"
+# content="noindex">, y para leerlo Google necesita poder rastrear la página.
 
 Sitemap: https://esenciaytaza.com/sitemap.xml

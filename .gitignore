@@ -13,3 +13,10 @@ notas.txt
 
 # Google Apps Script con llaves privadas — NO subir al repo
 wompi-firma.gs
+
+# Copias de trabajo y paquetes que no deben subirse
+respaldo-*/
+entregas/
+*.zip
+.env
+.claude/settings.local.json
