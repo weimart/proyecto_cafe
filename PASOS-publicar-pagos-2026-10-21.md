@@ -26,11 +26,16 @@ no pasa nada, el script lo procesa una sola vez.
 
 ## 3. Proteger el panel de ventas
 
-1. Abre en script.google.com el proyecto del **panel** (dashboard) y pega `backend/dashboard.gs`.
-2. *Configuración del proyecto → Propiedades del script* → agrega `PANEL_PIN` con un PIN
-   nuevo de **al menos 6 dígitos**. El PIN viejo (2025) estaba publicado: no lo reutilices.
-3. *Implementar → Gestionar implementaciones* → lápiz → **Quién puede acceder: Solo yo** →
+El panel publicado en Apps Script es más nuevo que `backend/dashboard.gs` (tiene clave
+propia, marketing e inventario). **No pegues `backend/dashboard.gs` encima**: es la
+versión 1.0 y borraría esas funciones.
+
+1. *Implementar → Gestionar implementaciones* → lápiz → **Quién puede acceder: Solo yo** →
    *Nueva versión* → **Implementar**.
+2. Confirma que la clave del panel publicado no sea el PIN viejo (2025), que estaba
+   publicado en el código.
+3. Pendiente: pasar al panel publicado las protecciones contra inyección de HTML (XSS)
+   que tiene `backend/dashboard.gs` (función `_escD` y `encodeData`).
 
 ## 3b. Publicar la web
 

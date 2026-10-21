@@ -8,7 +8,7 @@ Antioquia (Colombia). En línea en **https://esenciaytaza.com**.
 | Carpeta | Qué hay | ¿Se publica? |
 |---|---|---|
 | `portal-mercado/` | La web: páginas, imágenes, CSS y JS, `robots.txt`, `sitemap.xml` | Sí, Netlify publica solo esta carpeta (`netlify.toml`) |
-| `backend/` | `pedidos.gs` (pedidos y pagos Wompi) y `dashboard.gs` (panel de ventas) | No. Se copian a mano en Google Apps Script |
+| `backend/` | `pedidos.gs` (pedidos y pagos Wompi) y `dashboard.gs` (versión 1.0 del panel, solo de referencia: el publicado es más nuevo) | No. Se copian a mano en Google Apps Script |
 | `herramientas/` | `generar-marca.js`, regenera logos y favicons | No |
 | `marca/`, `img/` | Manual de marca, logos y piezas de campaña | No |
 | `plantilla-control/` | Plantillas CSV de ventas, gastos y clientes | No |
