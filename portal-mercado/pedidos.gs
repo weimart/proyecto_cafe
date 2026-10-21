@@ -8,6 +8,11 @@ const SHEET_CLIENTES = '1brrITidrtD78AbLOagFTVLQ47KXqNzq7Bk1WflGDjBE';
 const EMAIL_VENDEDOR = 'comercial@esenciaytaza.com';
 const WHATSAPP_VENDEDOR = '573022573244';
 
+// Enlace para dejar reseña en el Perfil de Empresa de Google (Perfil →
+// «Pedir opiniones»). Es el mismo valor que ENLACE en resenas-google.js.
+// Vacío = el correo no muestra el botón.
+const ENLACE_RESENAS = '';
+
 // Debe coincidir con CLIENT_TOKEN en main.js / gracias.js. NO es un secreto
 // (viaja en el JS público); solo filtra bots y llamadas directas triviales.
 const CLIENT_TOKEN = 'et_cli_v1_9f3a2b7c1d';
@@ -494,6 +499,15 @@ function _confirmarCliente(p, idPedido, transaccionId) {
     <!-- Factura -->
     <p style="margin:24px 0 8px;font-size:11px;font-weight:700;color:#C8962E;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid rgba(200,150,46,.2);padding-bottom:6px">Datos de factura</p>
     <table width="100%">${factLinea}</table>` : ''}
+
+    ${/^https:\/\/(g\.page|www\.google\.com|maps\.app\.goo\.gl|search\.google\.com)\//.test(ENLACE_RESENAS) ? `
+    <!-- Reseña en Google -->
+    <div style="text-align:center;margin:28px 0 0;padding:16px;background:#FAF5EE;border-radius:8px">
+      <p style="margin:0 0 10px;font-size:13px;color:#6B4226">Cuando pruebes el café, cuéntalo en Google: ayuda a que más personas encuentren café de Caicedo.</p>
+      <a href="${_esc(ENLACE_RESENAS)}" style="display:inline-block;background:#fff;color:#3B2214;text-decoration:none;font-weight:700;font-size:14px;padding:10px 22px;border-radius:999px;border:1px solid #E8D9C5">
+        <span style="color:#D89B2B">★★★★★</span> Califica nuestro café en Google
+      </a>
+    </div>` : ''}
 
     <!-- CTA -->
     <div style="text-align:center;margin:28px 0 0">
