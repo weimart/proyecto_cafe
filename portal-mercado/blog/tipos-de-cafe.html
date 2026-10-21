@@ -5,14 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tipos y Variedades de Café — Esencia y Taza Blog</title>
   <meta name="description" content="Conoce las diferencias entre Arábica y Robusta, las principales variedades cultivadas en Colombia y qué hace único al café de especialidad de Antioquia.">
-  <link rel="icon" type="image/png" href="../assets/images/favicon.png">
-  <link rel="apple-touch-icon" href="../assets/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
   <link rel="canonical" href="https://esenciaytaza.com/blog/tipos-de-cafe.html">
   <meta property="og:type"  content="article">
   <meta property="og:url"   content="https://esenciaytaza.com/blog/tipos-de-cafe.html">
   <meta property="og:title" content="Tipos de café: Arábica, Robusta y variedades colombianas — Esencia y Taza">
   <meta property="og:description" content="Conoce las diferencias entre Arábica y Robusta, variedades de Colombia y qué hace único al café de especialidad de Antioquia.">
-  <meta property="og:image" content="https://esenciaytaza.com/assets/images/logo-grande.png">
+  <meta property="og:image" content="https://esenciaytaza.com/assets/images/og-image.jpg">
   <meta name="robots" content="index, follow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,10 +26,13 @@
 <nav class="blog-nav" aria-label="Navegación principal">
   <div class="blog-nav-inner">
     <a href="../index.html" class="blog-nav-logo" aria-label="Esencia y Taza — Inicio">
-      <img src="../assets/images/logo.png" alt="Logo Esencia y Taza" class="blog-nav-logo-img">
+      <span class="blog-nav-logo-mark">
+        <img src="../assets/images/isotipo-claro.png" alt="Logo Esencia y Taza" class="blog-nav-logo-img">
+        <span class="blog-nav-vapor" aria-hidden="true"><i></i><i></i><i></i></span>
+      </span>
       <div class="blog-nav-logo-text">
         <span class="blog-nav-logo-name">Esencia y Taza</span>
-        <span class="blog-nav-logo-tagline">Café de especialidad</span>
+        <span class="blog-nav-logo-tagline">El arte del origen, tradición que se cultiva</span>
       </div>
     </a>
     <ul class="blog-nav-links" role="list">
@@ -126,7 +130,7 @@
 
     <div class="tip-box">
       <div class="tip-box-label">🫘 Nuestro café</div>
-      <p>El café de Esencia y Taza en Caicedo incluye principalmente <strong>Caturra</strong>, cultivada entre 1.600 y 1.900 msnm. A esa altitud, la maduración lenta concentra los azúcares, dando el caramelo y chocolate que caracterizan nuestro perfil.</p>
+      <p>El café de Esencia y Taza en Caicedo es una mezcla de <strong>Caturra, Castillo y Colombia</strong>, cultivada a unos 2.000 msnm. A esa altitud, la maduración lenta concentra los azúcares y da el dulzor y el cuerpo que caracterizan nuestro perfil.</p>
     </div>
 
     <h3 id="castillo">Castillo</h3>
@@ -208,7 +212,7 @@
 
     <div class="tip-box">
       <div class="tip-box-label">📍 Caicedo, Antioquia — nuestro origen</div>
-      <p>Caicedo está ubicado en el suroeste antioqueño, una de las subregiones más reconocidas por la calidad de su café. La combinación de suelos volcánicos, temperatura media de 19 °C y alturas entre 1.600–1.900 msnm produce los perfiles de <strong>chocolate, caramelo y fruta roja</strong> que caracterizan al café de Esencia y Taza.</p>
+      <p>Caicedo está ubicado en el occidente antioqueño, una de las subregiones más reconocidas por la calidad de su café. La combinación de suelos volcánicos, temperatura media de 19 °C y alturas cercanas a los 2.000 msnm produce el perfil de <strong>cuerpo alto, dulzor medio y acidez media</strong> que caracteriza al café de Esencia y Taza.</p>
     </div>
 
     <h2 id="proceso-beneficio">El Procesamiento Define el Sabor</h2>
@@ -286,33 +290,40 @@
   <p>© <span id="anio"></span> <a href="../index.html">Esencia y Taza</a> — Café artesanal de origen · <a href="../blog.html">Blog</a></p>
 </footer>
 <script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"Article",
-  "headline":"Tipos de café: Arábica, Robusta y variedades colombianas",
-  "description":"Conoce las diferencias entre café Arábica y Robusta, las variedades de Colombia (Typica, Bourbon, Caturra, Castillo, Geisha) y qué hace especial al café de especialidad.",
-  "author":{"@type":"Organization","name":"Esencia y Taza","url":"https://esenciaytaza.com"},
-  "publisher":{"@type":"Organization","name":"Esencia y Taza","logo":{"@type":"ImageObject","url":"https://esenciaytaza.com/assets/images/logo.png"}},
-  "datePublished":"2026-06-01",
-  "dateModified":"2026-06-25",
-  "url":"https://esenciaytaza.com/blog/tipos-de-cafe.html",
-  "inLanguage":"es-CO",
-  "mainEntityOfPage":{"@type":"WebPage","@id":"https://esenciaytaza.com/blog/tipos-de-cafe.html"}
-}
-</script>
-<script>
-document.getElementById('anio').textContent = new Date().getFullYear();
-(function(){
-  const btn=document.getElementById('blog-ham'),menu=document.getElementById('blog-mobile-menu'),nav=document.querySelector('.blog-nav');
-  if(!btn||!menu)return;
-  function navH(){return nav?nav.offsetHeight:66;}
-  function openM(){menu.style.top=navH()+'px';menu.removeAttribute('hidden');btn.classList.add('is-open');btn.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';}
-  function closeM(){menu.setAttribute('hidden','');btn.classList.remove('is-open');btn.setAttribute('aria-expanded','false');document.body.style.overflow='';}
-  btn.addEventListener('click',()=>menu.hasAttribute('hidden')?openM():closeM());
-  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeM));
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM();});
-  window.addEventListener('resize',()=>{if(!menu.hasAttribute('hidden'))menu.style.top=navH()+'px';});
-}());
-</script>
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Tipos de café: Arábica, Robusta y variedades colombianas",
+    "description": "Conoce las diferencias entre café Arábica y Robusta, las variedades de Colombia (Typica, Bourbon, Caturra, Castillo, Geisha) y qué hace especial al café de especialidad.",
+    "author": {
+      "@type": "Organization",
+      "name": "Esencia y Taza",
+      "url": "https://esenciaytaza.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Esencia y Taza",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://esenciaytaza.com/assets/images/logo-grande.png"
+      }
+    },
+    "datePublished": "2026-06-01",
+    "dateModified": "2026-06-25",
+    "url": "https://esenciaytaza.com/blog/tipos-de-cafe.html",
+    "inLanguage": "es-CO",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://esenciaytaza.com/blog/tipos-de-cafe.html"
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://esenciaytaza.com/assets/images/blog-variedades.jpg",
+      "width": 1200,
+      "height": 630
+    }
+  }
+  </script>
+<script src="../assets/js/blog.js" defer></script>
 </body>
 </html>

@@ -7,6 +7,22 @@ const WHATSAPP = '573022573244';
 
 const PEDIDOS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwVbUa59Zlb-pD5dsLEKqw4AnnKBQdvQI3YhVgRAl4ZUwEC-hxhzafSXsrcJIB2FwU/exec';
 
+// Token compartido con los Apps Script. NO es un secreto (viaja en este JS público);
+// solo sirve para que los endpoints rechacen bots y peticiones directas triviales.
+// Debe coincidir con CLIENT_TOKEN en pedidos.gs y wompi-firma.gs.
+const CLIENT_TOKEN = 'et_cli_v1_9f3a2b7c1d';
+
+// ── Utilidades de seguridad ──────────────────────────────────────────────────
+// Escapa caracteres peligrosos antes de insertar texto en HTML.
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => (
+  { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+));
+// Quita caracteres de control (incluye CR/LF, que permiten inyección de cabeceras en mailto:).
+const limpiarTexto = (s, max) => String(s == null ? '' : s)
+  .replace(/\p{Cc}+/gu, ' ')
+  .trim()
+  .slice(0, max || 500);
+
 const WOMPI = {
   publicKey  : 'pub_prod_i8kgq0AwhbR6ZGuKKrvH1Nh6Fq8EnXZn',
   currency   : 'COP',
@@ -18,7 +34,7 @@ const WOMPI = {
 // ── Catálogo: Café Origen Caicedo, presentaciones (grano o molido) ─────────
 const PRESENTACIONES = [
   { id: '125g',  tamano: '125 g',  precio: 20000,
-    desc: 'Ideal para descubrir el perfil de taza de Caicedo. Notas de chocolate oscuro y caramelo con tueste medio, perfecto en espresso o prensa francesa.',
+    desc: 'Ideal para descubrir el perfil de taza de Caicedo. Cuerpo alto, dulzor medio y acidez media, con tueste medio. Perfecto en espresso o prensa francesa.',
     tueste: 'Tueste medio', uso: 'Ideal para probar' },
   { id: '250g',  tamano: '250 g',  precio: 33000,
     desc: 'Para tu consumo diario de café en casa. Tueste medio que realza la dulzura natural del grano de altura, ideal para espresso, V60 o prensa francesa.',
@@ -98,14 +114,14 @@ const Cart = (() => {
     cont.innerHTML = items.map(i => `
       <div class="cart-item">
         <div class="cart-item-info">
-          <strong>${i.nombre}</strong>
-          <span>${i.tamano} · ${i.tipo}</span>
+          <strong>${esc(i.nombre)}</strong>
+          <span>${esc(i.tamano)} · ${esc(i.tipo)}</span>
           <span class="cart-item-precio">${formatoCOP(i.precio)} c/u</span>
         </div>
         <div class="cart-item-qty">
-          <button class="qty-btn" data-key="${i.key}" data-delta="-1">−</button>
-          <span>${i.cantidad}</span>
-          <button class="qty-btn" data-key="${i.key}" data-delta="1">+</button>
+          <button class="qty-btn" data-key="${esc(i.key)}" data-delta="-1">−</button>
+          <span>${Number(i.cantidad) || 0}</span>
+          <button class="qty-btn" data-key="${esc(i.key)}" data-delta="1">+</button>
         </div>
       </div>
     `).join('');
@@ -177,7 +193,7 @@ const Cart = (() => {
 
     if (WOMPI.scriptUrl) {
       try {
-        const url = `${WOMPI.scriptUrl}?ref=${encodeURIComponent(referencia)}&amount=${montoEnCentavos}&cur=COP`;
+        const url = `${WOMPI.scriptUrl}?ref=${encodeURIComponent(referencia)}&amount=${encodeURIComponent(montoEnCentavos)}&cur=COP&token=${encodeURIComponent(CLIENT_TOKEN)}`;
         const res  = await fetch(url);
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
@@ -440,13 +456,18 @@ const ContactForm = (() => {
       e.preventDefault();
       limpiarErrores();
 
-      const nombre  = document.getElementById('cf-nombre')?.value.trim()  || '';
-      const correo  = document.getElementById('cf-email')?.value.trim()   || '';
-      const mensaje = document.getElementById('cf-mensaje')?.value.trim() || '';
+      // Límites de longitud + saneo de caracteres de control (evita URLs gigantes
+      // y la inyección de cabeceras vía CR/LF en el enlace mailto:).
+      const nombre  = limpiarTexto(document.getElementById('cf-nombre')?.value,  100);
+      const correo  = limpiarTexto(document.getElementById('cf-email')?.value,   120);
+      const mensaje = limpiarTexto(document.getElementById('cf-mensaje')?.value, 2000);
 
       let valido = true;
       if (!nombre)  { mostrarError('cf-nombre',  'Por favor ingresa tu nombre.');          valido = false; }
       if (!correo)  { mostrarError('cf-email',   'Por favor ingresa tu correo.');          valido = false; }
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+        mostrarError('cf-email', 'Ingresa un correo válido.'); valido = false;
+      }
       if (!mensaje) { mostrarError('cf-mensaje', 'Por favor escribe tu mensaje o pedido.'); valido = false; }
       if (!valido) return;
 
@@ -460,10 +481,19 @@ const ContactForm = (() => {
       // Abrir cliente de correo
       window.open(mailtoUrl, '_self');
 
-      // Mostrar fallback WhatsApp inmediatamente
+      // Mostrar fallback WhatsApp inmediatamente — se construye por DOM (sin innerHTML)
+      // para que ningún dato del formulario pueda alterar el marcado.
       const nota = form.querySelector('.form-nota');
       if (nota) {
-        nota.innerHTML = `✓ Si no se abrió tu correo, <a href="${waUrl}" target="_blank" rel="noopener" class="nota-wa">envíanos el mensaje por WhatsApp</a>.`;
+        nota.textContent = '✓ Si no se abrió tu correo, ';
+        const a = document.createElement('a');
+        a.href = waUrl;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.className = 'nota-wa';
+        a.textContent = 'envíanos el mensaje por WhatsApp';
+        nota.appendChild(a);
+        nota.appendChild(document.createTextNode('.'));
         nota.classList.add('form-nota--ok');
       }
     });
@@ -532,7 +562,7 @@ const Checkout = (() => {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({ ...payload, token: CLIENT_TOKEN })
     }).catch(() => {});
   };
 
@@ -689,7 +719,7 @@ const Checkout = (() => {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 15000);
       try {
-        const url  = `${WOMPI.scriptUrl}?ref=${encodeURIComponent(pedido.referencia)}&amount=${montoEnCentavos}&cur=COP`;
+        const url  = `${WOMPI.scriptUrl}?ref=${encodeURIComponent(pedido.referencia)}&amount=${encodeURIComponent(montoEnCentavos)}&cur=COP&token=${encodeURIComponent(CLIENT_TOKEN)}`;
         const res  = await fetch(url, { redirect: 'follow', signal: controller.signal });
         clearTimeout(timeout);
         if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -762,10 +792,14 @@ if (document.readyState === 'loading') {
   if (!form) return;
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const nombre   = document.getElementById('nl-nombre')?.value.trim()   || '';
-    const telefono = document.getElementById('nl-telefono')?.value.trim() || '';
+    const nombre   = limpiarTexto(document.getElementById('nl-nombre')?.value, 80);
+    const telefono = limpiarTexto(document.getElementById('nl-telefono')?.value, 20).replace(/[^\d+]/g, '');
     if (!nombre || !telefono) {
       alert('Por favor completa tu nombre y número de WhatsApp.');
+      return;
+    }
+    if (!/^\+?\d{7,15}$/.test(telefono)) {
+      alert('Ingresa un número de WhatsApp válido (7 a 15 dígitos).');
       return;
     }
     const msg = `Hola Esencia y Taza, soy *${nombre}* (${telefono}) y me gustaría recibir novedades sobre sus cafés por WhatsApp. ☕`;

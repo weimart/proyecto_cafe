@@ -5,14 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Métodos de Preparación de Café — Esencia y Taza Blog</title>
   <meta name="description" content="Guía ilustrada de los 8 métodos de preparación de café: espresso, French press, V60, AeroPress, Chemex, moka, cold brew y sifón. Con pasos y tips.">
-  <link rel="icon" type="image/png" href="../assets/images/favicon.png">
-  <link rel="apple-touch-icon" href="../assets/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
   <link rel="canonical" href="https://esenciaytaza.com/blog/metodos-preparacion.html">
   <meta property="og:type"  content="article">
   <meta property="og:url"   content="https://esenciaytaza.com/blog/metodos-preparacion.html">
   <meta property="og:title" content="8 métodos de preparación de café — Esencia y Taza">
   <meta property="og:description" content="Guía ilustrada de espresso, French press, V60, AeroPress, Chemex, moka, cold brew y sifón con pasos y parámetros.">
-  <meta property="og:image" content="https://esenciaytaza.com/assets/images/logo-grande.png">
+  <meta property="og:image" content="https://esenciaytaza.com/assets/images/og-image.jpg">
   <meta name="robots" content="index, follow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,10 +26,13 @@
 <nav class="blog-nav" aria-label="Navegación principal">
   <div class="blog-nav-inner">
     <a href="../index.html" class="blog-nav-logo" aria-label="Esencia y Taza — Inicio">
-      <img src="../assets/images/logo.png" alt="Logo Esencia y Taza" class="blog-nav-logo-img">
+      <span class="blog-nav-logo-mark">
+        <img src="../assets/images/isotipo-claro.png" alt="Logo Esencia y Taza" class="blog-nav-logo-img">
+        <span class="blog-nav-vapor" aria-hidden="true"><i></i><i></i><i></i></span>
+      </span>
       <div class="blog-nav-logo-text">
         <span class="blog-nav-logo-name">Esencia y Taza</span>
-        <span class="blog-nav-logo-tagline">Café de especialidad</span>
+        <span class="blog-nav-logo-tagline">El arte del origen, tradición que se cultiva</span>
       </div>
     </a>
     <ul class="blog-nav-links" role="list">
@@ -773,40 +777,40 @@
   <p>© <span id="anio"></span> <a href="../index.html">Esencia y Taza</a> — Café artesanal de origen · <a href="../blog.html">Blog</a></p>
 </footer>
 <script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"Article",
-  "headline":"8 métodos de preparación de café: guía completa con ilustraciones",
-  "description":"Aprende a preparar café espresso, prensa francesa, V60, AeroPress, Chemex, moka, cold brew y sifón con ilustraciones paso a paso.",
-  "author":{"@type":"Organization","name":"Esencia y Taza","url":"https://esenciaytaza.com"},
-  "publisher":{"@type":"Organization","name":"Esencia y Taza","logo":{"@type":"ImageObject","url":"https://esenciaytaza.com/assets/images/logo.png"}},
-  "datePublished":"2026-06-01",
-  "dateModified":"2026-06-25",
-  "url":"https://esenciaytaza.com/blog/metodos-preparacion.html",
-  "inLanguage":"es-CO",
-  "mainEntityOfPage":{"@type":"WebPage","@id":"https://esenciaytaza.com/blog/metodos-preparacion.html"}
-}
-</script>
-<script>
-document.getElementById('anio').textContent = new Date().getFullYear();
-(function(){
-  const btn=document.getElementById('blog-ham'),menu=document.getElementById('blog-mobile-menu'),nav=document.querySelector('.blog-nav');
-  if(!btn||!menu)return;
-  function navH(){return nav?nav.offsetHeight:66;}
-  function openM(){menu.style.top=navH()+'px';menu.removeAttribute('hidden');btn.classList.add('is-open');btn.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';}
-  function closeM(){menu.setAttribute('hidden','');btn.classList.remove('is-open');btn.setAttribute('aria-expanded','false');document.body.style.overflow='';}
-  btn.addEventListener('click',()=>menu.hasAttribute('hidden')?openM():closeM());
-  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeM));
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM();});
-  window.addEventListener('resize',()=>{if(!menu.hasAttribute('hidden'))menu.style.top=navH()+'px';});
-}());
-// WhatsApp share dinámico
-(function(){
-  const a=document.getElementById('share-wa-metodos');
-  if(!a)return;
-  const txt='Mira esta guía completa de métodos de preparación de café: https://esenciaytaza.com/blog/metodos-preparacion.html';
-  a.href='https://wa.me/?text='+encodeURIComponent(txt);
-}());
-</script>
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "8 métodos de preparación de café: guía completa con ilustraciones",
+    "description": "Aprende a preparar café espresso, prensa francesa, V60, AeroPress, Chemex, moka, cold brew y sifón con ilustraciones paso a paso.",
+    "author": {
+      "@type": "Organization",
+      "name": "Esencia y Taza",
+      "url": "https://esenciaytaza.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Esencia y Taza",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://esenciaytaza.com/assets/images/logo-grande.png"
+      }
+    },
+    "datePublished": "2026-06-01",
+    "dateModified": "2026-06-25",
+    "url": "https://esenciaytaza.com/blog/metodos-preparacion.html",
+    "inLanguage": "es-CO",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://esenciaytaza.com/blog/metodos-preparacion.html"
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://esenciaytaza.com/assets/images/blog-metodos.jpg",
+      "width": 1200,
+      "height": 630
+    }
+  }
+  </script>
+<script src="../assets/js/blog.js" defer></script>
 </body>
 </html>

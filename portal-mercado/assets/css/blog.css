@@ -46,12 +46,131 @@ body {
   display: flex; align-items: center; gap: 0.65rem;
   text-decoration: none; flex-shrink: 0; margin-right: auto;
 }
+/* ═══════════════════════════════════════════════════════════════
+   LOGO DE LA BARRA — la taza humea al pasar el ratón
+   ───────────────────────────────────────────────────────────────
+   Mismo efecto que en la portada, ajustado a esta barra: aquí el
+   fondo es oscuro y el círculo mide 40 px en vez de 48, así que el
+   vapor sube menos y el dorado va más encendido para que destaque.
+   Todo con transform y opacity: los enlaces de al lado no se mueven.
+   ═══════════════════════════════════════════════════════════════ */
+.blog-nav-logo-mark {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
 .blog-nav-logo-img {
   width: 40px; height: 40px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid rgba(200,150,46,.5);
   display: block;
+  transition: transform .5s cubic-bezier(.34, 1.4, .64, 1),
+              box-shadow .4s ease,
+              border-color .4s ease;
+}
+
+.blog-nav-logo:hover .blog-nav-logo-img,
+.blog-nav-logo:focus-visible .blog-nav-logo-img {
+  transform: scale(1.1);
+  border-color: rgba(232, 199, 102, .95);
+  box-shadow: 0 3px 16px rgba(200, 150, 46, .45);
+}
+
+/* Halo que se expande desde el borde */
+.blog-nav-logo-mark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(200,150,46,.8);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.blog-nav-logo:hover .blog-nav-logo-mark::after,
+.blog-nav-logo:focus-visible .blog-nav-logo-mark::after {
+  animation: blog-anillo 1.9s cubic-bezier(.2, .6, .3, 1) infinite;
+}
+
+@keyframes blog-anillo {
+  0%   { opacity: .6; transform: scale(1); }
+  75%  { opacity: 0;  transform: scale(1.6); }
+  100% { opacity: 0;  transform: scale(1.6); }
+}
+
+/* Vapor: gotas alargadas de borde irregular, desenfocadas, cada una
+   con su altura, su deriva y su retardo. */
+.blog-nav-vapor {
+  position: absolute;
+  left: 50%; top: -4px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.blog-nav-vapor i {
+  display: block;
+  border-radius: 60% 40% 55% 45% / 60% 55% 45% 40%;
+  background: linear-gradient(to top,
+              rgba(232,199,102,.95), rgba(232,199,102,.4) 55%, rgba(232,199,102,0));
+  filter: blur(.9px);
+  opacity: 0;
+  transform-origin: bottom center;
+}
+
+.blog-nav-logo:hover .blog-nav-vapor i,
+.blog-nav-logo:focus-visible .blog-nav-vapor i {
+  animation: blog-vapor 2.2s cubic-bezier(.35, .1, .5, 1) infinite;
+}
+
+.blog-nav-vapor i:nth-child(1) { width: 2.5px; height: 9px;  --deriva: -3px; --giro: -14deg; }
+.blog-nav-vapor i:nth-child(2) { width: 3px;   height: 12px; --deriva:  2px; --giro:   9deg; animation-delay: .45s; }
+.blog-nav-vapor i:nth-child(3) { width: 2px;   height: 9px;  --deriva:  4px; --giro:  16deg; animation-delay: .9s; }
+
+@keyframes blog-vapor {
+  0%   { opacity: 0;  transform: translate(0, 6px) scaleY(.35) rotate(0deg); }
+  22%  { opacity: .9; }
+  55%  { transform: translate(calc(var(--deriva) * .45), -4px) scaleY(1.15) rotate(var(--giro)); }
+  100% { opacity: 0;  transform: translate(var(--deriva), -15px) scaleY(1.7)
+                      rotate(calc(var(--giro) * -.7)); }
+}
+
+/* Subrayado dorado bajo el bloque de texto completo.
+   Va en el contenedor, no en el nombre: aquí debajo hay una segunda línea
+   ("Café de especialidad") y una raya bajo el nombre la atravesaría. */
+.blog-nav-logo-text { position: relative; }
+
+.blog-nav-logo-text::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -5px;
+  width: 100%; height: 2px;
+  background: rgba(232,199,102,.9);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .45s cubic-bezier(.65, 0, .35, 1);
+}
+
+.blog-nav-logo:hover .blog-nav-logo-text::after,
+.blog-nav-logo:focus-visible .blog-nav-logo-text::after {
+  transform: scaleX(1);
+}
+
+/* blog.css no carga styles.css, así que la preferencia de movimiento
+   reducido hay que respetarla también aquí. */
+@media (prefers-reduced-motion: reduce) {
+  .blog-nav-logo-img,
+  .blog-nav-logo-mark::after,
+  .blog-nav-vapor i,
+  .blog-nav-logo-text::after {
+    animation: none !important;
+    transition-duration: .01ms !important;
+  }
 }
 .blog-nav-logo-text { display: flex; flex-direction: column; line-height: 1.15; }
 .blog-nav-logo-name {
