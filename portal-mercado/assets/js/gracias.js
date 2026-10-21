@@ -38,7 +38,12 @@
   const tituloEl = $('gr-titulo');
   const subtitEl = $('gr-subtitulo');
 
+  // El carrito (main.js) se vacía solo cuando el pedido quedó hecho: pago
+  // aprobado o pedido por WhatsApp. Si el pago falla, el cliente lo conserva.
+  const _vaciarCarrito = () => { try { localStorage.removeItem('et_carrito'); } catch (_) {} };
+
   const _pintarAprobado = () => {
+    _vaciarCarrito();
     iconEl.textContent   = '✅';
     tituloEl.textContent = '¡Pedido confirmado!';
     subtitEl.textContent = 'Gracias por tu compra. Pronto nos pondremos en contacto contigo.';
@@ -69,6 +74,7 @@
     tituloEl.textContent = 'Pedido en proceso';
     subtitEl.textContent = 'Completa el pago para confirmar tu pedido.';
   } else if (esWA) {
+    _vaciarCarrito();
     statusEl.style.background = '#1565C0';
     iconEl.textContent   = '💬';
     tituloEl.textContent = '¡Pedido recibido por WhatsApp!';

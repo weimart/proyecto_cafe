@@ -58,11 +58,41 @@ const formatoCOP = (v) => '$' + v.toLocaleString('es-CO');
 const Cart = (() => {
   let items = []; // { key, nombre, tamano, tipo, precio, cantidad }
 
+  // El carrito se guarda en el navegador para que no se pierda al recargar,
+  // salir de la página o cancelar en Wompi. Caduca a los 7 días. Al cargarlo
+  // se toman los precios actuales de PRESENTACIONES, no los guardados.
+  const CLAVE = 'et_carrito';
+  const DURACION_MS = 7 * 24 * 60 * 60 * 1000;
+  const guardar = () => {
+    try {
+      if (items.length) localStorage.setItem(CLAVE, JSON.stringify({ items, _exp: Date.now() + DURACION_MS }));
+      else localStorage.removeItem(CLAVE);
+    } catch (_) { /* sin almacenamiento: el carrito vive solo en esta página */ }
+  };
+  const cargar = () => {
+    try {
+      const datos = JSON.parse(localStorage.getItem(CLAVE) || 'null');
+      if (!datos || !Array.isArray(datos.items) || !(datos._exp > Date.now())) {
+        localStorage.removeItem(CLAVE);
+        return;
+      }
+      items = datos.items.map((i) => {
+        const pres = PRESENTACIONES.find(p => p.tamano === i.tamano);
+        const tipo = i.tipo === 'Molido' ? 'Molido' : 'En grano';
+        const cantidad = Math.min(99, parseInt(i.cantidad, 10) || 0);
+        if (!pres || cantidad < 1) return null;
+        return { key: `${pres.tamano}-${tipo}`, nombre: 'Café Origen Caicedo',
+                 tamano: pres.tamano, tipo, precio: pres.precio, cantidad };
+      }).filter(Boolean);
+    } catch (_) { items = []; }
+  };
+  cargar();
+
   const add = (tamano, tipo, precio) => {
     const key = `${tamano}-${tipo}`;
     const exist = items.find(i => i.key === key);
     if (exist) {
-      exist.cantidad += 1;
+      exist.cantidad = Math.min(99, exist.cantidad + 1);
     } else {
       items.push({ key, nombre: 'Café Origen Caicedo', tamano, tipo, precio, cantidad: 1 });
     }
@@ -72,7 +102,7 @@ const Cart = (() => {
   const cambiarCantidad = (key, delta) => {
     const it = items.find(i => i.key === key);
     if (!it) return;
-    it.cantidad += delta;
+    it.cantidad = Math.min(99, it.cantidad + delta);
     if (it.cantidad <= 0) items = items.filter(i => i.key !== key);
     render();
   };
@@ -92,6 +122,8 @@ const Cart = (() => {
   };
 
   const render = () => {
+    guardar();
+
     // Badge del botón del carrito
     const badge = document.getElementById('cart-count');
     if (badge) badge.textContent = totalItems();
