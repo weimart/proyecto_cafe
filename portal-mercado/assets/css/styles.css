@@ -172,12 +172,159 @@ a:hover {
   text-decoration: none;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   LOGO DE LA CABECERA — la taza humea al pasar el ratón
+   ───────────────────────────────────────────────────────────────
+   Tres capas: la marca se agranda, un anillo dorado se expande
+   desde el borde, y tres hilos de vapor suben desde la taza.
+   Todo con transform y opacity, que no fuerzan recálculo de
+   diseño, así que el menú de al lado no se mueve ni un píxel.
+   ═══════════════════════════════════════════════════════════════ */
+.logo-mark {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
 .logo-img {
   width: 48px;
   height: 48px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--color-gold);
+  transition: transform .5s cubic-bezier(.34, 1.4, .64, 1),
+              box-shadow .4s ease,
+              border-color .4s ease;
+}
+
+.navbar-logo:hover .logo-img,
+.navbar-logo:focus-visible .logo-img {
+  transform: scale(1.09);
+  border-color: #E8C766;
+  box-shadow: 0 4px 16px rgba(212, 175, 55, .38);
+}
+
+/* Anillo que se expande y se desvanece, como el halo de una taza caliente */
+.logo-mark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--color-gold);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.navbar-logo:hover .logo-mark::after,
+.navbar-logo:focus-visible .logo-mark::after {
+  animation: logo-anillo 1.9s cubic-bezier(.2, .6, .3, 1) infinite;
+}
+
+@keyframes logo-anillo {
+  0%   { opacity: .5;  transform: scale(1); }
+  75%  { opacity: 0;   transform: scale(1.55); }
+  100% { opacity: 0;   transform: scale(1.55); }
+}
+
+/* Vapor: tres hilos que suben, se ensanchan y se disipan, cada uno
+   con su propio retardo y su propia deriva lateral. */
+.logo-vapor {
+  position: absolute;
+  left: 50%;
+  top: -4px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  pointer-events: none;
+}
+
+/* Cada hilo es una gota alargada de bordes irregulares y ligeramente
+   desenfocada. Tres barras rectas parecían un código de barras; la curvatura
+   asimétrica y el desenfoque son lo que lo hace leer como vapor. */
+.logo-vapor i {
+  display: block;
+  border-radius: 60% 40% 55% 45% / 60% 55% 45% 40%;
+  background: linear-gradient(to top,
+              rgba(212, 175, 55, .95), rgba(212, 175, 55, .35) 55%, rgba(212, 175, 55, 0));
+  filter: blur(.9px);
+  opacity: 0;
+  transform-origin: bottom center;
+}
+
+.navbar-logo:hover .logo-vapor i,
+.navbar-logo:focus-visible .logo-vapor i {
+  animation: logo-vapor 2.2s cubic-bezier(.35, .1, .5, 1) infinite;
+}
+
+/* Alturas y derivas distintas: si los tres suben igual, se nota el truco. */
+.logo-vapor i:nth-child(1) { width: 3px;   height: 10px; --deriva: -4px; --giro: -14deg; }
+.logo-vapor i:nth-child(2) { width: 3.5px; height: 14px; --deriva:  2px; --giro:   9deg; animation-delay: .45s; }
+.logo-vapor i:nth-child(3) { width: 2.5px; height: 11px; --deriva:  5px; --giro:  16deg; animation-delay: .9s; }
+
+@keyframes logo-vapor {
+  0%   { opacity: 0;   transform: translate(0, 7px) scaleY(.35) rotate(0deg); }
+  22%  { opacity: .9; }
+  55%  { transform: translate(calc(var(--deriva) * .45), -5px) scaleY(1.15)
+                    rotate(var(--giro)); }
+  100% { opacity: 0;   transform: translate(var(--deriva), -17px) scaleY(1.7)
+                    rotate(calc(var(--giro) * -.7)); }
+}
+
+/* Nombre y eslogan apilados */
+.logo-texto {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.12;
+  position: relative;
+}
+
+.logo-slogan {
+  font-family: var(--font-sans, inherit);
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  /* --color-light (#A0826D) sobre blanco da 2,09:1, muy por debajo del 4,5:1
+     que exige la norma para texto pequeno. --color-medium (#6B5344) llega a
+     7,13:1. */
+  color: var(--color-medium);
+  white-space: nowrap;
+  margin-top: 3px;
+  transition: color .4s ease;
+}
+
+.navbar-logo:hover .logo-slogan,
+.navbar-logo:focus-visible .logo-slogan {
+  color: var(--color-medium);
+}
+
+/* Subrayado dorado que barre bajo el bloque de texto.
+   Va en el contenedor, no en el nombre: debajo está el eslogan y una raya
+   bajo el nombre lo atravesaría. */
+.logo-texto::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 2px;
+  background: var(--color-gold);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .45s cubic-bezier(.65, 0, .35, 1);
+}
+
+.navbar-logo:hover .logo-texto::after,
+.navbar-logo:focus-visible .logo-texto::after {
+  transform: scaleX(1);
+}
+
+/* En pantallas estrechas el eslogan compite con el menú y el carrito.
+   El nombre se mantiene; el eslogan cede. */
+@media (max-width: 900px) {
+  .logo-slogan { display: none; }
 }
 
 .navbar-logo .logo-text {
@@ -995,6 +1142,7 @@ a:hover {
   margin-bottom: 1rem; font-size: 1.1rem;
 }
 .cart-total-row strong { color: var(--color-dark); font-size: 1.4rem; }
+.cart-envio-row { margin-bottom: .4rem; font-size: .95rem; color: var(--color-text-light, #6B5344); }
 .btn-checkout {
   width: 100%; padding: 1rem;
   background: #25D366; color: #fff; border: none; border-radius: 8px;
@@ -1774,3 +1922,6 @@ a:hover {
 @media (max-width: 540px) {
   .newsletter-row { grid-template-columns: 1fr; }
 }
+
+/* El contador del carrito no se parte en dos líneas en pantallas angostas. */
+.btn-cart { white-space: nowrap; }
