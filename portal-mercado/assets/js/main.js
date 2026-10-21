@@ -220,8 +220,8 @@ const Products = (() => {
             <span class="product-tag product-tag--uso">${p.uso}</span>
           </div>
           <div class="product-tipo-group" role="group" aria-label="Tipo de molienda">
-            <button class="tipo-pill tipo-pill--active" data-tipo="En grano">En grano</button>
-            <button class="tipo-pill" data-tipo="Molido">Molido</button>
+            <button type="button" class="tipo-pill tipo-pill--active" data-tipo="En grano" aria-pressed="true">En grano</button>
+            <button type="button" class="tipo-pill" data-tipo="Molido" aria-pressed="false">Molido</button>
           </div>
           <div class="product-action">
             <div class="product-pricing">
@@ -240,8 +240,9 @@ const Products = (() => {
     grid.querySelectorAll('.tipo-pill').forEach(pill => {
       pill.addEventListener('click', () => {
         const card = pill.closest('.product-card');
-        card.querySelectorAll('.tipo-pill').forEach(p => p.classList.remove('tipo-pill--active'));
+        card.querySelectorAll('.tipo-pill').forEach(p => { p.classList.remove('tipo-pill--active'); p.setAttribute('aria-pressed', 'false'); });
         pill.classList.add('tipo-pill--active');
+        pill.setAttribute('aria-pressed', 'true');
         card.dataset.tipo = pill.dataset.tipo;
       });
     });
@@ -633,11 +634,11 @@ const Checkout = (() => {
         razonSocial : data.get('razonSocial')?.trim() || '',
       };
 
-      // Guardar en localStorage para gracias.html (se borra tras 30 min)
+      // Guardar en sessionStorage para gracias.html (solo esta pestaña; caduca a los 30 min)
       const guardarLocal = () => {
         try {
           const payload = { ...pedido, _exp: Date.now() + 30 * 60 * 1000 };
-          localStorage.setItem('et_pedido_pendiente', JSON.stringify(payload));
+          sessionStorage.setItem('et_pedido_pendiente', JSON.stringify(payload));
         } catch (_) { /* sin almacenamiento: gracias.html muestra lo básico */ }
       };
 
@@ -652,7 +653,7 @@ const Checkout = (() => {
         msg += `\n¿Me confirman disponibilidad?`;
         // Redirigir a gracias.html y abrir WhatsApp
         const graciasUrl = new URL('gracias.html', window.location.href).href;
-        window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+        window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
         window.location.href = graciasUrl;
       } else {
         // Pago Wompi
@@ -725,7 +726,7 @@ const Checkout = (() => {
       'amount-in-cents'                : resp.montoEnCentavos,
       'reference'                      : resp.referencia,
       'signature:integrity'            : resp.firma,
-      'redirect-url'                   : new URL('gracias.html', window.location.href).href,
+      'redirect-url'                   : 'https://esenciaytaza.com/gracias.html',
       'customer-data:email'            : pedido.email,
       'customer-data:full-name'        : pedido.nombre,
       'customer-data:phone-number'     : telefono,
@@ -746,7 +747,7 @@ const Checkout = (() => {
     msg += `📦 *Envío a:* ${pedido.ciudad || ''}, ${pedido.departamento || ''}\n${pedido.direccion || ''}\n`;
     msg += `👤 *Nombre:* ${pedido.nombre || ''}\n📱 *Tel:* ${pedido.telefono || ''}\n`;
     msg += `\n¿Me confirman disponibilidad?`;
-    window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+    window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
   };
 
   return { init, abrir };

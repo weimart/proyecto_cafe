@@ -8,7 +8,7 @@ Los originales quedaron guardados en `respaldo-2026-10-21/`.
 
 1. Abre en script.google.com el proyecto de **pedidos**: es el que publica la URL
    que termina en `...FwU/exec`.
-2. Borra el código y pega todo el contenido de `portal-mercado/pedidos.gs`.
+2. Borra el código y pega todo el contenido de `backend/pedidos.gs`.
 3. Ve a **Configuración del proyecto** (engranaje) → **Propiedades del script** y agrega dos:
    - `WOMPI_INTEGRITY_SECRET` → en el panel de Wompi: *Desarrolladores → Secretos para integración técnica → Integridad*.
    - `WOMPI_EVENTS_SECRET` → en el mismo lugar: *Eventos*.
@@ -24,11 +24,18 @@ Con esto, un pago aprobado queda como PAGADO en la hoja y te llega el correo
 aunque el cliente cierre la pestaña. Wompi puede reintentar el aviso varias veces;
 no pasa nada, el script lo procesa una sola vez.
 
-## 3. Publicar la web en Netlify
+## 3. Proteger el panel de ventas
 
-Sube la carpeta `portal-mercado` como lo hacen siempre. Cambiaron:
-`index.html`, `gracias.html`, `terminos.html`, `assets/js/main.js`,
-`assets/js/gracias.js` y `assets/css/styles.css`.
+1. Abre en script.google.com el proyecto del **panel** (dashboard) y pega `backend/dashboard.gs`.
+2. *Configuración del proyecto → Propiedades del script* → agrega `PANEL_PIN` con un PIN
+   nuevo de **al menos 6 dígitos**. El PIN viejo (2025) estaba publicado: no lo reutilices.
+3. *Implementar → Gestionar implementaciones* → lápiz → **Quién puede acceder: Solo yo** →
+   *Nueva versión* → **Implementar**.
+
+## 3b. Publicar la web
+
+Fusiona el pull request en GitHub: Netlify publica `portal-mercado/` solo.
+Los scripts de Apps Script ahora están en `backend/` y ya no se publican en la web.
 
 ## 4. Apagar el script viejo de firma
 
@@ -44,5 +51,14 @@ Compra una bolsa de 125 g con tu propia tarjeta o Nequi y revisa:
 
 ## Si cambias precios o envío
 
-Hay que cambiarlos en **dos sitios**: `PRECIOS` y `ENVIO` en `pedidos.gs` (lo que se
-cobra) y `PRESENTACIONES` y `ENVIO` en `main.js` (lo que se muestra). Después repite los pasos 1 y 3.
+Lo que **se cobra** está en un solo sitio: `PRECIOS` y `ENVIO` en `backend/pedidos.gs`
+(después repite el paso 1). El precio también se **muestra** en estos sitios; cámbialo en todos:
+
+- `portal-mercado/assets/js/main.js` → `PRESENTACIONES` y `ENVIO`
+- `portal-mercado/index.html` → meta descripción ("desde $20.000"), los dos bloques de
+  datos para Google (`"price"` y `shippingRate`), la nota del carrito y la pregunta frecuente de envíos
+- `portal-mercado/link.html` → las cuatro tarjetas de producto
+- `portal-mercado/terminos.html` → sección 4 (envío)
+- `backend/pedidos.gs` → las tarjetas de productos del correo al cliente
+
+Si se te pasa uno, se cobra bien igual: solo quedaría un texto desactualizado.

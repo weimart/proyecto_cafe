@@ -15,10 +15,10 @@
 
   // Leer datos guardados antes del pago (con verificación de TTL)
   let pedido = null;
-  try { pedido = JSON.parse(localStorage.getItem('et_pedido_pendiente') || 'null'); }
+  try { pedido = JSON.parse(sessionStorage.getItem('et_pedido_pendiente') || 'null'); }
   catch (_) { pedido = null; }
   if (pedido && pedido._exp && Date.now() > pedido._exp) {
-    localStorage.removeItem('et_pedido_pendiente');
+    sessionStorage.removeItem('et_pedido_pendiente');
     pedido = null;
   }
 
@@ -165,7 +165,7 @@
       fetch(url, { mode: 'no-cors' }).catch(() => {});
     }
 
-    setTimeout(() => localStorage.removeItem('et_pedido_pendiente'), 3000);
+    setTimeout(() => sessionStorage.removeItem('et_pedido_pendiente'), 3000);
   } else {
     $('gr-ref').textContent = ref || 'Sin referencia';
     $('gr-btn-wa').href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent('Hola, necesito información sobre mi pedido.')}`;

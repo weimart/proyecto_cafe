@@ -79,6 +79,13 @@ function _limpiar(v, max) {
     .trim()
     .slice(0, max || 300);
 }
+// Prefijo ' para que Sheets nunca interprete un campo como fórmula
+// (p. ej. un nombre que empiece por =IMPORTXML(...)).
+function _safeCelda(v) {
+  const s = String(v == null ? '' : v);
+  return /^[=+\-@\t\r]/.test(s) ? "'" + s : s;
+}
+
 function _esEmail(v) {
   return /^[^\s@]{1,64}@[^\s@]{1,255}\.[^\s@]{2,}$/.test(v);
 }
@@ -146,6 +153,19 @@ function _validarPedido(d) {
     numeroDoc:    _limpiar(d.numeroDoc, 20).replace(/[^0-9A-Za-z-]/g, ''),
     razonSocial:  _limpiar(d.razonSocial, 140)
   };
+}
+
+function _correoClienteOk(email) {
+  try {
+    const cache = CacheService.getScriptCache();
+    const clave = 'mail_' + Utilities.base64EncodeWebSafe(
+      Utilities.computeDigest(Utilities.DigestAlgorithm.MD5, String(email)));
+    if (cache.get(clave)) return false;
+    cache.put(clave, '1', 600);
+    return true;
+  } catch (err) {
+    return true;
+  }
 }
 
 // Límite de tasa global por minuto. (Ya no hay bloqueo por correo: hacía que
@@ -229,7 +249,9 @@ function guardarPedido(data) {
       _upsertCliente(data);
       if (data.metodo === 'whatsapp') {
         _notificarVendedor(data, data.idPedido, null);
-        _confirmarCliente(data, data.idPedido, null);
+        // Un bot podría usar el formulario para mandar correos con tu marca a
+        // cualquier dirección: máximo un correo por destinatario cada 10 min.
+        if (_correoClienteOk(data.email)) _confirmarCliente(data, data.idPedido, null);
       }
       // Para Wompi: los emails se envían al confirmar el pago (ya verificado).
     }
@@ -259,11 +281,7 @@ function _agregarFila(hoja, data) {
   const fecha = Utilities.formatDate(new Date(), 'America/Bogota', 'dd/MM/yyyy HH:mm:ss');
   const estado = data.metodo === 'wompi' ? 'PAGO_PENDIENTE' : 'WHATSAPP_PENDIENTE';
 
-  // Prefijo ' para que Sheets nunca interprete un campo como fórmula.
-  const safe = function (v) {
-    var s = String(v == null ? '' : v);
-    return /^[=+\-@]/.test(s) ? "'" + s : s;
-  };
+  const safe = _safeCelda;
 
   hoja.appendRow([
     safe(data.idPedido), fecha, estado, safe(data.referencia),
@@ -412,11 +430,12 @@ function _upsertCliente(data) {
     }
   }
 
+  const safe = _safeCelda;
   hoja.appendRow([
     fecha, fecha,
-    data.nombre, data.email, data.telefono,
-    data.departamento, data.ciudad, data.direccion,
-    data.tipoDoc || '', data.numeroDoc || '', data.razonSocial || '',
+    safe(data.nombre), safe(data.email), safe(data.telefono),
+    safe(data.departamento), safe(data.ciudad), safe(data.direccion),
+    safe(data.tipoDoc), safe(data.numeroDoc), safe(data.razonSocial),
     1, Number(data.total)
   ]);
 }

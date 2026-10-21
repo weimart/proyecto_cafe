@@ -6,7 +6,7 @@
 
    Fuente:  img/Logo nuevo esencia y taza.jpeg  (1600x1600, fondo crema)
 
-   Genera, en portal-mercado/assets/images/:
+   Genera, en portal-mercado/assets/images/ (se ejecuta desde herramientas/):
      logo.png             logotipo completo, fondo transparente
      logo-claro.png       ídem en tinta clara, para el pie oscuro
      logo-grande.png      versión grande para datos estructurados
@@ -26,7 +26,7 @@ const path = require('path');
 
 const RAIZ   = path.join(__dirname, '..');
 const FUENTE = path.join(RAIZ, 'img', 'Logo nuevo esencia y taza.jpeg');
-const SALIDA = path.join(__dirname, 'assets', 'images');
+const SALIDA = path.join(RAIZ, 'portal-mercado', 'assets', 'images');
 const BAK    = path.join(SALIDA, '_originales');
 const MARCA  = path.join(RAIZ, 'marca', 'logos');
 

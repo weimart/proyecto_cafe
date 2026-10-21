@@ -3,18 +3,43 @@
 
    INSTRUCCIONES DE DESPLIEGUE:
    1. Abre script.google.com → Nuevo proyecto → Pega este código completo
-   2. Cambia D_PIN al PIN que desees (mín. 4 dígitos)
+   2. Configuración del proyecto → Propiedades del script → agrega PANEL_PIN
+      con un PIN de al menos 6 dígitos (el PIN ya NO va en el código).
    3. Ejecuta _autorizar() una vez para otorgar permisos de Sheets
    4. Implementar → Nueva implementación → Aplicación web
       · Descripción: Dashboard v1
       · Ejecutar como: Yo (comercial@esenciaytaza.com)
-      · Quién puede acceder: Cualquiera
+      · Quién puede acceder: Solo yo  (así lo protege tu inicio de sesión de
+        Google; el PIN queda como segunda barrera)
    5. Copia la URL y guárdala en un lugar seguro
    ============================================================================ */
 
 const D_PEDIDOS  = '1hyx7y9qdXwfiXFlLsm4hcCCiBUm_tH3xzwvZ7uRBR4Y';
 const D_CLIENTES = '1brrITidrtD78AbLOagFTVLQ47KXqNzq7Bk1WflGDjBE';
-const D_PIN      = '2025'; // ← CAMBIA ESTE PIN ANTES DE DESPLEGAR
+
+// PIN en Propiedades del script (PANEL_PIN). Tras 5 intentos fallidos el
+// panel se bloquea 15 minutos para todos.
+const MAX_FALLOS_PIN = 5;
+function _pinOk(pin) {
+  const correcto = PropertiesService.getScriptProperties().getProperty('PANEL_PIN') || '';
+  if (correcto.length < 6) return { error: 'Configura PANEL_PIN (mín. 6 dígitos) en las propiedades del script' };
+  const cache  = CacheService.getScriptCache();
+  const fallos = Number(cache.get('panel_fallos') || 0);
+  if (fallos >= MAX_FALLOS_PIN) return { error: 'Demasiados intentos. Espera 15 minutos.' };
+  if (String(pin) !== correcto) {
+    cache.put('panel_fallos', String(fallos + 1), 900);
+    return { error: 'PIN incorrecto' };
+  }
+  return null;
+}
+
+// Todo texto que viene de la hoja se escapa antes de enviarlo al navegador:
+// el panel lo pinta con innerHTML y los datos los escribe cualquier cliente.
+function _escD(v) {
+  return String(v == null ? '' : v)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
 
 // ── Autorización inicial ──────────────────────────────────────────────────────
 function _autorizar() {
@@ -26,13 +51,13 @@ function _autorizar() {
 // ── Entrada web app ───────────────────────────────────────────────────────────
 function doGet() {
   return HtmlService.createHtmlOutput(DASHBOARD_HTML)
-    .setTitle('Dashboard — Esencia y Taza')
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    .setTitle('Dashboard — Esencia y Taza');
 }
 
 // ── Datos del dashboard ───────────────────────────────────────────────────────
 function getDashboardData(pin) {
-  if (pin !== D_PIN) return { error: 'PIN incorrecto' };
+  const errPin = _pinOk(pin);
+  if (errPin) return errPin;
   try {
     const hPed = SpreadsheetApp.openById(D_PEDIDOS).getSheetByName('Pedidos');
     const hCli = SpreadsheetApp.openById(D_CLIENTES).getSheetByName('Clientes');
@@ -62,14 +87,14 @@ function getDashboardData(pin) {
 
       pedidos.push({
         fila: idx + 2,
-        id: String(id || ''), fecha: fechaS, estado: estadoS,
-        prods: String(prods || ''), total: totalN,
-        nombre: String(nombre || ''), email: String(email || ''),
-        tel: String(tel || ''), ciudad: String(ciudad || ''),
-        depto: String(depto || ''), dir: String(dir || ''),
-        comp: String(comp || ''), factura: String(factura || ''),
-        tipoDoc: String(tipoDoc || ''), numDoc: String(numDoc || ''),
-        razon: String(razon || ''), txnId: String(txnId || '')
+        id: _escD(id), fecha: _escD(fechaS), estado: _escD(estadoS),
+        prods: _escD(prods), total: totalN,
+        nombre: _escD(nombre), email: _escD(email),
+        tel: _escD(tel), ciudad: _escD(ciudad),
+        depto: _escD(depto), dir: _escD(dir),
+        comp: _escD(comp), factura: _escD(factura),
+        tipoDoc: _escD(tipoDoc), numDoc: _escD(numDoc),
+        razon: _escD(razon), txnId: _escD(txnId)
       });
 
       if (estadoS === 'PAGADO' || estadoS === 'ENVIADO') {
@@ -97,9 +122,9 @@ function getDashboardData(pin) {
 
     var clientes = filasCli.map(function(r) {
       return {
-        primeraCompra: String(r[0] || ''), ultimaCompra: String(r[1] || ''),
-        nombre: String(r[2] || ''), email: String(r[3] || ''),
-        telefono: String(r[4] || ''), ciudad: String(r[6] || ''),
+        primeraCompra: _escD(r[0]), ultimaCompra: _escD(r[1]),
+        nombre: _escD(r[2]), email: _escD(r[3]),
+        telefono: _escD(r[4]), ciudad: _escD(r[6]),
         totalPedidos: Number(r[11]) || 0, totalAcum: Number(r[12]) || 0
       };
     }).sort(function(a, b) { return b.totalAcum - a.totalAcum; });
@@ -123,13 +148,16 @@ function getDashboardData(pin) {
       timestamp: Utilities.formatDate(ahora, 'America/Bogota', 'dd/MM/yyyy HH:mm:ss')
     };
   } catch(e) {
-    return { error: e.message };
+    return { error: _escD(e.message) };
   }
 }
 
 // ── Cambiar estado de pedido ──────────────────────────────────────────────────
 function cambiarEstado(pin, fila, nuevoEstado) {
-  if (pin !== D_PIN) return { error: 'PIN incorrecto' };
+  const errPin = _pinOk(pin);
+  if (errPin) return errPin;
+  fila = Number(fila);
+  if (!(fila >= 2 && fila === Math.floor(fila))) return { error: 'Fila no válida' };
   var estadosValidos = ['PAGADO','ENVIADO','CANCELADO','PAGO_PENDIENTE','WHATSAPP_PENDIENTE'];
   if (estadosValidos.indexOf(nuevoEstado) < 0) return { error: 'Estado no válido' };
   try {
@@ -364,7 +392,7 @@ var DASHBOARD_HTML = '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"
 '    var tipo = a.estado===\'PAGO_PENDIENTE\' ? \'Pago pendiente de confirmar\' : \'Pedido WhatsApp por atender\';' +
 '    html += \'<div class="alerta-item"><div class="alerta-txt"><strong>\'+tipo+\'</strong> &mdash; \'+' +
 '    a.nombre+\' &mdash; \'+formatCOP(a.total)+\' &mdash; <span class="mono">\'+a.id+\'</span></div>\'+' +
-'    \'<button class="alerta-ver" onclick="openModal(\'+JSON.stringify(a)+\')">Ver</button></div>\';' +
+'    \'<button class="alerta-ver" onclick="openModal(\'+encodeData(a)+\')">Ver</button></div>\';' +
 '  });' +
 '  el.innerHTML = html;' +
 '}' +
@@ -513,7 +541,7 @@ var DASHBOARD_HTML = '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"
 'function estadoLabel(e){var m={PAGADO:\'Pagado\',ENVIADO:\'Enviado\',PAGO_PENDIENTE:\'Pago pendiente\',WHATSAPP_PENDIENTE:\'WhatsApp pendiente\',CANCELADO:\'Cancelado\'};return m[e]||e;}' +
 'function formatCOP(n){return \'$\'+Number(n||0).toLocaleString(\'es-CO\');}' +
 'function formatCOPShort(n){if(n>=1000000)return \'$\'+(n/1000000).toFixed(1)+\'M\';if(n>=1000)return \'$\'+(n/1000).toFixed(0)+\'k\';return \'$\'+n;}' +
-'function encodeData(obj){return JSON.stringify(obj).replace(/\'/g,"&#39;").replace(/"/g,\'&quot;\');}' +
+'function encodeData(obj){return JSON.stringify(obj).replace(/&/g,\'&amp;\').replace(/\'/g,"&#39;").replace(/"/g,\'&quot;\');}' +
 
 /* auto-refresh cada 2 min */
 'setInterval(function(){if(PIN)loadData();},120000);' +
