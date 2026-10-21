@@ -1,5 +1,5 @@
 /* ============================================================================
-   ESENCIA Y TAZA — Dashboard de Ventas v1.0 — REFERENCIA: el panel publicado en Apps Script es más nuevo; no pegar este archivo encima. Sirve para portar las correcciones de XSS (_escD, encodeData).
+   ESENCIA Y TAZA — Dashboard de Ventas v1.0 — REFERENCIA: el panel publicado en Apps Script es más nuevo; no pegar este archivo encima. El panel vivo (v22) está en otro repositorio privado.
 
    INSTRUCCIONES DE DESPLIEGUE:
    1. Abre script.google.com → Nuevo proyecto → Pega este código completo

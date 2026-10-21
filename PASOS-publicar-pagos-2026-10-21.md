@@ -34,8 +34,9 @@ versión 1.0 y borraría esas funciones.
    *Nueva versión* → **Implementar**.
 2. Confirma que la clave del panel publicado no sea el PIN viejo (2025), que estaba
    publicado en el código.
-3. Pendiente: pasar al panel publicado las protecciones contra inyección de HTML (XSS)
-   que tiene `backend/dashboard.gs` (función `_escD` y `encodeData`).
+
+El panel publicado (versión 22) ya escapa el texto contra XSS y su código vive en
+otro repositorio privado.
 
 ## 3b. Publicar la web
 
