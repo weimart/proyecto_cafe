@@ -39,8 +39,8 @@
 ## 📱 ÁREA 2 — INTEGRACIÓN A REDES SOCIALES
 
 ### ✅ Ya tengo concreto
-- [x] Instagram conectado en la web: @esenciaytaza
-- [x] TikTok conectado en la web: @esenciaytaza
+- [x] Instagram conectado en la web: @esenciaytazacafe
+- [x] TikTok conectado en la web: @esenciaytazacafe
 - [x] Página "link in bio" creada y publicada (`links.html`):
       **https://weimart.github.io/proyecto_cafe/links.html**
       (con botones a WhatsApp, tienda, historia, IG, TikTok, correo)

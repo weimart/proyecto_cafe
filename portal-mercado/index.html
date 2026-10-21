@@ -361,7 +361,7 @@
             <li><a href="#faq" class="navbar-link">FAQ</a></li>
           </ul>
 
-          <button id="cart-toggle" class="btn btn-primary btn-sm btn-cart" aria-label="Ver carrito">
+          <button id="cart-toggle" class="btn btn-primary btn-sm btn-cart" aria-label="Ver carrito" aria-expanded="false" aria-controls="cart-panel">
             🛒 Carrito (<span id="cart-count">0</span>)
           </button>
 
@@ -455,7 +455,12 @@
         <p class="section-subtitle">Café Origen Caicedo, disponible en grano o molido. Elige tu presentación.</p>
 
         <div class="products-grid" id="products-grid">
-          <!-- Las tarjetas se generan dinámicamente desde main.js -->
+          <!-- Las tarjetas se generan dinámicamente desde main.js (PRESENTACIONES).
+               Sin JavaScript se ve este aviso; los precios no se repiten aquí. -->
+          <noscript>
+            <p class="section-subtitle">Para ver precios y comprar en línea activa JavaScript, o
+              <a href="https://wa.me/573022573244?text=Hola%20Esencia%20y%20Taza,%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">pídenos por WhatsApp</a>.</p>
+          </noscript>
         </div>
       </div>
     </section>
@@ -869,8 +874,8 @@
   <div id="cookie-banner" class="cookie-banner" role="alertdialog" aria-label="Aviso de privacidad" hidden>
     <div class="cookie-content">
       <p>
-        <strong>Usamos datos mínimos</strong> para gestionar tus pedidos (nombre, correo, dirección de envío).
-        Al continuar navegando aceptas nuestra
+        <strong>Usamos datos mínimos</strong> para gestionar tus pedidos (nombre, correo, dirección de envío)
+        y solo cuando nos haces un pedido. Cómo los tratamos y cómo ejercer tus derechos está en nuestra
         <a href="./privacidad.html" target="_blank" rel="noopener noreferrer">Política de privacidad</a> —
         Ley 1581 de 2012.
       </p>
@@ -882,7 +887,7 @@
   </div>
 
   <!-- Scripts -->
-  <script src="./assets/js/main.js?v=20261021b" defer></script>
+  <script src="./assets/js/main.js?v=20261021c" defer></script>
 <script src="./assets/js/resenas-google.js?v=20261021" defer></script>
 </body>
 </html>
