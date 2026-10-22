@@ -177,7 +177,10 @@ function aCuadrado(img, lado, fondo) {
   const tazaSola = limpiar(recortarFondo(
       orig.clone().crop(TAZA.x0, TAZA.y0, TAZA.x1 - TAZA.x0, TAZA.y1 - TAZA.y0)));
 
-  for (const [n, lado, prop, marca] of [['favicon.png',    64, 0.62, isoTrans],
+  // Google pide un icono de lado múltiplo de 48 para mostrarlo en resultados.
+  for (const [n, lado, prop, marca] of [['favicon-192.png', 192, 0.62, isoTrans],
+                                        ['favicon-48.png', 48, 0.62, isoTrans],
+                                        ['favicon.png',    64, 0.62, isoTrans],
                                         ['favicon-32.png', 32, 0.68, isoTrans],
                                         ['favicon-16.png', 16, 0.86, tazaSola]]) {
     await medallon(marca, lado, prop).writeAsync(path.join(SALIDA, n));
